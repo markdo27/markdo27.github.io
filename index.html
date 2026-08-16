@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>MarkDo — Web Toys &amp; Type Tools</title>
-<meta name="description" content="Browser-based type, pattern and sound tools by MarkDo. Every one runs in the browser — nothing to install."/>
-<meta property="og:title" content="MarkDo — Web Toys &amp; Type Tools"/>
-<meta property="og:description" content="Browser-based type, pattern and sound tools. Nothing to install."/>
+<title>MRKD — Fun Tools for Design</title>
+<meta name="description" content="Browser-based tools for making type, patterns, posters and noise. Nothing to install."/>
+<meta property="og:title" content="MRKD — Fun Tools for Design"/>
+<meta property="og:description" content="Browser-based tools for making type, patterns, posters and noise."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://markdo27.github.io/"/>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fafafa'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%230a0a0a'/%3E%3C/svg%3E"/>
@@ -61,18 +61,6 @@ header{
   letter-spacing:0.15em;
   color:var(--muted);
 }
-.header-inner .spacer{flex:1}
-.header-link{
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:0.15em;
-  text-decoration:none;
-  border:1px solid var(--ink);
-  padding:6px 12px;
-  transition:background-color .15s ease,color .15s ease;
-  white-space:nowrap;
-}
-.header-link:hover{background:var(--ink);color:var(--paper)}
 
 main{max-width:1100px;margin:0 auto;padding:40px 24px 64px}
 
@@ -105,12 +93,6 @@ main{max-width:1100px;margin:0 auto;padding:40px 24px 64px}
   color:var(--muted);
 }
 .section-count{font-size:11px;color:#a3a3a3;letter-spacing:0.1em}
-.section-note{
-  font-size:12px;
-  color:var(--muted);
-  margin-bottom:16px;
-  max-width:60ch;
-}
 
 /* CARD GRID */
 .grid{
@@ -166,10 +148,6 @@ main{max-width:1100px;margin:0 auto;padding:40px 24px 64px}
 .card:hover .tag,.card:focus-visible .tag{color:#a3a3a3}
 .card-go{font-weight:500}
 
-/* SOURCE-ONLY / PENDING CARDS */
-.card.is-quiet{border-color:var(--line);background:var(--paper)}
-.card.is-quiet:hover,.card.is-quiet:focus-visible{background:var(--ink);border-color:var(--ink)}
-
 /* FOOTER */
 footer{
   border-top:1px solid var(--ink);
@@ -179,18 +157,11 @@ footer{
   max-width:1100px;
   margin:0 auto;
   padding:20px 24px 40px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:12px 20px;
-  align-items:baseline;
   font-size:11px;
   text-transform:uppercase;
   letter-spacing:0.15em;
   color:var(--muted);
 }
-.footer-inner a{text-decoration:none;border-bottom:1px solid var(--line)}
-.footer-inner a:hover{border-bottom-color:var(--ink);color:var(--ink)}
-.footer-inner .spacer{flex:1}
 
 @media (max-width:600px){
   main{padding:28px 16px 48px}
@@ -204,165 +175,83 @@ footer{
 
 <header>
   <div class="header-inner">
-    <span class="wordmark">MARKDO</span>
-    <span class="wordmark-sub">web toys &amp; type tools</span>
-    <span class="spacer"></span>
-    <a class="header-link" href="https://github.com/markdo27">GitHub ↗</a>
+    <span class="wordmark">MRKD</span>
+    <span class="wordmark-sub">fun tools for design</span>
   </div>
 </header>
 
 <main>
 
   <section class="intro">
-    <h1>Small tools for making type, patterns and noise.</h1>
+    <h1>Small tools for making type, patterns, posters and noise.</h1>
     <p>Everything here runs in the browser — no install, no account. Click any card to open the live demo.</p>
   </section>
 
   <section class="section">
     <div class="section-head">
       <h2>Live demos</h2>
-      <span class="section-count">/ 12</span>
+      <span class="section-count">/ 10</span>
     </div>
     <div class="grid">
 
-      <a class="card" href="https://markdo27.github.io/typoman/">
-        <div class="card-top"><span class="card-idx">01</span><span class="card-name">TYPOMAN</span></div>
-        <p class="card-desc">Kinetic type engine — set letters in motion and export the result.</p>
+      <a class="card" href="https://circlefont.vercel.app">
+        <div class="card-top"><span class="card-idx">01</span><span class="card-name">Grid Typeface Builder</span></div>
+        <p class="card-desc">CIRCLE — draw letterforms on a modular grid and export the result as an installable OpenType font.</p>
         <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
       </a>
 
-      <a class="card" href="https://markdo27.github.io/funtool/">
-        <div class="card-top"><span class="card-idx">02</span><span class="card-name">PUSHTYPE</span></div>
-        <p class="card-desc">Push and pull image blocks in 3D relief, then type in any direction to build posters.</p>
-        <div class="card-foot"><span class="tag">Poster</span><span class="card-go">Open ↗</span></div>
-      </a>
-
-      <a class="card" href="https://markdo27.github.io/typebox/">
-        <div class="card-top"><span class="card-idx">03</span><span class="card-name">RASTER.PRESS</span></div>
-        <p class="card-desc">Pixel typography playground — per-letter rotation, scale, skew, gradient, grain and animation.</p>
+      <a class="card" href="https://markdo27.github.io/typoman/">
+        <div class="card-top"><span class="card-idx">02</span><span class="card-name">Kinetic Type Animator</span></div>
+        <p class="card-desc">TYPOMAN — set letters in motion and export the animation.</p>
         <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
       </a>
 
       <a class="card" href="https://markdo27.github.io/generativefont_creator/">
-        <div class="card-top"><span class="card-idx">04</span><span class="card-name">Liquid.Font</span></div>
-        <p class="card-desc">Liquid type generator — melt and reflow letterforms into a usable set.</p>
+        <div class="card-top"><span class="card-idx">03</span><span class="card-name">Liquid Font Generator</span></div>
+        <p class="card-desc">Liquid.Font — melt and reflow letterforms into a usable typeface.</p>
         <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
       </a>
 
-      <a class="card" href="https://markdo27.github.io/mosaic_art/">
-        <div class="card-top"><span class="card-idx">05</span><span class="card-name">Mosaic System</span></div>
-        <p class="card-desc">Encaustic 3D typography tile engine — set text or a logo in ceramic mosaic, export PNG or SVG.</p>
-        <div class="card-foot"><span class="tag">Pattern</span><span class="card-go">Open ↗</span></div>
+      <a class="card" href="https://poster-generator-jet.vercel.app">
+        <div class="card-top"><span class="card-idx">04</span><span class="card-name">Poster Generator</span></div>
+        <p class="card-desc">FRACTURED — p5.js generative brutalist posters, reshuffled until one lands.</p>
+        <div class="card-foot"><span class="tag">Poster</span><span class="card-go">Open ↗</span></div>
       </a>
 
-      <a class="card" href="https://markdo27.github.io/pattern_creator/">
-        <div class="card-top"><span class="card-idx">06</span><span class="card-name">Pattern Studio</span></div>
-        <p class="card-desc">Grid play creator — pick a pattern type, assign a palette, export tileable SVG.</p>
+      <a class="card" href="https://markdo27.github.io/mosaic_art/">
+        <div class="card-top"><span class="card-idx">05</span><span class="card-name">Mosaic Tile Generator</span></div>
+        <p class="card-desc">Set text or a logo in encaustic ceramic mosaic, then export PNG or SVG.</p>
         <div class="card-foot"><span class="tag">Pattern</span><span class="card-go">Open ↗</span></div>
       </a>
 
       <a class="card" href="https://markdo27.github.io/pattern_typo/">
-        <div class="card-top"><span class="card-idx">07</span><span class="card-name">Pattern Studio — Typo</span></div>
-        <p class="card-desc">The pattern engine with a typographic layer, focus mode and keyboard-driven shuffling.</p>
+        <div class="card-top"><span class="card-idx">06</span><span class="card-name">Pattern Generator</span></div>
+        <p class="card-desc">Pick a pattern type, assign a palette, add a typographic layer, export tileable SVG.</p>
         <div class="card-foot"><span class="tag">Pattern</span><span class="card-go">Open ↗</span></div>
       </a>
 
       <a class="card" href="https://markdo27.github.io/musicbox/">
-        <div class="card-top"><span class="card-idx">08</span><span class="card-name">MusicBox</span></div>
-        <p class="card-desc">Browser-native MIDI step sequencer with Strudel samples — genre presets, spatial FX and save slots.</p>
+        <div class="card-top"><span class="card-idx">07</span><span class="card-name">Step Sequencer</span></div>
+        <p class="card-desc">Browser-native MIDI sequencer with Strudel samples — genre presets, spatial FX and save slots.</p>
         <div class="card-foot"><span class="tag">Sound</span><span class="card-go">Open ↗</span></div>
       </a>
 
       <a class="card" href="https://markdo27.github.io/GenerativeWebcamVisualizer/">
-        <div class="card-top"><span class="card-idx">09</span><span class="card-name">Webcam Visualizer</span></div>
+        <div class="card-top"><span class="card-idx">08</span><span class="card-name">Webcam Visualizer</span></div>
         <p class="card-desc">Turns a live webcam feed into generative visuals. Needs camera permission.</p>
         <div class="card-foot"><span class="tag">Visual</span><span class="card-go">Open ↗</span></div>
       </a>
 
       <a class="card" href="https://markdo27.github.io/dead4rat-v3/">
-        <div class="card-top"><span class="card-idx">10</span><span class="card-name">DEAD4RAT</span></div>
-        <p class="card-desc">Terminal decay — a text interface that corrodes as you use it.</p>
+        <div class="card-top"><span class="card-idx">09</span><span class="card-name">VJ Audio Visualizer</span></div>
+        <p class="card-desc">DEAD4RAT — live VJ engine with audio reactivity, webcam input, gesture tracking and shader effects.</p>
         <div class="card-foot"><span class="tag">Visual</span><span class="card-go">Open ↗</span></div>
       </a>
 
-      <a class="card" href="https://markdo27.github.io/guideline_blk/">
-        <div class="card-top"><span class="card-idx">11</span><span class="card-name">BLK46®</span></div>
-        <p class="card-desc">Brand identity guidelines for a bar at 46 Ma May, Hanoi. House party energy, dialed up.</p>
-        <div class="card-foot"><span class="tag">Brand</span><span class="card-go">Open ↗</span></div>
-      </a>
-
       <a class="card" href="https://markdo27.github.io/vietlot_predict/">
-        <div class="card-top"><span class="card-idx">12</span><span class="card-name">Vietlott Phân Tích</span></div>
+        <div class="card-top"><span class="card-idx">10</span><span class="card-name">Lottery Analyzer</span></div>
         <p class="card-desc">Thống kê Power 6/55 và Mega 6/45 — số nóng/lạnh, khoảng cách, bộ số được chấm điểm.</p>
         <div class="card-foot"><span class="tag">Data</span><span class="card-go">Open ↗</span></div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- ───────────────────────────────────────────────────────────────────
-       TO ADD A VERCEL DEMO: replace the href below with the live URL and
-       change the footer's "Source ↗" to "Open ↗". Nothing else to update.
-       ─────────────────────────────────────────────────────────────────── -->
-  <section class="section">
-    <div class="section-head">
-      <h2>Hosted elsewhere</h2>
-      <span class="section-count">/ 6</span>
-    </div>
-    <p class="section-note">These need a server or database, so they live on Vercel rather than GitHub Pages. Links go to source until the live URLs are filled in.</p>
-    <div class="grid">
-
-      <a class="card is-quiet" href="https://github.com/markdo27/baogia">
-        <div class="card-top"><span class="card-idx">13</span><span class="card-name">Báo Giá</span></div>
-        <p class="card-desc">Construction quote builder. Next.js with a database and AI-assisted estimates.</p>
-        <div class="card-foot"><span class="tag">Tool</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-      <a class="card is-quiet" href="https://github.com/markdo27/baogia_stable">
-        <div class="card-top"><span class="card-idx">14</span><span class="card-name">Báo Giá (stable)</span></div>
-        <p class="card-desc">The stable build of the quote builder, with image analysis and saved projects.</p>
-        <div class="card-foot"><span class="tag">Tool</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-      <a class="card is-quiet" href="https://github.com/markdo27/birdy_planning">
-        <div class="card-top"><span class="card-idx">15</span><span class="card-name">Birdy Planning</span></div>
-        <p class="card-desc">Task planner backed by a hosted Postgres database.</p>
-        <div class="card-foot"><span class="tag">Tool</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-      <a class="card is-quiet" href="https://github.com/markdo27/font_creator">
-        <div class="card-top"><span class="card-idx">16</span><span class="card-name">Font Creator</span></div>
-        <p class="card-desc">Next.js typeface builder.</p>
-        <div class="card-foot"><span class="tag">Type</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-      <a class="card is-quiet" href="https://github.com/markdo27/translate-doc">
-        <div class="card-top"><span class="card-idx">17</span><span class="card-name">Translate Doc</span></div>
-        <p class="card-desc">Document translation, running server-side.</p>
-        <div class="card-foot"><span class="tag">Tool</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-      <a class="card is-quiet" href="https://github.com/markdo27/song_finder">
-        <div class="card-top"><span class="card-idx">18</span><span class="card-name">Song Finder</span></div>
-        <p class="card-desc">Song lookup with its own API and backend.</p>
-        <div class="card-foot"><span class="tag">Sound</span><span class="card-go">Source ↗</span></div>
-      </a>
-
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="section-head">
-      <h2>Source only</h2>
-      <span class="section-count">/ 1</span>
-    </div>
-    <p class="section-note">Needs an API key supplied at build time, so there is no public demo.</p>
-    <div class="grid">
-
-      <a class="card is-quiet" href="https://github.com/markdo27/Glitchez">
-        <div class="card-top"><span class="card-idx">19</span><span class="card-name">Glitchez</span></div>
-        <p class="card-desc">Video synthesizer. Run it locally with your own Gemini API key.</p>
-        <div class="card-foot"><span class="tag">Visual</span><span class="card-go">Source ↗</span></div>
       </a>
 
     </div>
@@ -371,11 +260,7 @@ footer{
 </main>
 
 <footer>
-  <div class="footer-inner">
-    <span>MarkDo</span>
-    <span class="spacer"></span>
-    <a href="https://github.com/markdo27">github.com/markdo27</a>
-  </div>
+  <div class="footer-inner">MRKD</div>
 </footer>
 
 </body>
