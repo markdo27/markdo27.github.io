@@ -3,317 +3,743 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>MRKD — Fun Tools for Design</title>
-<meta name="description" content="Browser-based tools for making type, patterns, posters and noise. Nothing to install."/>
-<meta property="og:title" content="MRKD — Fun Tools for Design"/>
-<meta property="og:description" content="Browser-based tools for making type, patterns, posters and noise."/>
+<title>MRKD / TOOLS INDEX</title>
+<meta name="description" content="Twelve browser based tools for type, pattern, poster, sound and document work. Nothing to install."/>
+<meta name="author" content="MRKD"/>
+<meta name="theme-color" content="#e4e4e4"/>
+<meta property="og:title" content="MRKD / TOOLS INDEX"/>
+<meta property="og:description" content="Twelve browser based tools for type, pattern, poster, sound and document work. Nothing to install."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://markdo27.github.io/"/>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23fafafa'/%3E%3Ccircle cx='50' cy='50' r='30' fill='%230a0a0a'/%3E%3C/svg%3E"/>
+<meta property="og:image" content="https://markdo27.github.io/logo.svg"/>
+<meta name="twitter:card" content="summary"/>
+<link rel="canonical" href="https://markdo27.github.io/"/>
+<link rel="icon" href="logo.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="logo.svg"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Doto:wght@300;500;700;900&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
 :root{
-  --paper:#fafafa;
-  --ink:#0a0a0a;
-  --white:#ffffff;
-  --line:#d4d4d4;
-  --line-soft:#e5e5e5;
-  --muted:#737373;
-  --muted-strong:#525252;
-  --font-mono:'IBM Plex Mono','JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  color-scheme:light;
+  --bg:#e3e3e3;
+  --cell:#f0f0f0;
+  --ink:#2e2e2e;
+  --ink-soft:#585858;
+  --ink-faint:#9b9b9b;
+  --ink-deep:#0a0a0a;
+  --on-ink:#ffffff;
+  --on-ink-soft:#b8b8b8;
+  --on-ink-hair:#3d3d3d;
+  --hair:#d8d8d8;
+  --red:#d71921;
+  --dot:'Doto',ui-monospace,monospace;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --r:22px;
+  --gap:10px;
 }
+
 html{-webkit-text-size-adjust:100%}
 body{
-  font-family:var(--font-mono);
-  background:var(--paper);
+  background:var(--bg);
   color:var(--ink);
-  min-height:100vh;
-  line-height:1.5;
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.6;
+  letter-spacing:0.02em;
+  text-transform:uppercase;
   -webkit-font-smoothing:antialiased;
+  padding:var(--gap);
 }
-::selection{background:var(--ink);color:var(--paper)}
-a{color:inherit}
+::selection{background:var(--ink);color:var(--cell)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
 
-/* HEADER */
-header{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background:var(--paper);
-  border-bottom:1px solid var(--ink);
-}
-.header-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:14px 24px;
-  display:flex;
-  align-items:baseline;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.wordmark{font-size:18px;font-weight:700;letter-spacing:-0.02em}
-.wordmark-sub{
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:0.15em;
-  color:var(--muted);
-}
+.sheet{max-width:1180px;margin:0 auto}
 
-main{max-width:1100px;margin:0 auto;padding:40px 24px 64px}
-
-/* INTRO */
-.intro{max-width:60ch;margin-bottom:44px}
-.intro h1{
-  font-size:clamp(24px,4.5vw,34px);
-  font-weight:700;
-  letter-spacing:-0.02em;
-  line-height:1.2;
-  margin-bottom:14px;
-}
-.intro p{font-size:14px;color:var(--muted-strong)}
-
-/* SECTIONS */
-.section{margin-bottom:44px}
-.section-head{
-  display:flex;
-  align-items:baseline;
-  gap:10px;
-  margin-bottom:16px;
-  padding-bottom:8px;
-  border-bottom:1px solid var(--line-soft);
-}
-.section-head h2{
-  font-size:11px;
-  font-weight:500;
-  text-transform:uppercase;
-  letter-spacing:0.15em;
-  color:var(--muted);
-}
-.section-count{font-size:11px;color:#a3a3a3;letter-spacing:0.1em}
-
-/* CARD GRID */
-.grid{
+/* ---------- GRID ---------- */
+.row{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(288px,1fr));
+  gap:var(--gap);
+  margin-bottom:var(--gap);
 }
-.card{
+.row--three{grid-template-columns:repeat(3,1fr)}
+
+/* ---------- CELL ---------- */
+.cell{
+  position:relative;
   display:flex;
   flex-direction:column;
-  gap:10px;
-  border:1px solid var(--ink);
-  background:var(--white);
-  padding:16px;
-  text-decoration:none;
-  transition:background-color .15s ease,color .15s ease;
+  background:var(--cell);
+  border-radius:var(--r);
+  padding:26px 26px 28px;
+  min-height:330px;
 }
-.card:hover,.card:focus-visible{background:var(--ink);color:var(--paper);outline:none}
-.card-top{display:flex;align-items:baseline;gap:10px}
-.card-idx{
-  font-size:10px;
+.cell-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.cell-body{margin-top:auto;padding-top:36px}
+
+/* dot matrix type */
+.dot{
+  font-family:var(--dot);
+  font-weight:700;
   letter-spacing:0.1em;
-  color:var(--muted);
+  line-height:1.05;
+  color:var(--ink);
+}
+.title{font-size:clamp(26px,3.6vw,38px)}
+.idx{font-size:28px;font-weight:900;letter-spacing:0.14em}
+
+.label{
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.16em;
+  color:var(--ink);
+  margin-top:26px;
+}
+.meta{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.045em}
+.meta + .meta{margin-top:18px}
+.meta b{font-weight:500;color:var(--ink);display:block}
+.faint{color:var(--ink-faint)}
+
+/* brand line, third masthead cell */
+.claim{
+  font-size:13px;
+  font-weight:500;
+  line-height:1.75;
+  letter-spacing:0.07em;
+  color:var(--ink);
+  max-width:29ch;
+}
+
+/* attractor field, third masthead cell. Circles run the full cell, edge to
+   edge, and the copy sits over them. */
+.cell--play{
+  cursor:crosshair;
+  overflow:hidden;
+  isolation:isolate;
+}
+/* z-index:-1 keeps the canvas above the cell background but below the copy,
+   and leaves the copy in the cell's own blending group. Giving .cell-body a
+   stacking context of its own would cut the text off from that group. */
+.play{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+}
+.play canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
+/* Difference blending keeps the line readable in both directions: near black
+   over the cell, near white wherever a circle passes under it. */
+@supports (mix-blend-mode:difference){
+  .cell--play .claim{
+    color:#ffffff;
+    mix-blend-mode:difference;
+  }
+}
+
+/* red dot, as on the reference sheet */
+.rdot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--red);
   flex-shrink:0;
 }
-.card:hover .card-idx,.card:focus-visible .card-idx{color:#a3a3a3}
-.card-name{
-  font-size:14px;
-  font-weight:700;
-  letter-spacing:-0.01em;
-  line-height:1.3;
-}
-.card-desc{
-  font-size:12px;
-  line-height:1.55;
-  color:var(--muted-strong);
-  flex:1;
-}
-.card:hover .card-desc,.card:focus-visible .card-desc{color:#d4d4d4}
-.card-foot{
+
+/* ---------- SECTION BAR ---------- */
+.bar{
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding-top:10px;
-  border-top:1px solid var(--line-soft);
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:0.15em;
+  gap:18px;
+  background:var(--cell);
+  border-radius:var(--r);
+  padding:16px 26px;
+  margin-bottom:var(--gap);
 }
-.card:hover .card-foot,.card:focus-visible .card-foot{border-top-color:#404040}
-.tag{color:var(--muted)}
-.card:hover .tag,.card:focus-visible .tag{color:#a3a3a3}
-.card-go{font-weight:500}
-
-/* FOOTER */
-footer{
-  border-top:1px solid var(--ink);
-  margin-top:8px;
-}
-.footer-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:20px 24px 40px;
+.bar .dot{font-size:22px;font-weight:900}
+.bar h2{
   font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:0.15em;
-  color:var(--muted);
+  font-weight:500;
+  letter-spacing:0.18em;
+  color:var(--ink);
+}
+.bar .count{margin-left:auto;font-size:11px;color:var(--ink-faint);letter-spacing:0.12em}
+
+/* ---------- TOOL CELL ---------- */
+/* Hover turns the whole cell over to black, slowly, and the type to white. */
+.tool{transition:background-color .55s ease,transform .25s ease}
+.tool *{transition:color .55s ease,border-color .55s ease}
+.tool:hover,.tool:focus-visible{
+  background:var(--ink-deep);
+  transform:translateY(-2px);
+  outline:none;
+}
+.tool:focus-visible{box-shadow:0 0 0 2px var(--ink)}
+.tool:hover .dot,.tool:focus-visible .dot,
+.tool:hover .name,.tool:focus-visible .name,
+.tool:hover .code,.tool:focus-visible .code,
+.tool:hover .go,.tool:focus-visible .go{color:var(--on-ink)}
+.tool:hover .meta,.tool:focus-visible .meta,
+.tool:hover .desc,.tool:focus-visible .desc{color:var(--on-ink-soft)}
+.tool:hover .go,.tool:focus-visible .go{border-top-color:var(--on-ink-hair)}
+.tool .cue{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--red);
+  opacity:0;
+  transition:opacity .35s ease;
+  flex-shrink:0;
+}
+.tool:hover .cue,.tool:focus-visible .cue{opacity:1}
+.tool .name{
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.09em;
+  line-height:1.35;
+  margin-top:26px;
+}
+.tool .code{font-weight:500;color:var(--ink);display:block;margin-bottom:4px}
+.tool .desc{font-size:11.5px;color:var(--ink-soft);letter-spacing:0.045em}
+.go{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:22px;
+  padding-top:14px;
+  border-top:1px solid var(--hair);
+  font-size:10.5px;
+  font-weight:500;
+  letter-spacing:0.18em;
+  color:var(--ink-faint);
+  transition:color .18s ease;
+}
+.go svg{width:9px;height:9px;flex-shrink:0}
+
+/* ---------- CONTACT ---------- */
+.contact{min-height:auto}
+.contact .cell-body{padding-top:30px}
+.mailto{border-bottom:1px solid var(--ink-faint);transition:border-color .18s ease,color .18s ease}
+.mailto:hover,.mailto:focus-visible{color:var(--red);border-color:var(--red);outline:none}
+
+/* ---------- FOOT ---------- */
+.foot{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px 26px;
+  padding:20px 26px 8px;
+  font-size:10.5px;
+  letter-spacing:0.16em;
+  color:var(--ink-faint);
 }
 
-@media (max-width:600px){
-  main{padding:28px 16px 48px}
-  .header-inner{padding:12px 16px}
-  .footer-inner{padding:18px 16px 32px}
-  .grid{grid-template-columns:1fr}
+@media (max-width:880px){
+  .row--three{grid-template-columns:1fr}
+  .cell{min-height:280px;padding:22px 22px 24px}
+  .bar{padding:14px 22px}
+  .foot{padding:18px 22px 8px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .tool:hover,.tool:focus-visible{transform:none}
 }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
-    <span class="wordmark">MRKD</span>
-    <span class="wordmark-sub">fun tools for design</span>
+<div class="sheet">
+
+  <!-- ============ MASTHEAD ============ -->
+  <div class="row row--three">
+
+    <div class="cell">
+      <div class="cell-top"><span class="dot title">MRKD</span></div>
+      <div class="cell-body">
+        <div class="meta">
+          <b>MRKD</b>
+          BROWSER BASED DESIGN TOOLS<br/>
+          TOOLS INDEX V2.0.0<br/>
+          LANGUAGE : ENGLISH
+        </div>
+      </div>
+    </div>
+
+    <div class="cell">
+      <div class="cell-top"><span class="dot title">HOW TO USE</span></div>
+      <div class="cell-body">
+        <div class="meta">
+          <b>OPEN</b>
+          TAP ANY CARD TO LAUNCH THE TOOL
+          IN A NEW TAB.
+        </div>
+        <div class="meta">
+          <b>RUN</b>
+          EVERYTHING RUNS IN YOUR BROWSER.
+          NO INSTALL, NO ACCOUNT, NO COST.
+        </div>
+        <div class="meta">
+          <b>KEEP</b>
+          EXPORT YOUR WORK AS FONT, SVG,
+          PNG, MIDI OR DOCUMENT.
+        </div>
+      </div>
+    </div>
+
+    <div class="cell cell--play" id="field">
+      <div class="play" aria-hidden="true"><canvas></canvas></div>
+      <div class="cell-body">
+        <p class="claim">SMALL TOOLS FOR MAKING TYPE, PATTERNS, POSTERS AND NOISE.</p>
+      </div>
+    </div>
+
   </div>
-</header>
 
-<main>
+  <!-- ============ A / TYPE ============ -->
+  <div class="bar">
+    <span class="dot">A</span>
+    <h2>TYPE</h2>
+    <span class="count">/ 3</span>
+  </div>
+  <div class="row">
 
-  <section class="intro">
-    <h1>Small tools for making type, patterns, posters and noise.</h1>
-    <p>Most of it runs in the browser — no install, no account. Click any card to open it.</p>
-  </section>
+    <a class="cell tool" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">01</span><span class="cue"></span></div>
+      <div class="name">GRID TYPEFACE BUILDER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">CIRCLE</span>
+          <span class="desc">DRAW LETTERFORMS ON A MODULAR GRID, THEN EXPORT AN INSTALLABLE OPENTYPE FONT.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Font Creator &amp; Poster Generator</h2>
-      <span class="section-count">/ 4</span>
+    <a class="cell tool" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">02</span><span class="cue"></span></div>
+      <div class="name">KINETIC TYPE ANIMATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">TYPOMAN</span>
+          <span class="desc">SET LETTERS IN MOTION ON A TIMELINE AND EXPORT THE ANIMATION.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">03</span><span class="cue"></span></div>
+      <div class="name">LIQUID FONT GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">LIQUID.FONT</span>
+          <span class="desc">MELT AND REFLOW LETTERFORMS INTO A USABLE TYPEFACE.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ B / PRINT AND PATTERN ============ -->
+  <div class="bar">
+    <span class="dot">B</span>
+    <h2>PRINT &amp; PATTERN</h2>
+    <span class="count">/ 3</span>
+  </div>
+  <div class="row">
+
+    <a class="cell tool" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">04</span><span class="cue"></span></div>
+      <div class="name">POSTER GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">FRACTURED</span>
+          <span class="desc">P5.JS GENERATIVE BRUTALIST POSTERS, RESHUFFLED UNTIL ONE LANDS.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">05</span><span class="cue"></span></div>
+      <div class="name">MOSAIC TILE GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">MOSAIC</span>
+          <span class="desc">SET TEXT OR A LOGO IN ENCAUSTIC CERAMIC MOSAIC, THEN EXPORT PNG OR SVG.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">06</span><span class="cue"></span></div>
+      <div class="name">PATTERN GENERATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">PATTERN TYPO</span>
+          <span class="desc">PICK A PATTERN TYPE, ASSIGN A PALETTE, ADD A TYPOGRAPHIC LAYER, EXPORT TILEABLE SVG.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ C / SOUND AND VISUAL ============ -->
+  <div class="bar">
+    <span class="dot">C</span>
+    <h2>SOUND &amp; VISUAL</h2>
+    <span class="count">/ 2</span>
+  </div>
+  <div class="row">
+
+    <a class="cell tool" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">07</span><span class="cue"></span></div>
+      <div class="name">STEP SEQUENCER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">MUSICBOX</span>
+          <span class="desc">BROWSER NATIVE MIDI SEQUENCER WITH STRUDEL SAMPLES. GENRE PRESETS, SPATIAL FX AND SAVE SLOTS.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">08</span><span class="cue"></span></div>
+      <div class="name">VJ AUDIO VISUALIZER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">DEAD4RAT</span>
+          <span class="desc">LIVE VJ ENGINE WITH AUDIO REACTIVITY, WEBCAM INPUT, GESTURE TRACKING AND SHADER EFFECTS.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ D / FIGMA PLUGIN ============ -->
+  <div class="bar">
+    <span class="dot">D</span>
+    <h2>FIGMA PLUGIN</h2>
+    <span class="count">/ 2</span>
+  </div>
+  <div class="row">
+
+    <a class="cell tool" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">09</span><span class="cue"></span></div>
+      <div class="name">EPS IMPORTER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">FIGMA COMMUNITY</span>
+          <span class="desc">OPENS EPS ARTWORK INSIDE FIGMA AS EDITABLE VECTOR LAYERS. CONVERTS ON YOUR MACHINE, NOTHING UPLOADED.</span>
+        </div>
+        <div class="go">INSTALL<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">10</span><span class="cue"></span></div>
+      <div class="name">PDF IMPORTER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">FIGMA COMMUNITY</span>
+          <span class="desc">BRINGS PDF PAGES INTO FIGMA AS FRAMES WITH LIVE, EDITABLE TEXT INSTEAD OF A FLATTENED IMAGE.</span>
+        </div>
+        <div class="go">INSTALL<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ E / DATA AND DOCUMENT ============ -->
+  <div class="bar">
+    <span class="dot">E</span>
+    <h2>DATA &amp; DOCUMENT</h2>
+    <span class="count">/ 2</span>
+  </div>
+  <div class="row">
+
+    <a class="cell tool" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">11</span><span class="cue"></span></div>
+      <div class="name">LOTTERY ANALYZER</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">VIETLOT</span>
+          <span class="desc">POWER 6/55 AND MEGA 6/45 STATISTICS. HOT AND COLD NUMBERS, DRAW GAPS AND SCORED SETS.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+    <a class="cell tool" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
+      <div class="cell-top"><span class="dot idx">12</span><span class="cue"></span></div>
+      <div class="name">DOCUMENT TRANSLATOR</div>
+      <div class="cell-body">
+        <div class="meta">
+          <span class="code">TRANSLAATE</span>
+          <span class="desc">UPLOAD A DOCUMENT AND TRANSLATE IT WHILE THE ORIGINAL LAYOUT STAYS INTACT.</span>
+        </div>
+        <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ============ CONTACT ============ -->
+  <div class="row">
+    <div class="cell contact">
+      <div class="cell-top">
+        <span class="dot idx">F</span>
+        <span class="rdot"></span>
+      </div>
+      <div class="label">CONTACT</div>
+      <div class="cell-body">
+        <div class="meta">
+          SOMETHING BROKEN, OR AN IDEA FOR A TOOL ?<br/>
+          WRITE TO <a class="mailto" href="mailto:dtcmark@gmail.com">DTCMARK@GMAIL.COM</a>
+        </div>
+      </div>
     </div>
-    <div class="grid">
+  </div>
 
-      <a class="card" href="https://circlefont.vercel.app">
-        <div class="card-top"><span class="card-idx">01</span><span class="card-name">Grid Typeface Builder</span></div>
-        <p class="card-desc">CIRCLE — draw letterforms on a modular grid and export the result as an installable OpenType font.</p>
-        <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
-      </a>
+  <div class="foot">
+    <span>MRKD</span>
+    <span>TOOLS INDEX V2.0.0</span>
+    <span>DTCMARK@GMAIL.COM</span>
+    <span>2026</span>
+  </div>
 
-      <a class="card" href="https://markdo27.github.io/typoman/">
-        <div class="card-top"><span class="card-idx">02</span><span class="card-name">Kinetic Type Animator</span></div>
-        <p class="card-desc">TYPOMAN — set letters in motion and export the animation.</p>
-        <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
-      </a>
+</div>
 
-      <a class="card" href="https://markdo27.github.io/generativefont_creator/">
-        <div class="card-top"><span class="card-idx">03</span><span class="card-name">Liquid Font Generator</span></div>
-        <p class="card-desc">Liquid.Font — melt and reflow letterforms into a usable typeface.</p>
-        <div class="card-foot"><span class="tag">Type</span><span class="card-go">Open ↗</span></div>
-      </a>
+<script>
+/* Cursor attractor field. Circles drift in the masthead cell and are pulled
+   toward the pointer while it is inside that cell. No dependencies. */
+(function () {
+  var cell = document.getElementById('field');
+  if (!cell) return;
+  var host = cell.querySelector('.play');
+  var canvas = host.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
 
-      <a class="card" href="https://poster-generator-jet.vercel.app">
-        <div class="card-top"><span class="card-idx">04</span><span class="card-name">Poster Generator</span></div>
-        <p class="card-desc">FRACTURED — p5.js generative brutalist posters, reshuffled until one lands.</p>
-        <div class="card-foot"><span class="tag">Poster</span><span class="card-go">Open ↗</span></div>
-      </a>
+  var INK = '#0a0a0a';
+  var PAPER = (getComputedStyle(document.documentElement)
+    .getPropertyValue('--cell') || '#f0f0f0').trim() || '#f0f0f0';
+  var FIELD = 150;      /* pointer field radius, css px, sized to the cell in measure() */
+  var PULL = 0.20;      /* pull at the centre of the field, px per frame squared */
+  var DAMP_IDLE = 0.995;/* almost lossless, so they keep floating */
+  var DAMP_PULL = 0.985;/* a little more loss, so they settle into the cluster */
+  var STEER = 0.012;    /* random steering, keeps paths from going straight forever */
+  var VMIN = 0.16;      /* floating speed floor, px per frame */
+  var VMAX = 0.85;      /* floating speed ceiling */
+  var VCAP = 6;         /* hard speed cap while the pointer pulls */
+  var EASE = 0.06;      /* how fast speed eases back into the float band */
+  var WALL = 0.98;      /* wall restitution */
+  var BOUNCE = 0.85;    /* body to body restitution */
 
-    </div>
-  </section>
+  var w = 0, h = 0, bodies = [], raf = 0, last = 0;
+  var onScreen = true, running = false;
+  var pointer = { x: 0, y: 0, on: false };
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Pattern &amp; Tile Generator</h2>
-      <span class="section-count">/ 2</span>
-    </div>
-    <div class="grid">
+  function measure() {
+    var r = host.getBoundingClientRect();
+    w = Math.max(1, Math.round(r.width));
+    h = Math.max(1, Math.round(r.height));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    FIELD = Math.max(110, Math.min(230, (w + h) * 0.5));
+  }
 
-      <a class="card" href="https://markdo27.github.io/mosaic_art/">
-        <div class="card-top"><span class="card-idx">05</span><span class="card-name">Mosaic Tile Generator</span></div>
-        <p class="card-desc">Set text or a logo in encaustic ceramic mosaic, then export PNG or SVG.</p>
-        <div class="card-foot"><span class="tag">Pattern</span><span class="card-go">Open ↗</span></div>
-      </a>
+  function idealCount() {
+    return Math.max(22, Math.min(90, Math.round((w * h) / 1900)));
+  }
 
-      <a class="card" href="https://markdo27.github.io/pattern_typo/">
-        <div class="card-top"><span class="card-idx">06</span><span class="card-name">Pattern Generator</span></div>
-        <p class="card-desc">Pick a pattern type, assign a palette, add a typographic layer, export tileable SVG.</p>
-        <div class="card-foot"><span class="tag">Pattern</span><span class="card-go">Open ↗</span></div>
-      </a>
+  function seed() {
+    var n = idealCount();
+    var big = Math.min(w, h) < 160 ? 6.5 : 8.5;
+    bodies = [];
+    for (var i = 0; i < n; i++) {
+      var rad = 3 + Math.pow(Math.random(), 1.8) * big;
+      var sp = VMIN + Math.random() * (VMAX - VMIN);
+      var a = Math.random() * Math.PI * 2;
+      bodies.push({
+        x: rad + Math.random() * Math.max(1, w - rad * 2),
+        y: rad + Math.random() * Math.max(1, h - rad * 2),
+        vx: Math.cos(a) * sp,
+        vy: Math.sin(a) * sp,
+        r: rad,
+        m: rad * rad
+      });
+    }
+  }
 
-    </div>
-  </section>
+  function step(dt) {
+    var pulling = pointer.on;
+    var damp = Math.pow(pulling ? DAMP_PULL : DAMP_IDLE, dt);
+    var i, j, b;
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Music &amp; Visualizer</h2>
-      <span class="section-count">/ 2</span>
-    </div>
-    <div class="grid">
+    for (i = 0; i < bodies.length; i++) {
+      b = bodies[i];
+      if (pulling) {
+        var dx = pointer.x - b.x, dy = pointer.y - b.y;
+        var d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+        if (d < FIELD) {
+          var f = PULL * (1 - d / FIELD) * dt;
+          b.vx += (dx / d) * f;
+          b.vy += (dy / d) * f;
+        }
+      }
+      b.vx += (Math.random() - 0.5) * STEER * dt;
+      b.vy += (Math.random() - 0.5) * STEER * dt;
+      b.vx *= damp;
+      b.vy *= damp;
 
-      <a class="card" href="https://markdo27.github.io/musicbox/">
-        <div class="card-top"><span class="card-idx">07</span><span class="card-name">Step Sequencer</span></div>
-        <p class="card-desc">Browser-native MIDI sequencer with Strudel samples — genre presets, spatial FX and save slots.</p>
-        <div class="card-foot"><span class="tag">Sound</span><span class="card-go">Open ↗</span></div>
-      </a>
+      /* Hold the idle speed inside a band so nothing ever settles, and cap the
+         rush while the pointer pulls. Eased, so letting go does not pop. */
+      var sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
+      if (sp < 0.0001) {
+        b.vx = (Math.random() - 0.5) * VMIN * 2;
+        b.vy = (Math.random() - 0.5) * VMIN * 2;
+      } else if (pulling) {
+        if (sp > VCAP) { b.vx *= VCAP / sp; b.vy *= VCAP / sp; }
+      } else {
+        var want = sp < VMIN ? VMIN : (sp > VMAX ? VMAX : sp);
+        if (want !== sp) {
+          var k = 1 + (want / sp - 1) * Math.min(1, EASE * dt);
+          b.vx *= k; b.vy *= k;
+        }
+      }
 
-      <a class="card" href="https://markdo27.github.io/dead4rat-v3/">
-        <div class="card-top"><span class="card-idx">08</span><span class="card-name">VJ Audio Visualizer</span></div>
-        <p class="card-desc">DEAD4RAT — live VJ engine with audio reactivity, webcam input, gesture tracking and shader effects.</p>
-        <div class="card-foot"><span class="tag">Visual</span><span class="card-go">Open ↗</span></div>
-      </a>
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
 
-    </div>
-  </section>
+      if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * WALL; }
+      else if (b.x + b.r > w) { b.x = w - b.r; b.vx = -Math.abs(b.vx) * WALL; }
+      if (b.y - b.r < 0) { b.y = b.r; b.vy = Math.abs(b.vy) * WALL; }
+      else if (b.y + b.r > h) { b.y = h - b.r; b.vy = -Math.abs(b.vy) * WALL; }
+    }
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Analyzer</h2>
-      <span class="section-count">/ 2</span>
-    </div>
-    <div class="grid">
+    for (i = 0; i < bodies.length; i++) {
+      for (j = i + 1; j < bodies.length; j++) {
+        var a = bodies[i], c = bodies[j];
+        var ox = c.x - a.x, oy = c.y - a.y;
+        var dist = Math.sqrt(ox * ox + oy * oy);
+        var min = a.r + c.r;
+        if (dist === 0) { dist = 0.01; ox = 0.01; oy = 0; }
+        if (dist >= min) continue;
 
-      <a class="card" href="https://markdo27.github.io/vietlot_predict/">
-        <div class="card-top"><span class="card-idx">09</span><span class="card-name">Lottery Analyzer</span></div>
-        <p class="card-desc">Thống kê Power 6/55 và Mega 6/45 — số nóng/lạnh, khoảng cách, bộ số được chấm điểm.</p>
-        <div class="card-foot"><span class="tag">Data</span><span class="card-go">Open ↗</span></div>
-      </a>
+        var nx = ox / dist, ny = oy / dist;
+        var over = min - dist, tm = a.m + c.m;
+        a.x -= nx * over * (c.m / tm);
+        a.y -= ny * over * (c.m / tm);
+        c.x += nx * over * (a.m / tm);
+        c.y += ny * over * (a.m / tm);
 
-      <a class="card" href="https://translate-doc-nine.vercel.app">
-        <div class="card-top"><span class="card-idx">10</span><span class="card-name">Document Translator</span></div>
-        <p class="card-desc">Translaate — upload a document and translate it, keeping the original layout.</p>
-        <div class="card-foot"><span class="tag">Text</span><span class="card-go">Open ↗</span></div>
-      </a>
+        var sep = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
+        if (sep >= 0) continue;
+        var imp = -(1 + BOUNCE) * sep / (1 / a.m + 1 / c.m);
+        a.vx -= (imp / a.m) * nx; a.vy -= (imp / a.m) * ny;
+        c.vx += (imp / c.m) * nx; c.vy += (imp / c.m) * ny;
+      }
+    }
+  }
 
-    </div>
-  </section>
+  function draw() {
+    /* Painted, not cleared: the copy above blends against this, so the ground
+       under it has to be opaque. */
+    ctx.fillStyle = PAPER;
+    ctx.fillRect(0, 0, w, h);
+    ctx.fillStyle = INK;
+    for (var i = 0; i < bodies.length; i++) {
+      var b = bodies[i];
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
 
-  <section class="section">
-    <div class="section-head">
-      <h2>Figma Plugin</h2>
-      <span class="section-count">/ 2</span>
-    </div>
-    <div class="grid">
+  function frame(now) {
+    var dt = last ? Math.min((now - last) / 16.667, 2.5) : 1;
+    last = now;
+    step(dt);
+    draw();
+    raf = requestAnimationFrame(frame);
+  }
 
-      <a class="card" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer">
-        <div class="card-top"><span class="card-idx">11</span><span class="card-name">EPS Importer</span></div>
-        <p class="card-desc">Opens EPS artwork inside Figma as editable vector layers — no Illustrator round-trip. Converts on your machine, nothing uploaded.</p>
-        <div class="card-foot"><span class="tag">Figma</span><span class="card-go">Install ↗</span></div>
-      </a>
+  function start() {
+    if (running || still.matches) return;
+    running = true;
+    last = 0;
+    raf = requestAnimationFrame(frame);
+  }
 
-      <a class="card" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer">
-        <div class="card-top"><span class="card-idx">12</span><span class="card-name">PDF Importer</span></div>
-        <p class="card-desc">Brings PDF pages into Figma as frames with every line still live, editable text — not a flattened image. Reads on your machine, nothing uploaded.</p>
-        <div class="card-foot"><span class="tag">Figma</span><span class="card-go">Install ↗</span></div>
-      </a>
+  function stop() {
+    running = false;
+    cancelAnimationFrame(raf);
+  }
 
-    </div>
-  </section>
+  function sync() {
+    if (onScreen && !document.hidden) start();
+    else stop();
+  }
 
-</main>
+  measure();
+  seed();
+  draw();
 
-<footer>
-  <div class="footer-inner">MRKD</div>
-</footer>
+  cell.addEventListener('pointermove', function (e) {
+    var r = host.getBoundingClientRect();
+    pointer.x = e.clientX - r.left;
+    pointer.y = e.clientY - r.top;
+    pointer.on = true;
+  });
+  cell.addEventListener('pointerleave', function () { pointer.on = false; });
+  cell.addEventListener('pointercancel', function () { pointer.on = false; });
+
+  var resizeTimer = 0;
+  function onResize() {
+    var before = bodies.length;
+    measure();
+    for (var i = 0; i < bodies.length; i++) {
+      var b = bodies[i];
+      b.x = Math.min(Math.max(b.x, b.r), Math.max(b.r, w - b.r));
+      b.y = Math.min(Math.max(b.y, b.r), Math.max(b.r, h - b.r));
+    }
+    draw();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (Math.abs(idealCount() - before) > before * 0.25) { seed(); draw(); }
+    }, 220);
+  }
+
+  if (window.ResizeObserver) new ResizeObserver(onResize).observe(host);
+  else window.addEventListener('resize', onResize);
+
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[0].isIntersecting;
+      sync();
+    }).observe(cell);
+  }
+
+  document.addEventListener('visibilitychange', sync);
+  if (still.addEventListener) still.addEventListener('change', function () {
+    if (still.matches) { stop(); seed(); draw(); } else sync();
+  });
+
+  sync();
+})();
+</script>
 
 </body>
 </html>
