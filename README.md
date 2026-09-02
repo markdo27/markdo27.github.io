@@ -78,7 +78,7 @@ comma.
 
 ## Hover
 
-The thirteen tool cells turn over to `--ink-deep` on hover and focus, type to
+The fifteen tool cells turn over to `--ink-deep` on hover and focus, type to
 white, over `.55s`. The lift runs faster at `.25s` so the card still feels
 responsive while the colour is still travelling. The red dot fades in at
 `.35s`. Category bars do not turn over: nothing there is clickable.
@@ -88,13 +88,15 @@ responsive while the colour is still travelling. The red dot fades in at
 | Key | Category | Tools |
 | --- | --- | --- |
 | A | Type | 01 to 03 |
-| B | Print & Pattern | 04 to 06 |
-| C | Sound & Visual | 07, 08 |
-| D | Figma Plugin | 09 to 11 |
-| E | Data & Document | 12, 13 |
+| B | Print & Pattern | 04 to 08 |
+| C | Sound & Visual | 09, 10 |
+| D | Figma Plugin | 11 to 13 |
+| E | Data & Document | 14, 15 |
 | F | Contact | dtcmark@gmail.com |
 
-Numbering runs `01` to `13` straight through, across categories.
+Numbering runs `01` to `15` straight through, across categories. Adding a tool
+mid sheet therefore renumbers every card after it, and the two meta
+descriptions in `<head>` spell the total out in words.
 
 ## Adding a tool
 
