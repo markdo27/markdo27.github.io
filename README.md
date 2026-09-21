@@ -4,6 +4,7 @@ MRKD tools index. A single page linking to live demos of my browser based
 tools, self hosted instead of Linktree.
 
 Live at **https://markdo27.github.io/**
+Author **Mark Do**
 Contact **dtcmark@gmail.com**
 
 ## Structure
@@ -78,7 +79,7 @@ comma.
 
 ## Hover
 
-The fifteen tool cells turn over to `--ink-deep` on hover and focus, type to
+The sixteen tool cells turn over to `--ink-deep` on hover and focus, type to
 white, over `.55s`. The lift runs faster at `.25s` so the card still feels
 responsive while the colour is still travelling. The red dot fades in at
 `.35s`. Category bars do not turn over: nothing there is clickable.
@@ -88,15 +89,30 @@ responsive while the colour is still travelling. The red dot fades in at
 | Key | Category | Tools |
 | --- | --- | --- |
 | A | Type | 01 to 03 |
-| B | Print & Pattern | 04 to 08 |
-| C | Sound & Visual | 09, 10 |
-| D | Figma Plugin | 11 to 13 |
-| E | Data & Document | 14, 15 |
-| F | Contact | dtcmark@gmail.com |
+| B | Print & Pattern | 04 to 09 |
+| C | Sound & Visual | 10, 11 |
+| D | Figma Plugin | 12 to 14 |
+| E | Data & Document | 15, 16 |
+| F | About | Author and contact |
+| G | Legal | Personal use free, commercial on request |
+| H | Contact | dtcmark@gmail.com |
 
-Numbering runs `01` to `15` straight through, across categories. Adding a tool
+Numbering runs `01` to `16` straight through, across categories. Adding a tool
 mid sheet therefore renumbers every card after it, and the two meta
 descriptions in `<head>` spell the total out in words.
+
+## About, legal and contact
+
+`F`, `G` and `H` are the three closing cells. They carry copy rather than a
+link, so they share the `.plate` class, which drops the `330px` tool cell
+floor and lets each one sit as tall as its text. They ride the same
+`.row--three` grid as the masthead, and stack to one column under `880px`.
+
+`G` states the terms the whole sheet runs on: every tool is free for personal,
+study and other non commercial work, and any paid, client, brand or resale use
+needs written permission first. The commercial address carries a
+`?subject=Commercial%20use%20request` so those requests arrive sorted. Change
+the terms in one place and they cover all sixteen tools.
 
 ## Adding a tool
 
@@ -122,11 +138,13 @@ a thing does before they care what it is called.
 
 ## Adding a category
 
-Add a bar, then a row under it:
+Add a bar, then a row under it. Categories run in front of the closing
+plates, so a sixth one takes `F` and `About`, `Legal` and `Contact` shift
+along to `G`, `H` and `I`:
 
 ```html
 <div class="bar">
-  <span class="dot">G</span>
+  <span class="dot">F</span>
   <h2>CATEGORY NAME</h2>
   <span class="count">/ 2</span>
 </div>
@@ -142,3 +160,10 @@ and three fill a third each. No empty slots to plan around.
 
 For a `markdo27.github.io/REPO/` link to resolve, that repo needs Pages turned
 on: Settings, Pages, deploy from `main`, folder `/`.
+
+## Legal
+
+© 2026 Mark Do. Every tool linked from this sheet is free for personal, study
+and other non commercial use. Commercial use, meaning client, brand, resale or
+any other paid work, needs written permission first: **dtcmark@gmail.com**.
+The tools are provided as is, with no warranty.
