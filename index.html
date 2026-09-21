@@ -735,10 +735,16 @@ img{display:block;max-width:100%}
    NEW BADGE, VISIT COUNTING
    ═══════════════════════════════════════════════════════════════════ */
 
-/* Paste the code from your GoatCounter site here, the first label of
-   YOURCODE.goatcounter.com. Until it is filled in, nothing is loaded and
-   no count is shown: the page just runs without analytics. */
-var GOATCOUNTER_CODE = '';
+/* The base URL of your GoatCounter, with no trailing slash. It takes
+   either kind, because GoatCounter is the same program whether Martin
+   Tournoij runs it or you do:
+
+     hosted      https://YOURCODE.goatcounter.com
+     self-hosted https://stats.your-domain.com
+
+   Until it is filled in, nothing is loaded and no count is shown: the
+   page just runs without analytics. */
+var GOATCOUNTER_HOST = '';
 
 /* A tool counts as new for this many days after its release date. One
    number, one place: raise it and more cards carry the badge. */
@@ -769,12 +775,17 @@ var NEW_FOR_DAYS = 30;
    clicked. Card clicks arrive as events named tool/<slug>, so the
    dashboard ranks the tools against each other. */
 (function () {
-  if (!GOATCOUNTER_CODE) return;
-  var host = 'https://' + GOATCOUNTER_CODE + '.goatcounter.com';
+  if (!GOATCOUNTER_HOST) return;
+  var host = GOATCOUNTER_HOST.replace(/\/+$/, '');
 
+  /* count.js is served by GoatCounter itself, so this is the one line
+     that works against both a hosted site and your own server. The
+     hosted docs point at the gc.zgo.at CDN instead, which is a little
+     faster but pins the snippet to goatcounter.com and adds a third
+     party; for a 3.5K script that trade is not worth making. */
   var tag = document.createElement('script');
   tag.async = true;
-  tag.src = '//gc.zgo.at/count.js';
+  tag.src = host + '/count.js';
   tag.setAttribute('data-goatcounter', host + '/count');
   document.head.appendChild(tag);
 

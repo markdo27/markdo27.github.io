@@ -172,31 +172,60 @@ var NEW_FOR_DAYS = 30;
 
 ## Visitor counting
 
-Off by default. The page is static, so counting real visitors needs a service
-to record the hit; this uses [GoatCounter](https://www.goatcounter.com/), which
-sets no cookies and stores no personal data.
+Off by default. The page is static, so counting real visitors needs something
+server side to record the hit; this uses [GoatCounter][gc], which sets no
+cookies and stores no personal data.
 
-To switch it on:
+GoatCounter is the same program whether its author runs it or you do, so the
+page takes a base URL rather than an account name and works against either:
 
-1. Make a site at goatcounter.com. The code is the first label of the
-   host it gives you, so `mrkd.goatcounter.com` means `mrkd`.
-2. Put that code in `index.html`:
-   ```js
-   var GOATCOUNTER_CODE = 'mrkd';
-   ```
-3. For the footer total, turn on *Allow adding visitor counts to your website*
-   in the GoatCounter settings. Without it that endpoint returns 403 and the
-   footer simply shows nothing.
+```js
+var GOATCOUNTER_HOST = 'https://mrkd.goatcounter.com';   // hosted
+var GOATCOUNTER_HOST = 'https://stats.example.com';      // your own server
+```
 
-While the code is empty no script is loaded and no request is made, so the
-page carries no analytics at all rather than calling a dead host.
+A trailing slash is trimmed, so both spellings are fine. While it is empty no
+script is loaded and no request is made, so the page carries no analytics at
+all rather than calling a dead host.
 
-Two things get recorded. The page view itself, and a click on any tool cell as
-an event named `tool/<slug>` taken from `data-tool`. Those events are listed
-together in the GoatCounter dashboard, which is what ranks the tools against
-each other. Note what that measures: a visitor who goes straight to a tool's
-own URL never touches this page and is not counted. Counting those would mean
-installing the tracker inside all thirteen tools.
+`count.js` is served by GoatCounter itself, which is what lets one line cover
+both cases. The hosted documentation points at the `gc.zgo.at` CDN instead; it
+is a little faster, but it pins the snippet to goatcounter.com and adds a third
+party, which is not worth it for a 3.5K script.
+
+[gc]: https://www.goatcounter.com/
+
+### Hosted
+
+1. Make a site at goatcounter.com and use the host it gives you.
+2. For the footer total, turn on *Allow adding visitor counts to your website*
+   in the settings. Without it that endpoint returns 403 and the footer simply
+   shows nothing.
+
+### Self-hosted
+
+The [source][src] is EUPL 1.2 and the README is explicit that it can be
+self-hosted without restrictions. It is a single static Go binary; the only
+dependency is somewhere to keep a SQLite file, or PostgreSQL for a larger site.
+There is a Dockerfile and a compose.yaml in that repository.
+
+    goatcounter serve -listen=:443 -tls=tls,rdr,acme
+
+ACME certificates are handled by GoatCounter itself. Note that this cannot live
+on GitHub Pages, which only serves static files: self-hosting means a second,
+always-on host somewhere, and a hostname pointing at it.
+
+[src]: https://github.com/arp242/goatcounter
+
+### What is recorded
+
+Two things: the page view, and a click on any tool cell as an event named
+`tool/<slug>` taken from `data-tool`. Those events are listed together in the
+dashboard, which is what ranks the tools against each other.
+
+Note what that measures. A visitor who goes straight to a tool's own URL never
+touches this page and is not counted. Counting those would mean installing the
+tracker inside all thirteen tools.
 
 The footer total is fetched from `/counter/TOTAL.json`. Any failure, offline,
 blocked or private, leaves the slot hidden instead of showing an error.
