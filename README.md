@@ -79,7 +79,7 @@ comma.
 
 ## Hover
 
-The sixteen tool cells turn over to `--ink-deep` on hover and focus, type to
+The seventeen tool cells turn over to `--ink-deep` on hover and focus, type to
 white, over `.55s`. The lift runs faster at `.25s` so the card still feels
 responsive while the colour is still travelling. The red dot fades in at
 `.35s`. Category bars do not turn over: nothing there is clickable.
@@ -88,16 +88,16 @@ responsive while the colour is still travelling. The red dot fades in at
 
 | Key | Category | Tools |
 | --- | --- | --- |
-| A | Type | 01 to 03 |
-| B | Print & Pattern | 04 to 09 |
-| C | Sound & Visual | 10, 11 |
-| D | Figma Plugin | 12 to 14 |
-| E | Data & Document | 15, 16 |
+| A | Type | 01 to 04 |
+| B | Print & Pattern | 05 to 10 |
+| C | Sound & Visual | 11, 12 |
+| D | Figma Plugin | 13 to 15 |
+| E | Data & Document | 16, 17 |
 | F | About | Author and contact |
 | G | Legal | Personal use free, commercial on request |
 | H | Contact | dtcmark@gmail.com |
 
-Numbering runs `01` to `16` straight through, across categories. Adding a tool
+Numbering runs `01` to `17` straight through, across categories. Adding a tool
 mid sheet therefore renumbers every card after it, and the two meta
 descriptions in `<head>` spell the total out in words.
 
@@ -112,7 +112,7 @@ floor and lets each one sit as tall as its text. They ride the same
 study and other non commercial work, and any paid, client, brand or resale use
 needs written permission first. The commercial address carries a
 `?subject=Commercial%20use%20request` so those requests arrive sorted. Change
-the terms in one place and they cover all sixteen tools.
+the terms in one place and they cover all seventeen tools.
 
 ## Adding a tool
 
