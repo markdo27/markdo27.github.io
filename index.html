@@ -220,6 +220,57 @@ img{display:block;max-width:100%}
 }
 .go svg{width:9px;height:9px;flex-shrink:0}
 
+/* ---------- DATELINE ---------- */
+/* Static markup, not drawn by script: the dates are the record, so they
+   have to survive with JavaScript off. */
+.dates{
+  display:flex;
+  gap:22px;
+  margin-top:20px;
+  margin-bottom:-4px;
+}
+.dates div{min-width:0}
+.dates dt{
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:0.16em;
+  color:var(--ink-faint);
+  margin-bottom:2px;
+}
+.dates dd{
+  font-size:10.5px;
+  letter-spacing:0.06em;
+  color:var(--ink-soft);
+  font-variant-numeric:tabular-nums;
+}
+/* --on-ink-hair is a rule colour; as text on the turned-over cell it is
+   barely there. --ink-faint stays quieter than the value beside it and
+   still reads on black. */
+.tool:hover .dates dt,.tool:focus-visible .dates dt{color:var(--ink-faint)}
+.tool:hover .dates dd,.tool:focus-visible .dates dd{color:var(--on-ink-soft)}
+
+/* ---------- NEW BADGE ---------- */
+/* Added by script from data-released, so it expires on its own instead of
+   being a hardcoded label someone has to remember to strip. */
+.new{
+  align-self:flex-start;
+  margin-top:7px;
+  margin-right:auto;
+  padding:3px 8px;
+  background:var(--red);
+  color:#fff;
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:0.18em;
+  line-height:1.5;
+  flex-shrink:0;
+}
+.tool:hover .new,.tool:focus-visible .new{color:#fff}
+
+/* ---------- VISIT COUNT ---------- */
+.hits[hidden]{display:none}
+.hits b{font-weight:500;color:var(--ink-soft)}
+
 /* ---------- ABOUT, LEGAL, CONTACT ---------- */
 /* Plates hold copy rather than a link, so they sit as tall as their text
    instead of holding the tool cell floor. */
@@ -308,7 +359,7 @@ img{display:block;max-width:100%}
   </div>
   <div class="row">
 
-    <a class="cell tool" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="circle" data-released="2026-08-12" data-updated="2026-08-15" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">01</span><span class="cue"></span></div>
       <div class="name">GRID TYPEFACE BUILDER</div>
       <div class="cell-body">
@@ -316,11 +367,15 @@ img{display:block;max-width:100%}
           <span class="code">CIRCLE</span>
           <span class="desc">DRAW LETTERFORMS ON A MODULAR GRID, THEN EXPORT AN INSTALLABLE OPENTYPE FONT.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-12</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-15</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="typoman" data-released="2026-04-20" data-updated="2026-08-16" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">02</span><span class="cue"></span></div>
       <div class="name">KINETIC TYPE ANIMATOR</div>
       <div class="cell-body">
@@ -328,11 +383,15 @@ img{display:block;max-width:100%}
           <span class="code">TYPOMAN</span>
           <span class="desc">SET LETTERS IN MOTION ON A TIMELINE AND EXPORT THE ANIMATION.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-04-20</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-16</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="liquid-font" data-released="2026-07-31" data-updated="2026-07-31" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">03</span><span class="cue"></span></div>
       <div class="name">LIQUID FONT GENERATOR</div>
       <div class="cell-body">
@@ -340,6 +399,10 @@ img{display:block;max-width:100%}
           <span class="code">LIQUID.FONT</span>
           <span class="desc">MELT AND REFLOW LETTERFORMS INTO A USABLE TYPEFACE.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-07-31</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-07-31</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
@@ -354,7 +417,7 @@ img{display:block;max-width:100%}
   </div>
   <div class="row">
 
-    <a class="cell tool" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="fractured" data-released="2026-08-02" data-updated="2026-08-03" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">04</span><span class="cue"></span></div>
       <div class="name">POSTER GENERATOR</div>
       <div class="cell-body">
@@ -362,11 +425,15 @@ img{display:block;max-width:100%}
           <span class="code">FRACTURED</span>
           <span class="desc">P5.JS GENERATIVE BRUTALIST POSTERS, RESHUFFLED UNTIL ONE LANDS.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-02</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-03</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="mosaic" data-released="2026-07-03" data-updated="2026-08-15" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">05</span><span class="cue"></span></div>
       <div class="name">MOSAIC TILE GENERATOR</div>
       <div class="cell-body">
@@ -374,11 +441,15 @@ img{display:block;max-width:100%}
           <span class="code">MOSAIC</span>
           <span class="desc">SET TEXT OR A LOGO IN ENCAUSTIC CERAMIC MOSAIC, THEN EXPORT PNG OR SVG.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-07-03</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-15</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="pattern-typo" data-released="2026-06-26" data-updated="2026-08-15" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">06</span><span class="cue"></span></div>
       <div class="name">PATTERN GENERATOR</div>
       <div class="cell-body">
@@ -386,11 +457,15 @@ img{display:block;max-width:100%}
           <span class="code">PATTERN TYPO</span>
           <span class="desc">PICK A PATTERN TYPE, ASSIGN A PALETTE, ADD A TYPOGRAPHIC LAYER, EXPORT TILEABLE SVG.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-06-26</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-15</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/Burnt-Noise/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="burnt-noise" data-released="2026-08-16" data-updated="2026-09-02" href="https://markdo27.github.io/Burnt-Noise/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">07</span><span class="cue"></span></div>
       <div class="name">RADIANT BURNT</div>
       <div class="cell-body">
@@ -398,11 +473,15 @@ img{display:block;max-width:100%}
           <span class="code">BURNT NOISE</span>
           <span class="desc">MELT TYPE, A LOGO OR AN SVG INTO A THERMAL FLUID, THEN SCAN IT DIRTY. EXPORT PNG, GIF OR WEBM.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-16</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-09-02</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/nuftext/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="nuftext" data-released="2026-08-24" data-updated="2026-09-02" href="https://markdo27.github.io/nuftext/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">08</span><span class="cue"></span></div>
       <div class="name">THERMAL TYPE</div>
       <div class="cell-body">
@@ -410,11 +489,15 @@ img{display:block;max-width:100%}
           <span class="code">NUFTEXT</span>
           <span class="desc">DRAG ACROSS THE TYPE TO MELT IT INTO GOO AND RAISE A COLOUR HALO. EXPORT PNG, WEBM OR GIF.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-24</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-09-02</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/vietnamsesignage/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="saigon-1985" data-released="2026-09-02" data-updated="2026-09-02" href="https://markdo27.github.io/vietnamsesignage/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">09</span><span class="cue"></span></div>
       <div class="name">VIETNAMESE SIGN WALL</div>
       <div class="cell-body">
@@ -422,6 +505,10 @@ img{display:block;max-width:100%}
           <span class="code">SAIGON 1985</span>
           <span class="desc">A STREET OF VIETNAMESE SHOPFRONT SIGNS FILLING THE SCREEN. DRAG THE SEAMS TO RESIZE, EDIT ANY LINE, SWITCH BETWEEN 1985 PAINTED BOARDS AND 2010 VINYL. EXPORT PNG OR SVG.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-09-02</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-09-02</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
@@ -436,7 +523,7 @@ img{display:block;max-width:100%}
   </div>
   <div class="row">
 
-    <a class="cell tool" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="musicbox" data-released="2026-05-30" data-updated="2026-06-02" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">10</span><span class="cue"></span></div>
       <div class="name">STEP SEQUENCER</div>
       <div class="cell-body">
@@ -444,11 +531,15 @@ img{display:block;max-width:100%}
           <span class="code">MUSICBOX</span>
           <span class="desc">BROWSER NATIVE MIDI SEQUENCER WITH STRUDEL SAMPLES. GENRE PRESETS, SPATIAL FX AND SAVE SLOTS.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-05-30</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-06-02</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="dead4rat" data-released="2026-04-05" data-updated="2026-08-16" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">11</span><span class="cue"></span></div>
       <div class="name">VJ AUDIO VISUALIZER</div>
       <div class="cell-body">
@@ -456,6 +547,10 @@ img{display:block;max-width:100%}
           <span class="code">DEAD4RAT</span>
           <span class="desc">LIVE VJ ENGINE WITH AUDIO REACTIVITY, WEBCAM INPUT, GESTURE TRACKING AND SHADER EFFECTS.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-04-05</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-08-16</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
@@ -470,7 +565,7 @@ img{display:block;max-width:100%}
   </div>
   <div class="row">
 
-    <a class="cell tool" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="eps-importer" data-released="2026-08-21" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">12</span><span class="cue"></span></div>
       <div class="name">EPS IMPORTER</div>
       <div class="cell-body">
@@ -478,11 +573,14 @@ img{display:block;max-width:100%}
           <span class="code">FIGMA COMMUNITY</span>
           <span class="desc">OPENS EPS ARTWORK INSIDE FIGMA AS EDITABLE VECTOR LAYERS. CONVERTS ON YOUR MACHINE, NOTHING UPLOADED.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-21</dd></div>
+        </dl>
         <div class="go">INSTALL<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="pdf-importer" data-released="2026-08-26" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">13</span><span class="cue"></span></div>
       <div class="name">PDF IMPORTER</div>
       <div class="cell-body">
@@ -490,11 +588,14 @@ img{display:block;max-width:100%}
           <span class="code">FIGMA COMMUNITY</span>
           <span class="desc">BRINGS PDF PAGES INTO FIGMA AS FRAMES WITH LIVE, EDITABLE TEXT INSTEAD OF A FLATTENED IMAGE.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-26</dd></div>
+        </dl>
         <div class="go">INSTALL<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://www.figma.com/community/plugin/1674297961569861299/free-html-to-figma" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="website-importer" data-released="2026-08-27" href="https://www.figma.com/community/plugin/1674297961569861299/free-html-to-figma" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">14</span><span class="cue"></span></div>
       <div class="name">WEBSITE IMPORTER</div>
       <div class="cell-body">
@@ -502,6 +603,9 @@ img{display:block;max-width:100%}
           <span class="code">FIGMA COMMUNITY</span>
           <span class="desc">PASTE A URL AND GET THE PAGE BACK AS EDITABLE FIGMA LAYERS, WITH COMPONENTS, STYLES AND A WIREFRAME.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-08-27</dd></div>
+        </dl>
         <div class="go">INSTALL<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
@@ -516,7 +620,7 @@ img{display:block;max-width:100%}
   </div>
   <div class="row">
 
-    <a class="cell tool" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="vietlot" data-released="2026-04-27" data-updated="2026-05-02" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">15</span><span class="cue"></span></div>
       <div class="name">LOTTERY ANALYZER</div>
       <div class="cell-body">
@@ -524,11 +628,15 @@ img{display:block;max-width:100%}
           <span class="code">VIETLOT</span>
           <span class="desc">POWER 6/55 AND MEGA 6/45 STATISTICS. HOT AND COLD NUMBERS, DRAW GAPS AND SCORED SETS.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-04-27</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-05-02</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
 
-    <a class="cell tool" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
+    <a class="cell tool" data-tool="translaate" data-released="2026-05-12" data-updated="2026-05-12" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">16</span><span class="cue"></span></div>
       <div class="name">DOCUMENT TRANSLATOR</div>
       <div class="cell-body">
@@ -536,6 +644,10 @@ img{display:block;max-width:100%}
           <span class="code">TRANSLAATE</span>
           <span class="desc">UPLOAD A DOCUMENT AND TRANSLATE IT WHILE THE ORIGINAL LAYOUT STAYS INTACT.</span>
         </div>
+        <dl class="dates">
+          <div><dt>RELEASED</dt><dd>2026-05-12</dd></div>
+          <div><dt>UPDATED</dt><dd>2026-05-12</dd></div>
+        </dl>
         <div class="go">OPEN<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg></div>
       </div>
     </a>
@@ -613,9 +725,87 @@ img{display:block;max-width:100%}
     <span>DTCMARK@GMAIL.COM</span>
     <span>PERSONAL USE FREE, COMMERCIAL ON REQUEST</span>
     <span>&copy; 2026</span>
+    <span class="hits" id="hits" hidden></span>
   </div>
 
 </div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   NEW BADGE, VISIT COUNTING
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Paste the code from your GoatCounter site here, the first label of
+   YOURCODE.goatcounter.com. Until it is filled in, nothing is loaded and
+   no count is shown: the page just runs without analytics. */
+var GOATCOUNTER_CODE = '';
+
+/* A tool counts as new for this many days after its release date. One
+   number, one place: raise it and more cards carry the badge. */
+var NEW_FOR_DAYS = 30;
+
+/* ── NEW badge ─────────────────────────────────────────────────────────
+   Computed from data-released on each card, so a badge ages out by
+   itself. A hardcoded one stays "new" until somebody remembers it. */
+(function () {
+  var cutoff = Date.now() - NEW_FOR_DAYS * 864e5;
+  document.querySelectorAll('.tool[data-released]').forEach(function (card) {
+    var released = Date.parse(card.dataset.released + 'T00:00:00Z');
+    if (isNaN(released) || released < cutoff) return;
+    var badge = document.createElement('span');
+    badge.className = 'new';
+    badge.textContent = 'NEW';
+    /* After the index number, so the two read as one label. */
+    card.querySelector('.idx').insertAdjacentElement('afterend', badge);
+  });
+})();
+
+/* ── Visit counting ────────────────────────────────────────────────────
+   GoatCounter: no cookies, no personal data, nothing to consent to. The
+   script is injected rather than written into the markup so that an
+   unset code costs nothing instead of requesting a dead host.
+
+   Two things are recorded: the page view itself, and which tool card was
+   clicked. Card clicks arrive as events named tool/<slug>, so the
+   dashboard ranks the tools against each other. */
+(function () {
+  if (!GOATCOUNTER_CODE) return;
+  var host = 'https://' + GOATCOUNTER_CODE + '.goatcounter.com';
+
+  var tag = document.createElement('script');
+  tag.async = true;
+  tag.src = '//gc.zgo.at/count.js';
+  tag.setAttribute('data-goatcounter', host + '/count');
+  document.head.appendChild(tag);
+
+  /* The card opens in a new tab, so this page stays alive and the beacon
+     has time to leave on its own. */
+  document.querySelectorAll('.tool[data-tool]').forEach(function (card) {
+    card.addEventListener('click', function () {
+      if (!window.goatcounter || !window.goatcounter.count) return;
+      window.goatcounter.count({
+        path: 'tool/' + card.dataset.tool,
+        title: (card.querySelector('.name') || {}).textContent || card.dataset.tool,
+        event: true
+      });
+    });
+  });
+
+  /* Site total, for the footer. Needs "allow adding visitor counts to
+     your website" switched on in GoatCounter's settings; without it the
+     endpoint 403s and the slot simply stays hidden. */
+  var slot = document.getElementById('hits');
+  if (!slot) return;
+  fetch(host + '/counter/TOTAL.json')
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function (d) {
+      if (!d || !d.count) return;
+      slot.innerHTML = '<b>' + String(d.count).replace(/</g, '') + '</b> VISITS';
+      slot.hidden = false;
+    })
+    .catch(function () { /* counts private, offline or blocked: show nothing */ });
+})();
+</script>
 
 <script>
 /* Cursor attractor field. Circles drift in the masthead cell and are pulled
