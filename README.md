@@ -79,7 +79,7 @@ comma.
 
 ## Hover
 
-The seventeen tool cells turn over to `--ink-deep` on hover and focus, type to
+The eighteen tool cells turn over to `--ink-deep` on hover and focus, type to
 white, over `.55s`. The lift runs faster at `.25s` so the card still feels
 responsive while the colour is still travelling. The red dot fades in at
 `.35s`. Category bars do not turn over: nothing there is clickable.
@@ -90,14 +90,14 @@ responsive while the colour is still travelling. The red dot fades in at
 | --- | --- | --- |
 | A | Type | 01 to 04 |
 | B | Print & Pattern | 05 to 10 |
-| C | Sound & Visual | 11, 12 |
-| D | Figma Plugin | 13 to 15 |
-| E | Data & Document | 16, 17 |
+| C | Sound & Visual | 11 to 13 |
+| D | Figma Plugin | 14 to 16 |
+| E | Data & Document | 17, 18 |
 | F | About | Author and contact |
 | G | Legal | Personal use free, commercial on request |
 | H | Contact | dtcmark@gmail.com |
 
-Numbering runs `01` to `17` straight through, across categories. Adding a tool
+Numbering runs `01` to `18` straight through, across categories. Adding a tool
 mid sheet therefore renumbers every card after it, and the two meta
 descriptions in `<head>` spell the total out in words.
 
@@ -112,7 +112,7 @@ floor and lets each one sit as tall as its text. They ride the same
 study and other non commercial work, and any paid, client, brand or resale use
 needs written permission first. The commercial address carries a
 `?subject=Commercial%20use%20request` so those requests arrive sorted. Change
-the terms in one place and they cover all seventeen tools.
+the terms in one place and they cover all eighteen tools.
 
 ## Adding a tool
 
@@ -157,7 +157,7 @@ so they carry the date they were listed on this sheet and no update date.
 They are static text. Nothing fetches them, so shipping a change to a tool
 means editing its two dates here as well. A runtime lookup was the other
 option and was not worth it: the GitHub API allows 60 unauthenticated calls an
-hour per visitor, thirteen of them would go on one page load, and it would not
+hour per visitor, eighteen of them would go on one page load, and it would not
 cover the Vercel or Figma entries at all.
 
 The **NEW** badge is not written into the markup. A script compares
@@ -196,7 +196,7 @@ an event named `tool/<slug>` taken from `data-tool`. Those events are listed
 together in the GoatCounter dashboard, which is what ranks the tools against
 each other. Note what that measures: a visitor who goes straight to a tool's
 own URL never touches this page and is not counted. Counting those would mean
-installing the tracker inside all thirteen tools.
+installing the tracker inside all eighteen tools.
 
 The footer total is fetched from `/counter/TOTAL.json`. Any failure, offline,
 blocked or private, leaves the slot hidden instead of showing an error.
