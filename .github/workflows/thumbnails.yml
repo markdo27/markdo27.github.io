@@ -18,9 +18,10 @@ on:
       - tools/thumbs/**
       - .github/workflows/thumbnails.yml
 
+# Only to commit the images. Pages redeploys on its own: a push made with
+# GITHUB_TOKEN does start the Pages build, as the first run on main showed.
 permissions:
-  contents: write   # commit the images
-  pages: write      # ask Pages to rebuild after committing to main
+  contents: write
 
 concurrency:
   group: thumbnails-${{ github.ref }}
@@ -28,15 +29,19 @@ concurrency:
 
 jobs:
   capture:
-    runs-on: ubuntu-latest
+    # Pinned rather than ubuntu-latest, which moves to Ubuntu 26 from
+    # 19 Oct 2026. The fonts the shots depend on, CJK for Translaate and
+    # colour emoji for Vietlot, were checked on 24.04; move this on purpose,
+    # and look at the images when you do.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     defaults:
       run:
         working-directory: tools/thumbs
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -71,13 +76,3 @@ jobs:
           # newer branch tip cannot conflict with anything else.
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
-          echo "pushed=true" >> "$GITHUB_ENV"
-
-      # A push made with GITHUB_TOKEN does not start other workflows, and the
-      # Pages build is one of them, so ask for it directly.
-      - name: Rebuild Pages
-        if: env.pushed == 'true' && github.ref_name == github.event.repository.default_branch
-        working-directory: .
-        run: gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" --silent && echo "Pages build requested."
-        env:
-          GH_TOKEN: ${{ github.token }}
