@@ -93,11 +93,11 @@ responsive while the colour is still travelling. The red dot fades in at
 
 | Key | Category | Tools |
 | --- | --- | --- |
-| A | Type | 01 to 04 |
-| B | Print & Pattern | 05 to 10 |
-| C | Sound & Visual | 11 to 13 |
-| D | Figma Plugin | 14 to 16 |
-| E | Data & Document | 17, 18 |
+| A | Type | 01 to 03 |
+| B | Print & Pattern | 04 to 09 |
+| C | Sound & Visual | 10 to 12 |
+| D | Figma Plugin | 13 to 15 |
+| E | Data & Document | 16 to 18 |
 | F | About | Author and contact |
 | G | Legal | Personal use free, commercial on request |
 | H | Contact | dtcmark@gmail.com |
