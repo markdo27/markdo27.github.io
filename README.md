@@ -9,13 +9,18 @@ Contact **dtcmark@gmail.com**
 
 ## Structure
 
-Two files, no build step, no dependencies. GitHub Pages serves them straight
-from `main`.
+The page has no build step and no dependencies. GitHub Pages serves it
+straight from `main`. The only tooling is the thumbnail capture, and that runs
+in CI, not on the page.
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | The whole page. Markup, CSS and the one script, in one file. |
 | `logo.svg` | The mark: white square, black circle. Favicon, apple touch icon, OG image. |
+| `thumbs/` | One 800 × 500 WebP per tool cell, named after its `data-tool`. Generated, never edited by hand. |
+| `tools/thumbs/` | The capture script that makes them, and the font it feeds TypeForge. |
+| `.github/workflows/thumbnails.yml` | Runs the capture against the live sites and commits the images. |
+| `visual/` | Khối, the chrometype studio, hosted here as an offline single-file build. |
 
 ## The attractor field
 
@@ -124,6 +129,7 @@ follow it and the `count` on that category bar.
    data-tool="codename" data-released="2026-01-31" data-updated="2026-02-14">
   <div class="cell-top"><span class="dot idx">00</span><span class="cue"></span></div>
   <div class="name">WHAT IT DOES</div>
+  <div class="thumb"><img src="thumbs/codename.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
   <div class="cell-body">
     <div class="meta">
       <span class="code">CODENAME</span>
@@ -142,6 +148,11 @@ The dates appear twice on purpose. The `<dl>` is what a visitor reads and is
 plain markup, so it survives with JavaScript off. `data-released` is what the
 NEW badge is computed from, and `data-tool` is the slug the visit counter
 ranks the tool under. Keep the attribute and the `<dd>` in step.
+
+The thumbnail is named after `data-tool` too. Add an entry for the tool to
+`SHOTS` in `tools/thumbs/capture.mjs` and push: the Thumbnails workflow sees
+the change, captures the image and commits it. Until it exists the cell simply
+shows no picture rather than a broken one.
 
 `.name` is the function, `.code` is the project name. A visitor scans for what
 a thing does before they care what it is called.
@@ -170,33 +181,102 @@ window is a one-number edit:
 var NEW_FOR_DAYS = 30;
 ```
 
+## Thumbnails
+
+Every cell carries a screenshot of the tool at work, grayscale at rest so the
+grid stays quiet, full colour when the cell turns over on hover. Touch screens
+have no hover, so there they are in colour from the start.
+
+They are captured, not hand-made, by `tools/thumbs/capture.mjs`: headless
+Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All eighteen
+come to about 0.4 MB, and they lazy-load, so only the ones on screen are
+fetched.
+
+A tool's first screen is often an empty state, so each entry in `SHOTS` stages
+the tool until it shows what it makes. Dead4rat opens on a start card, so the
+capture presses Demo. Vietlot opens on "choose a game", so it picks Power 6/55.
+Musicbox loads the Techno preset so the sequencer is lit, Pattern Typo switches
+to Emblem, the one pattern that carries letterforms, and TypeForge is handed a
+font so it shows a specimen rather than a drop zone. The Figma plugins have no
+page to stage, so they use their Community cover image.
+
+### Refreshing
+
+Actions, Thumbnails, Run workflow. Leave *only* blank for every tool, or give
+slugs, `nuftext,visual`, to redo just those. The run commits whatever changed
+and asks Pages to rebuild. It also runs on its own whenever anything under
+`tools/thumbs/` changes, on any branch.
+
+Fractured and the sign wall randomise on every load, so their pictures change
+on each run. That is expected, not drift.
+
+To run it locally:
+
+    cd tools/thumbs
+    npm ci && npx playwright install --with-deps chromium
+    node capture.mjs
+    THUMBS_ONLY=nuftext,visual node capture.mjs
+
+A failed capture leaves that tool's previous image in place and turns the run
+red, so a broken stage shows up instead of quietly shipping a blank card.
+
 ## Visitor counting
 
-Off by default. The page is static, so counting real visitors needs a service
-to record the hit; this uses [GoatCounter](https://www.goatcounter.com/), which
-sets no cookies and stores no personal data.
+Off by default. The page is static, so counting real visitors needs something
+server side to record the hit; this uses [GoatCounter][gc], which sets no
+cookies and stores no personal data.
 
-To switch it on:
+GoatCounter is the same program whether its author runs it or you do, so the
+page takes a base URL rather than an account name and works against either:
 
-1. Make a site at goatcounter.com. The code is the first label of the
-   host it gives you, so `mrkd.goatcounter.com` means `mrkd`.
-2. Put that code in `index.html`:
-   ```js
-   var GOATCOUNTER_CODE = 'mrkd';
-   ```
-3. For the footer total, turn on *Allow adding visitor counts to your website*
-   in the GoatCounter settings. Without it that endpoint returns 403 and the
-   footer simply shows nothing.
+```js
+var GOATCOUNTER_HOST = 'https://mrkd.goatcounter.com';   // hosted
+var GOATCOUNTER_HOST = 'https://stats.example.com';      // your own server
+```
 
-While the code is empty no script is loaded and no request is made, so the
-page carries no analytics at all rather than calling a dead host.
+A trailing slash is trimmed, so both spellings are fine. While it is empty no
+script is loaded and no request is made, so the page carries no analytics at
+all rather than calling a dead host.
 
-Two things get recorded. The page view itself, and a click on any tool cell as
-an event named `tool/<slug>` taken from `data-tool`. Those events are listed
-together in the GoatCounter dashboard, which is what ranks the tools against
-each other. Note what that measures: a visitor who goes straight to a tool's
-own URL never touches this page and is not counted. Counting those would mean
-installing the tracker inside all eighteen tools.
+`count.js` is served by GoatCounter itself, which is what lets one line cover
+both cases. The hosted documentation points at the `gc.zgo.at` CDN instead; it
+is a little faster, but it pins the snippet to goatcounter.com and adds a third
+party, which is not worth it for a 3.5K script.
+
+[gc]: https://www.goatcounter.com/
+
+### Hosted
+
+1. Make a site at goatcounter.com and use the host it gives you.
+2. For the footer total, turn on *Allow adding visitor counts to your website*
+   in the settings. Without it that endpoint returns 403 and the footer simply
+   shows nothing.
+
+### Self-hosted
+
+The [source][src] is EUPL 1.2 and the README is explicit that it can be
+self-hosted without restrictions. It is a single static Go binary; the only
+dependency is somewhere to keep a SQLite file, or PostgreSQL for a larger site.
+There is a Dockerfile and a compose.yaml in that repository.
+
+    goatcounter serve -listen=:443 -tls=tls,rdr,acme
+
+ACME certificates are handled by GoatCounter itself. Note that this cannot live
+on GitHub Pages, which only serves static files: self-hosting means a second,
+always-on host somewhere, and a hostname pointing at it.
+
+[src]: https://github.com/arp242/goatcounter
+
+### What is recorded
+
+Two things: the page view, and a click on any tool cell as an event named
+`tool/<slug>` taken from `data-tool`. Those events are listed together in the
+dashboard, which is what ranks the tools against each other.
+
+Note what that measures. A visitor who goes straight to a tool's own URL never
+touches this page and is not counted. Counting those would mean installing the
+tracker inside every web tool, fifteen of the eighteen; the three Figma
+plugins live on figma.com and cannot carry one.
 
 The footer total is fetched from `/counter/TOTAL.json`. Any failure, offline,
 blocked or private, leaves the slot hidden instead of showing an error.
