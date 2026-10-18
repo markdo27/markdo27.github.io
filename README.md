@@ -9,13 +9,18 @@ Contact **dtcmark@gmail.com**
 
 ## Structure
 
-Two files, no build step, no dependencies. GitHub Pages serves them straight
-from `main`.
+The page has no build step and no dependencies. GitHub Pages serves it
+straight from `main`. The only tooling is the thumbnail capture, and that runs
+in CI, not on the page.
 
 | File | Purpose |
 | --- | --- |
 | `index.html` | The whole page. Markup, CSS and the one script, in one file. |
 | `logo.svg` | The mark: white square, black circle. Favicon, apple touch icon, OG image. |
+| `thumbs/` | One 800 × 500 WebP per tool cell, named after its `data-tool`. Generated, never edited by hand. |
+| `tools/thumbs/` | The capture script that makes them, and the font it feeds TypeForge. |
+| `.github/workflows/thumbnails.yml` | Runs the capture against the live sites and commits the images. |
+| `visual/` | Khối, the chrometype studio, hosted here as an offline single-file build. |
 
 ## The attractor field
 
@@ -124,6 +129,7 @@ follow it and the `count` on that category bar.
    data-tool="codename" data-released="2026-01-31" data-updated="2026-02-14">
   <div class="cell-top"><span class="dot idx">00</span><span class="cue"></span></div>
   <div class="name">WHAT IT DOES</div>
+  <div class="thumb"><img src="thumbs/codename.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
   <div class="cell-body">
     <div class="meta">
       <span class="code">CODENAME</span>
@@ -142,6 +148,11 @@ The dates appear twice on purpose. The `<dl>` is what a visitor reads and is
 plain markup, so it survives with JavaScript off. `data-released` is what the
 NEW badge is computed from, and `data-tool` is the slug the visit counter
 ranks the tool under. Keep the attribute and the `<dd>` in step.
+
+The thumbnail is named after `data-tool` too. Add an entry for the tool to
+`SHOTS` in `tools/thumbs/capture.mjs` and push: the Thumbnails workflow sees
+the change, captures the image and commits it. Until it exists the cell simply
+shows no picture rather than a broken one.
 
 `.name` is the function, `.code` is the project name. A visitor scans for what
 a thing does before they care what it is called.
@@ -169,6 +180,45 @@ window is a one-number edit:
 ```js
 var NEW_FOR_DAYS = 30;
 ```
+
+## Thumbnails
+
+Every cell carries a screenshot of the tool at work, grayscale at rest so the
+grid stays quiet, full colour when the cell turns over on hover. Touch screens
+have no hover, so there they are in colour from the start.
+
+They are captured, not hand-made, by `tools/thumbs/capture.mjs`: headless
+Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All eighteen
+come to about 0.4 MB, and they lazy-load, so only the ones on screen are
+fetched.
+
+A tool's first screen is often an empty state, so each entry in `SHOTS` stages
+the tool until it shows what it makes. Dead4rat opens on a start card, so the
+capture presses Demo. Vietlot opens on "choose a game", so it picks Power 6/55.
+Musicbox loads the Techno preset so the sequencer is lit, Pattern Typo switches
+to Emblem, the one pattern that carries letterforms, and TypeForge is handed a
+font so it shows a specimen rather than a drop zone. The Figma plugins have no
+page to stage, so they use their Community cover image.
+
+### Refreshing
+
+Actions, Thumbnails, Run workflow. Leave *only* blank for every tool, or give
+slugs, `nuftext,visual`, to redo just those. The run commits whatever changed
+and asks Pages to rebuild. It also runs on its own whenever anything under
+`tools/thumbs/` changes, on any branch.
+
+Fractured and the sign wall randomise on every load, so their pictures change
+on each run. That is expected, not drift.
+
+To run it locally:
+
+    cd tools/thumbs
+    npm ci && npx playwright install --with-deps chromium
+    node capture.mjs
+    THUMBS_ONLY=nuftext,visual node capture.mjs
+
+A failed capture leaves that tool's previous image in place and turns the run
+red, so a broken stage shows up instead of quietly shipping a blank card.
 
 ## Visitor counting
 

@@ -249,6 +249,29 @@ img{display:block;max-width:100%}
 .tool:hover .dates dt,.tool:focus-visible .dates dt{color:var(--ink-faint)}
 .tool:hover .dates dd,.tool:focus-visible .dates dd{color:var(--on-ink-soft)}
 
+/* ---------- THUMBNAIL ---------- */
+/* Grayscale at rest, so eighteen screenshots do not outshout the sheet,
+   and colour arrives with the turn-over the cell already does on hover.
+   The images come from tools/thumbs/capture.mjs, never by hand. */
+.thumb{
+  margin-top:20px;
+  aspect-ratio:8/5;
+  max-height:240px;
+  border-radius:10px;
+  overflow:hidden;
+  background:var(--hair);
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(1);
+  transition:filter .55s ease;
+}
+.tool:hover .thumb img,.tool:focus-visible .thumb img{filter:none}
+/* A touch screen has no hover, so colour would never arrive there. */
+@media (hover:none){.thumb img{filter:none}}
+
 /* ---------- NEW BADGE ---------- */
 /* Added by script from data-released, so it expires on its own instead of
    being a hardcoded label someone has to remember to strip. */
@@ -362,6 +385,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="circle" data-released="2026-08-12" data-updated="2026-08-15" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">01</span><span class="cue"></span></div>
       <div class="name">GRID TYPEFACE BUILDER</div>
+      <div class="thumb"><img src="thumbs/circle.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">CIRCLE</span>
@@ -378,6 +402,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="typoman" data-released="2026-04-20" data-updated="2026-08-16" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">02</span><span class="cue"></span></div>
       <div class="name">KINETIC TYPE ANIMATOR</div>
+      <div class="thumb"><img src="thumbs/typoman.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">TYPOMAN</span>
@@ -394,6 +419,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="liquid-font" data-released="2026-07-31" data-updated="2026-07-31" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">03</span><span class="cue"></span></div>
       <div class="name">LIQUID FONT GENERATOR</div>
+      <div class="thumb"><img src="thumbs/liquid-font.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">LIQUID.FONT</span>
@@ -411,6 +437,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="typeforge" data-released="2026-09-21" data-updated="2026-09-21" href="https://markdo27.github.io/fontconvertswift/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">04</span><span class="cue"></span></div>
       <div class="name">FONT CONVERTER &amp; RENAMER</div>
+      <div class="thumb"><img src="thumbs/typeforge.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">TYPEFORGE</span>
@@ -437,6 +464,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="fractured" data-released="2026-08-02" data-updated="2026-08-03" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">05</span><span class="cue"></span></div>
       <div class="name">POSTER GENERATOR</div>
+      <div class="thumb"><img src="thumbs/fractured.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">FRACTURED</span>
@@ -453,6 +481,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="mosaic" data-released="2026-07-03" data-updated="2026-08-15" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">06</span><span class="cue"></span></div>
       <div class="name">MOSAIC TILE GENERATOR</div>
+      <div class="thumb"><img src="thumbs/mosaic.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">MOSAIC</span>
@@ -469,6 +498,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="pattern-typo" data-released="2026-06-26" data-updated="2026-08-15" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">07</span><span class="cue"></span></div>
       <div class="name">PATTERN GENERATOR</div>
+      <div class="thumb"><img src="thumbs/pattern-typo.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">PATTERN TYPO</span>
@@ -485,6 +515,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="burnt-noise" data-released="2026-08-16" data-updated="2026-09-02" href="https://markdo27.github.io/Burnt-Noise/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">08</span><span class="cue"></span></div>
       <div class="name">RADIANT BURNT</div>
+      <div class="thumb"><img src="thumbs/burnt-noise.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">BURNT NOISE</span>
@@ -501,6 +532,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="nuftext" data-released="2026-08-24" data-updated="2026-09-02" href="https://markdo27.github.io/nuftext/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">09</span><span class="cue"></span></div>
       <div class="name">THERMAL TYPE</div>
+      <div class="thumb"><img src="thumbs/nuftext.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">NUFTEXT</span>
@@ -517,6 +549,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="saigon-1985" data-released="2026-09-02" data-updated="2026-09-02" href="https://markdo27.github.io/vietnamsesignage/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">10</span><span class="cue"></span></div>
       <div class="name">VIETNAMESE SIGN WALL</div>
+      <div class="thumb"><img src="thumbs/saigon-1985.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">SAIGON 1985</span>
@@ -543,6 +576,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="musicbox" data-released="2026-05-30" data-updated="2026-06-02" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">11</span><span class="cue"></span></div>
       <div class="name">STEP SEQUENCER</div>
+      <div class="thumb"><img src="thumbs/musicbox.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">MUSICBOX</span>
@@ -559,6 +593,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="dead4rat" data-released="2026-04-05" data-updated="2026-08-16" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">12</span><span class="cue"></span></div>
       <div class="name">VJ AUDIO VISUALIZER</div>
+      <div class="thumb"><img src="thumbs/dead4rat.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">DEAD4RAT</span>
@@ -575,6 +610,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="visual" data-released="2026-10-07" data-updated="2026-10-16" href="https://markdo27.github.io/visual/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">13</span><span class="cue"></span></div>
       <div class="name">CHROMETYPE STUDIO</div>
+      <div class="thumb"><img src="thumbs/visual.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">VISUAL</span>
@@ -601,6 +637,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="eps-importer" data-released="2026-08-21" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">14</span><span class="cue"></span></div>
       <div class="name">EPS IMPORTER</div>
+      <div class="thumb"><img src="thumbs/eps-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">FIGMA COMMUNITY</span>
@@ -616,6 +653,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="pdf-importer" data-released="2026-08-26" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">15</span><span class="cue"></span></div>
       <div class="name">PDF IMPORTER</div>
+      <div class="thumb"><img src="thumbs/pdf-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">FIGMA COMMUNITY</span>
@@ -631,6 +669,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="website-importer" data-released="2026-08-27" href="https://www.figma.com/community/plugin/1674297961569861299/free-html-to-figma" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">16</span><span class="cue"></span></div>
       <div class="name">WEBSITE IMPORTER</div>
+      <div class="thumb"><img src="thumbs/website-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">FIGMA COMMUNITY</span>
@@ -656,6 +695,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="vietlot" data-released="2026-04-27" data-updated="2026-05-02" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">17</span><span class="cue"></span></div>
       <div class="name">LOTTERY ANALYZER</div>
+      <div class="thumb"><img src="thumbs/vietlot.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">VIETLOT</span>
@@ -672,6 +712,7 @@ img{display:block;max-width:100%}
     <a class="cell tool" data-tool="translaate" data-released="2026-05-12" data-updated="2026-05-12" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
       <div class="cell-top"><span class="dot idx">18</span><span class="cue"></span></div>
       <div class="name">DOCUMENT TRANSLATOR</div>
+      <div class="thumb"><img src="thumbs/translaate.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></div>
       <div class="cell-body">
         <div class="meta">
           <span class="code">TRANSLAATE</span>
@@ -798,6 +839,16 @@ var NEW_FOR_DAYS = 30;
     card.querySelector('.idx').insertAdjacentElement('afterend', badge);
   });
 })();
+
+/* ── Thumbnails ────────────────────────────────────────────────────────
+   A cell added without running the capture would show a broken image.
+   Drop the empty box instead; the cell reads fine without a picture.
+   Checked on attach too, for an image that failed before this ran. */
+document.querySelectorAll('.thumb img').forEach(function (img) {
+  function drop() { if (img.parentNode) img.parentNode.remove(); }
+  if (img.complete && !img.naturalWidth) drop();
+  else img.addEventListener('error', drop);
+});
 
 /* ── Visit counting ────────────────────────────────────────────────────
    GoatCounter: no cookies, no personal data, nothing to consent to. The
