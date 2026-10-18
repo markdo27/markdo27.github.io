@@ -203,9 +203,9 @@ page to stage, so they use their Community cover image.
 ### Refreshing
 
 Actions, Thumbnails, Run workflow. Leave *only* blank for every tool, or give
-slugs, `nuftext,visual`, to redo just those. The run commits whatever changed
-and asks Pages to rebuild. It also runs on its own whenever anything under
-`tools/thumbs/` changes, on any branch.
+slugs, `nuftext,visual`, to redo just those. The run commits whatever changed,
+and Pages redeploys from that commit on its own. It also runs on its own
+whenever anything under `tools/thumbs/` changes, on any branch.
 
 Fractured and the sign wall randomise on every load, so their pictures change
 on each run. That is expected, not drift.
@@ -218,7 +218,13 @@ To run it locally:
     THUMBS_ONLY=nuftext,visual node capture.mjs
 
 A failed capture leaves that tool's previous image in place and turns the run
-red, so a broken stage shows up instead of quietly shipping a blank card.
+red, so a broken stage shows up instead of quietly shipping a blank card. The
+run page names the tool and the reason in an annotation, and its summary has a
+row per tool with size and time.
+
+The heavy WebGL tools draw at two or three frames a second under the
+software renderer CI has to use, so a single screenshot can take several
+seconds. The capture allows a minute per shot; that limit is for hangs.
 
 ## Visitor counting
 

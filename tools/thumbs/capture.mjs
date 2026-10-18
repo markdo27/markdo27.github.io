@@ -14,12 +14,16 @@
 
 import { chromium } from 'playwright';
 import sharp from 'sharp';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { appendFile, mkdir, writeFile } from 'node:fs/promises';
 
 const OUT = new URL('../../thumbs/', import.meta.url);
 const WIDTH = 800;
 const HEIGHT = 500; // 8:5, the same box as .thumb in index.html
 const VIEWPORT = { width: 1440, height: 900 };
+// Long on purpose. SwiftShader draws the WebGL tools at two or three frames
+// a second, so one element screenshot takes seconds, and longer on a busy
+// shared runner. The timeout is there to catch a hang, not a slow page.
+const SHOT_TIMEOUT = 60_000;
 // Figma answers a non-browser user agent with 403.
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0 Safari/537.36';
 
@@ -134,8 +138,8 @@ async function stageAndShoot(browser, shot) {
       }
     }
     return shot.clip
-      ? await page.locator(shot.clip).first().screenshot({ timeout: 15_000 })
-      : await page.screenshot();
+      ? await page.locator(shot.clip).first().screenshot({ timeout: SHOT_TIMEOUT })
+      : await page.screenshot({ timeout: SHOT_TIMEOUT });
   } finally {
     await context.close();
   }
@@ -157,6 +161,21 @@ async function fetchOk(url) {
 
 const POSITION = { attention: sharp.strategy.attention, centre: 'centre', top: 'top' };
 
+// Workflow commands end at a newline and treat % as an escape.
+function escapeCommand(text) {
+  return text.replace(/%/g, '%25').replace(/\r/g, '%0D').replace(/\n/g, '%0A');
+}
+
+// One row per tool on the run's summary page.
+async function writeSummary(results) {
+  if (!process.env.GITHUB_STEP_SUMMARY) return;
+  const rows = results.map(r => r.ok
+    ? `| ${r.slug} | ok | ${r.kb} KB | ${r.s.toFixed(1)} s |`
+    : `| ${r.slug} | **failed** | ${r.error.replace(/\|/g, '\\|')} | ${r.s.toFixed(1)} s |`);
+  await appendFile(process.env.GITHUB_STEP_SUMMARY,
+    ['### Thumbnails', '', '| Tool | Result | Size or reason | Time |', '| --- | --- | --- | --- |', ...rows, ''].join('\n'));
+}
+
 async function main() {
   const only = (process.env.THUMBS_ONLY || '').split(',').map(s => s.trim()).filter(Boolean);
   const shots = only.length ? SHOTS.filter(s => only.includes(s.slug)) : SHOTS;
@@ -171,7 +190,7 @@ async function main() {
     args: ['--enable-unsafe-swiftshader', '--use-angle=swiftshader', '--ignore-gpu-blocklist'],
   });
 
-  const failed = [];
+  const results = [];
   for (const shot of shots) {
     const started = Date.now();
     try {
@@ -183,16 +202,26 @@ async function main() {
         .webp({ quality: 78 })
         .toBuffer();
       await writeFile(new URL(`${shot.slug}.webp`, OUT), webp);
-      console.log(`ok    ${shot.slug.padEnd(18)} ${(webp.length / 1024).toFixed(0).padStart(4)} KB  ${((Date.now() - started) / 1000).toFixed(1)}s`);
+      const r = { slug: shot.slug, ok: true, kb: Math.round(webp.length / 1024), s: (Date.now() - started) / 1000 };
+      results.push(r);
+      console.log(`ok    ${r.slug.padEnd(18)} ${String(r.kb).padStart(4)} KB  ${r.s.toFixed(1)}s`);
     } catch (err) {
-      failed.push(shot.slug);
-      console.log(`FAIL  ${shot.slug.padEnd(18)} ${err.message.split('\n')[0]}`);
+      const r = { slug: shot.slug, ok: false, s: (Date.now() - started) / 1000, error: err.message.split('\n')[0] };
+      results.push(r);
+      console.log(`FAIL  ${r.slug.padEnd(18)} ${r.error}`);
+      // In Actions this becomes an annotation on the run: it names the tool
+      // and the reason on the run page, where the raw log is a click deeper.
+      if (process.env.GITHUB_ACTIONS) {
+        console.log(`::error title=Thumbnail failed: ${r.slug}::${escapeCommand(r.error)}`);
+      }
     }
   }
   await browser.close();
+  await writeSummary(results);
 
   // A failure keeps the old image in place and turns the run red, rather
   // than quietly shipping a card without a picture.
+  const failed = results.filter(r => !r.ok).map(r => r.slug);
   if (failed.length) {
     console.log(`\n${failed.length} of ${shots.length} failed: ${failed.join(', ')}`);
     process.exit(1);
