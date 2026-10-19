@@ -2676,7 +2676,10 @@
   // for it again. Like the Font-tool project the stored copy is untrusted:
   // every field is type-checked and clamped, and a malformed field falls back
   // to its default on its own instead of discarding the rest.
-  var POSTER_KEY = 'liquidfont.poster.v1';
+  // Its own key since the split from Liquid.Font: the Font tool's old poster
+  // page saved under 'liquidfont.poster.v1' on this same origin, and restoring
+  // that would hide the demo poster a first visit here should open on.
+  var POSTER_KEY = 'liquidposter.v1';
   var ROW_NUM = {
     size: [20, 500], tracking: [-0.06, 0.5], xp: [-200, 300], yp: [-200, 300],
     flow: [0, 46], slant: [-25, 25], weight: [0.15, 1.4], pocket: [0, 0.14],
@@ -3070,7 +3073,9 @@
     });
   }
 
-  function resetPoster() {
+  // Back to the stock poster, the demo. `msg` is the toast (Reset and the
+  // Demo button word it their own way).
+  function resetPoster(msg) {
     clearTimeout(persistTimer); persistTimer = null;
     try { window.localStorage.removeItem(POSTER_KEY); } catch (e) { /* nothing stored, or storage blocked */ }
     Object.keys(DEFAULTS).forEach(function (k) { state[k] = DEFAULTS[k]; });
@@ -3094,7 +3099,7 @@
     zoomToFit();
     scheduleRender(true);
     clearTimeout(persistTimer); persistTimer = null;   // a reset poster is the stock one: nothing to store
-    toast('Poster reset to the starting layout. ' + (IS_MAC ? '\u2318Z' : 'Ctrl+Z') + ' or Undo brings it back', 3600);
+    toast((msg || 'Poster reset to the starting layout.') + ' ' + (IS_MAC ? '\u2318Z' : 'Ctrl+Z') + ' or Undo brings it back', 3600);
   }
 
   function applyCanvasSize(w, h) {
@@ -3337,6 +3342,11 @@
       resetPoster();
     });
     resetBtn.addEventListener('blur', disarmReset);
+    // Demo: the demo poster in one click, undoable like any other step
+    $('btnDemo').addEventListener('click', function () {
+      checkpoint('Demo poster');
+      resetPoster('Demo poster loaded.');
+    });
     window.addEventListener('pagehide', flushPersist);
     // Narrow layout: the export bar is pinned over the bottom of the page, so
     // a control that takes focus underneath it is scrolled clear (browsers
