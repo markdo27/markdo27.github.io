@@ -270,7 +270,7 @@ button.pill-btn { margin: 0; line-height: normal; -webkit-appearance: none; appe
 .stage-spacer { flex: 1; }
 /* the size readout gives way first when the bar runs out of room */
 .stage-meta { min-width: 0; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; }
-.history-cluster, .zoom-cluster { flex: 0 0 auto; }
+.history-cluster, .zoom-cluster, .demo-btn { flex: 0 0 auto; }
 @media (max-width: 1100px) {
   .hist-label { display: none; }   /* icons only; the buttons keep aria-label */
 }

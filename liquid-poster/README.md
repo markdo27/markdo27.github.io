@@ -27,12 +27,18 @@ again.
 
 ## The demo poster
 
-A first visit, and *Reset poster*, opens on the demo: LIQUID solid and
+A first visit, the *Demo* button above the stage (undoable) and *Reset
+poster* all open the demo: LIQUID solid and
 dripping, POSTER as a contour echo it drips into, and the inked Vietnamese
 subhead CHẢY TRÔI ("flowing, adrift"), black on signal orange (the Blaze
 pair). The letters are Goo poured heavier, at full Drip and 85% Flow. The
 composition lives in `defaultRows`, `defaultBlocks`, `DEFAULTS` and
 `stockGlyph` in `poster-engine.js`.
+
+The poster autosaves under its own key, `liquidposter.v1`. Before the split,
+the Font tool's poster page saved under `liquidfont.poster.v1` on this same
+origin; that key is deliberately not read, so a poster left there does not
+hide the demo on a first visit here.
 
 ## Drawing with your own letters
 
@@ -105,7 +111,7 @@ effect produced, so Solid reads as a solid mass while Contour reads as
 concentric bands.
 
 **Undo / persistence**: the composition autosaves to this browser
-(`liquidfont.poster.v1`, validated on load); Ctrl/⌘Z / Shift+Ctrl/⌘Z undo
+(`liquidposter.v1`, validated on load); Ctrl/⌘Z / Shift+Ctrl/⌘Z undo
 and redo every gesture, Reset included.
 
 **Small text**: any number of independent blocks, each with its own
