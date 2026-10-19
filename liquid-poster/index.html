@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Liquid.Poster — liquid type poster generator</title>
+<meta name="description" content="Pour liquid type into posters: melted, inked and contour-echoed letterforms with Vietnamese accents. Export PNG or SVG." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Weights here must match the per-family weights in poster-engine.js
+     (MONO_FONTS), otherwise the canvas preview synthesises a weight the SVG
+     export does not embed. -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=IBM+Plex+Mono:wght@400;600;700&family=Space+Mono:wght@700&family=Roboto+Mono:wght@600&family=Fira+Code:wght@600&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="poster.css">
+</head>
+<body>
+  <!-- Keyboard shortcuts past the top bar: hidden until focused (poster.css) -->
+  <div class="skip-links">
+    <a class="skip-link visually-hidden" href="#posterControls">Skip to poster controls</a>
+    <a class="skip-link visually-hidden" href="#btnExportSvg">Skip to export</a>
+  </div>
+  <div id="app">
+    <header class="topbar">
+      <a class="wordmark" href="./" style="text-decoration:none;color:inherit;" title="Liquid.Poster">LIQUID<span>.</span>POSTER</a>
+      <div class="topbar-divider"></div>
+      <div class="fontname-input" style="cursor:default;">Poster generator</div>
+      <div class="topbar-spacer"></div>
+      <a class="text-btn" href="/generativefont_creator/" target="_blank" rel="noopener" title="Sculpt the letters in Liquid.Font, the glyph editor these posters are drawn with">Font tool &nearr;</a>
+      <a class="text-btn" href="/" title="All MRKD tools">Tools</a>
+      <button class="text-btn" id="aboutBtn" type="button" aria-haspopup="dialog" title="Author and terms of use">About</button>
+    </header>
+
+    <main class="poster-workspace">
+      <aside class="poster-sidebar">
+
+        <!-- ------------------------------------------------------ typeface -->
+        <section class="pgroup skip-target" id="posterControls" tabindex="-1" aria-labelledby="typefaceTitle">
+          <h2 class="pgroup-title" id="typefaceTitle">Typeface</h2>
+          <div class="seg-row" id="fontSourceRow" role="group" aria-label="Typeface source">
+            <button type="button" class="pill-btn active" data-value="builtin" aria-pressed="true">Liquid</button>
+            <button type="button" class="pill-btn" data-value="upload" aria-pressed="false">Upload</button>
+          </div>
+
+          <!-- A label, so a click (or Enter/Space on the focused input inside)
+               opens the native picker with no script; the input is visually
+               hidden rather than display:none so it stays in the tab order. -->
+          <label class="dropzone" id="fontDropzone" for="fontFileInput">
+            <input type="file" id="fontFileInput" class="visually-hidden" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" aria-describedby="fontDropLabel" />
+            <span id="fontDropLabel">Drop a .ttf / .otf / .woff, or click to browse</span>
+          </label>
+
+          <div id="glyphControls">
+            <div class="project-box" id="projectBox" hidden>
+              <label class="check-row" for="useProject"><input type="checkbox" id="useProject" checked /> Use my Font-tool glyphs</label>
+              <label class="check-row check-sub" for="useProjectShape"><input type="checkbox" id="useProjectShape" checked /> Match its flow state &amp; accents</label>
+              <p class="phint" id="projectMeta"></p>
+            </div>
+            <div class="pfield">
+              <label for="glyphPreset">Flow state</label>
+              <select class="pselect" id="glyphPreset">
+                <option value="liquid">Liquid</option>
+                <option value="mercury">Mercury</option>
+                <option value="acid">Acid</option>
+                <option value="molten">Molten</option>
+                <option value="bubble">Bubble</option>
+                <option value="goo">Goo</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+            <div class="pgrid2">
+              <div class="pfield">
+                <label for="glyphMass">Mass <b id="valGlyphMass"></b></label>
+                <input type="range" id="glyphMass" min="0.6" max="1.5" step="0.01" />
+              </div>
+              <div class="pfield">
+                <label for="glyphMelt">Melt <b id="valGlyphMelt"></b></label>
+                <input type="range" id="glyphMelt" min="0" max="40" step="1" />
+              </div>
+            </div>
+            <div class="pgrid2">
+              <div class="pfield">
+                <label for="glyphTension">Tension <b id="valGlyphTension"></b></label>
+                <input type="range" id="glyphTension" min="-12" max="8" step="0.5" />
+              </div>
+              <div class="pfield">
+                <label for="glyphWobble">Wobble <b id="valGlyphWobble"></b></label>
+                <input type="range" id="glyphWobble" min="0" max="8" step="0.1" />
+              </div>
+            </div>
+            <div class="pgrid2">
+              <div class="pfield">
+                <label for="glyphFlow" title="How much the surface flows: a sliding contour, beads and necks">Flow <b id="valGlyphFlow"></b></label>
+                <input type="range" id="glyphFlow" min="0" max="1" step="0.05" />
+              </div>
+              <div class="pfield">
+                <label for="glyphDrip" title="A few seeded drips from free stem feet and bar tips (0 = none)">Drip <b id="valGlyphDrip"></b></label>
+                <input type="range" id="glyphDrip" min="0" max="1" step="0.05" />
+              </div>
+            </div>
+            <p class="phint" id="glyphHint">Reshapes the letterforms themselves. Sculpt single letters and accents node-by-node in the <a href="/generativefont_creator/" target="_blank" rel="noopener">Font tool</a>: your edits appear here automatically (same browser).</p>
+          </div>
+        </section>
+
+        <!-- ----------------------------------------------------- big title -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">
+            Big title
+            <button type="button" class="mini-btn" id="btnAddBigRow" aria-label="Add title row">+ Row</button>
+          </h2>
+          <div id="bigRowList" class="card-list"></div>
+          <p class="phint">Select a row to expand its settings. Drag the box on the canvas to move, corner handles to resize, the top handle to rotate.</p>
+        </section>
+
+        <!-- ---------------------------------------------------- small text -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">
+            Small text
+            <button type="button" class="mini-btn" id="btnAddSmallBlock" aria-label="Add small text block">+ Text</button>
+          </h2>
+          <div id="smallBlockList" class="card-list"></div>
+        </section>
+
+        <!-- -------------------------------------------------------- output -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">Merge &amp; finish</h2>
+          <div class="pgrid2">
+            <div class="pfield">
+              <label for="melt" title="Blur radius that merges each row into one molten mass">Merge <b id="valMelt"></b></label>
+              <input type="range" id="melt" min="0" max="40" step="1" />
+            </div>
+            <div class="pfield">
+              <label for="tension">Tension <b id="valTension"></b></label>
+              <input type="range" id="tension" min="-30" max="30" step="1" />
+            </div>
+          </div>
+          <div class="pgrid2">
+            <div class="pfield">
+              <label for="wobble">Wobble <b id="valWobble"></b></label>
+              <input type="range" id="wobble" min="0" max="10" step="0.1" />
+            </div>
+            <div class="pfield">
+              <label for="grain">Grain <b id="valGrain"></b></label>
+              <input type="range" id="grain" min="0.01" max="0.15" step="0.005" />
+            </div>
+          </div>
+          <div class="pgrid2">
+            <div class="pfield">
+              <label for="smooth">Smooth <b id="valSmooth"></b></label>
+              <input type="range" id="smooth" min="0" max="4" step="1" />
+            </div>
+            <div class="pfield">
+              <label for="strokeWidth">Stroke <b id="valStroke"></b></label>
+              <input type="range" id="strokeWidth" min="0.5" max="6" step="0.25" />
+            </div>
+          </div>
+          <div class="prow prow-baseline">
+            <span class="phint">Noise seed <b id="valSeed"></b></span>
+            <span class="spacer"></span>
+            <button type="button" class="text-btn" id="btnReseed" aria-label="Restir: new noise seed">Restir &#8635;</button>
+          </div>
+          <p class="phint">Outline / filled and the line effect are set per row, under Big title.</p>
+        </section>
+
+        <!-- -------------------------------------------------------- canvas -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">Canvas</h2>
+          <div class="pfield">
+            <label for="canvasPreset">Poster size</label>
+            <select class="pselect" id="canvasPreset">
+              <option value="square">Square — 1:1</option>
+              <option value="portrait" selected>Portrait — 3:4</option>
+              <option value="tall">Story — 9:16</option>
+              <option value="landscape">Landscape — 4:3</option>
+              <option value="custom">Custom&hellip;</option>
+            </select>
+          </div>
+          <div class="pgrid2" id="customSizeRow" hidden>
+            <div class="pfield"><label for="canvasW">Width</label><input type="number" class="pnum" id="canvasW" value="1000" step="10" /></div>
+            <div class="pfield"><label for="canvasH">Height</label><input type="number" class="pnum" id="canvasH" value="1333" step="10" /></div>
+          </div>
+        </section>
+
+        <!-- ------------------------------------------------------- palette -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">Palette</h2>
+          <div class="pair-grid" id="pairPalette" role="group" aria-label="Colour pairs"></div>
+
+          <div class="pfield">
+            <span class="pfield-label" id="lblInk">Title ink <b id="valInk"></b></span>
+            <div class="swatch-grid" id="inkPalette" role="group" aria-labelledby="lblInk"></div>
+          </div>
+
+          <div class="pfield">
+            <span class="pfield-label" id="lblBg">Background <b id="valBg"></b></span>
+            <div class="swatch-grid" id="bgPalette" role="group" aria-labelledby="lblBg"></div>
+          </div>
+
+          <div class="prow prow-baseline">
+            <label class="check-row" for="bgTransparent"><input type="checkbox" id="bgTransparent" /> No background</label>
+            <span class="spacer"></span>
+            <label class="swatch-pick" title="Custom title ink">
+              <input type="color" id="inkColor" value="#141414" aria-label="Custom title ink colour" /><span aria-hidden="true">Ink</span>
+            </label>
+            <label class="swatch-pick" title="Custom background">
+              <input type="color" id="bgColor" value="#f5f2ec" aria-label="Custom background colour" /><span aria-hidden="true">BG</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- ---------------------------------------------------- saved poster -->
+        <section class="pgroup">
+          <h2 class="pgroup-title">Saved poster</h2>
+          <p class="phint" id="saveHint">Autosaved in this browser: title rows, small text, poster size, colours, typeface and finish. An uploaded font file is not stored.</p>
+          <div class="prow prow-baseline">
+            <span class="spacer"></span>
+            <button type="button" class="mini-btn reset-btn" id="btnResetPoster" aria-describedby="saveHint" title="Back to the starting layout (forgets the saved poster)">Reset poster</button>
+          </div>
+        </section>
+
+      </aside>
+
+      <section class="poster-stage" id="posterStage">
+        <div class="stage-bar">
+          <div class="stage-meta" id="stageMeta"></div>
+          <div class="stage-spacer"></div>
+          <div class="stage-loading" id="stageLoading" aria-hidden="true">Rendering&hellip;</div>
+          <!-- Undo / redo over the whole composition (also Ctrl/Cmd+Z, Shift+Ctrl/Cmd+Z, Ctrl/Cmd+Y) -->
+          <div class="history-cluster" role="group" aria-label="History">
+            <button type="button" class="mini-btn hist-btn" id="btnUndo" aria-label="Undo" aria-disabled="true" aria-keyshortcuts="Control+Z Meta+Z" title="Nothing to undo">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M5.5 2.5 2 6l3.5 3.5M2.5 6H10a4 4 0 0 1 0 8H6.5"/></svg><span class="hist-label">Undo</span>
+            </button>
+            <button type="button" class="mini-btn hist-btn" id="btnRedo" aria-label="Redo" aria-disabled="true" aria-keyshortcuts="Control+Shift+Z Meta+Shift+Z Control+Y Meta+Y" title="Nothing to redo">
+              <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10.5 2.5 14 6l-3.5 3.5M13.5 6H6a4 4 0 0 0 0 8h3.5"/></svg><span class="hist-label">Redo</span>
+            </button>
+          </div>
+          <div class="zoom-cluster">
+            <button type="button" class="mini-btn" id="btnZoomOut" title="Zoom out" aria-label="Zoom out">&minus;</button>
+            <input type="range" id="zoomRange" min="5" max="200" step="1" title="Zoom" aria-label="Zoom" />
+            <b class="zoom-val" id="valZoom" aria-hidden="true">50%</b>
+            <button type="button" class="mini-btn" id="btnZoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+            <button type="button" class="mini-btn" id="btnZoomFit" title="Fit the poster in the window">Fit</button>
+            <button type="button" class="mini-btn" id="btnZoom100" title="Zoom to actual pixel size">100%</button>
+          </div>
+        </div>
+        <div class="stage-view" id="stageView">
+          <div class="stage-scroll" id="stageScroll">
+            <div class="canvas-holder" id="canvasHolder">
+              <canvas id="posterCanvas" role="img" aria-label="Poster preview"></canvas>
+              <canvas id="overlayCanvas" aria-hidden="true"></canvas>
+            </div>
+          </div>
+          <!-- Empty / edge states: HTML over the stage, so never in an export -->
+          <div class="stage-empty" id="stageEmpty" hidden>
+            <div class="stage-empty-card">
+              <p class="stage-empty-msg" id="stageEmptyMsg"></p>
+              <button type="button" class="text-btn stage-empty-btn" id="stageEmptyBtn"></button>
+            </div>
+          </div>
+        </div>
+        <!-- In flow under the stage, so it can never sit on top of the poster. -->
+        <div class="stage-foot">
+          <ul class="stage-hint" id="stageHint" aria-label="Canvas controls">
+            <li>Drag to move</li>
+            <li>Corners resize</li>
+            <li>Top handle rotates</li>
+            <li><kbd>&larr;&uarr;&rarr;&darr;</kbd> nudge</li>
+            <li><kbd>[</kbd>&thinsp;<kbd>]</kbd> rotate</li>
+            <li><kbd>Shift</kbd> bigger steps, 15&deg; snaps</li>
+            <li>Drag the backdrop to pan</li>
+            <li><kbd>&#8984;</kbd>/<kbd>Ctrl</kbd> + scroll zooms</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="control-bar">
+      <div class="select-group">
+        <label for="exportScale">Export scale</label>
+        <select class="export-scale-select" id="exportScale">
+          <option value="1">1&times;</option>
+          <option value="2" selected>2&times;</option>
+          <option value="3">3&times;</option>
+        </select>
+      </div>
+      <div class="control-spacer"></div>
+      <div class="export-group" id="exportControls" role="group" aria-label="Export">
+        <button type="button" class="export-btn secondary" id="btnExportSvg" aria-label="Export SVG">SVG</button>
+        <button type="button" class="export-btn" id="btnExportPng" aria-label="Export PNG">PNG</button>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/opentype.js/1.3.4/opentype.min.js"></script>
+  <script src="blob-engine.js"></script>
+  <script src="glyphs_meta.js"></script>
+  <script src="glyph-compose.js"></script>
+  <script src="poster-engine.js"></script>
+
+  <dialog class="about-dialog" id="aboutDialog" aria-labelledby="aboutTitle">
+    <form method="dialog"><button class="text-btn about-close" type="submit" aria-label="Close">&times;</button></form>
+    <div class="about-title" id="aboutTitle">About &amp; Licence</div>
+    <dl class="about">
+      <dt>Author</dt>
+      <dd>Mark Do</dd>
+      <dt>Contact</dt>
+      <dd><a href="mailto:dtcmark@gmail.com">dtcmark@gmail.com</a></dd>
+      <dt>Personal use</dt>
+      <dd>Free. Use this tool, and the typefaces you draw with it, for personal, study and other non commercial work. No permission needed.</dd>
+      <dt>Commercial use</dt>
+      <dd>Ask first. Client, brand, resale and any other paid work needs written permission: <a href="mailto:dtcmark@gmail.com?subject=Commercial%20use%20request">request a licence</a>.</dd>
+    </dl>
+    <p class="about-note">&copy; 2026 Mark Do. Provided as is, with no warranty.</p>
+  </dialog>
+
+<script>
+/* Native dialog, so the whole of it is the button plus showModal(). */
+(function () {
+  var btn = document.getElementById('aboutBtn');
+  var dlg = document.getElementById('aboutDialog');
+  if (btn && dlg) btn.addEventListener('click', function () { dlg.showModal(); });
+})();
+/* Skip links: move focus itself (not just the scroll position), so the next
+   Tab continues from the target in every browser. */
+(function () {
+  document.querySelectorAll('.skip-link').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      var t = document.getElementById(a.getAttribute('href').slice(1));
+      if (!t) return;
+      e.preventDefault();
+      t.focus({ preventScroll: true });
+      t.scrollIntoView({ block: 'nearest' });
+    });
+  });
+})();
+</script>
+</body>
+</html>

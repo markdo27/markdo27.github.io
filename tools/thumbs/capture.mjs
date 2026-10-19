@@ -81,6 +81,11 @@ const SHOTS = [
   { slug: 'saigon-1985', url: `${GH}/vietnamsesignage/`,
     // The dock sits over the wall; the tool's own Hide puts the wall alone.
     steps: [{ wait: 3500 }, { eval: "document.body.classList.add('chrome-off')" }, { wait: 800 }] },
+  { slug: 'liquid-poster', url: `${GH}/liquid-poster/`,
+    // A first visit opens on the demo poster (black on signal orange), so it
+    // needs no staging beyond the trace. The stage frames the portrait sheet
+    // on its dark backdrop at about 8:5.
+    steps: [{ wait: 4500 }], clip: '.stage-view', focus: 'centre' },
 
   // ── C / Sound & Visual ──────────────────────────────────────────────
   { slug: 'musicbox', url: `${GH}/musicbox/`,

@@ -1,0 +1,607 @@
+:root {
+  --bg: #000000;
+  --surface: #0b0b0b;
+  --panel: #101010;
+  --fg: #ffffff;
+  --muted: #9a9a9a;
+  --line: #363636;
+  --line-soft: #222222;
+  --edge: #646464;             /* borders of interactive controls: >= 3:1 on the panels */
+  /* Monochrome: emphasis is never a hue. Selection, focus and the main action
+     invert to white; motion says what changed (ink wipes, liquid fills). */
+  --hi: #ffffff;
+  --hi-ink: #000000;           /* text on --hi */
+  --control: #ededed;          /* slider thumbs */
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);   /* quick start, long settle: ink spreading */
+  --t-fast: 120ms;
+  --t: 240ms;
+  --t-slow: 640ms;
+  --fs-xs: 10px;
+  --fs-s: 11px;
+  --fs-m: 13px;
+  --mono: 'IBM Plex Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --sans: 'Neue Haas Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+html, body {
+  margin: 0; padding: 0; height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--sans);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app { display: flex; flex-direction: column; height: 100vh; width: 100vw; }
+
+/* ------------------------------------------------------------------ topbar */
+.topbar {
+  display: flex; align-items: center; gap: 16px;
+  height: 52px; min-height: 52px; padding: 0 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+.wordmark {
+  font-family: var(--mono); font-weight: 700; font-size: 13px;
+  letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;
+  color: var(--fg); text-decoration: none;
+}
+/* The full stop is a drop of ink: now and then it swells, lets a drop fall
+   and settles back. The "." stays in the text (copy, screen readers) at size 0;
+   the empty box then sits on the baseline, so the dot can be drawn on it. */
+.wordmark { --wm: 13px; }
+.wordmark span {
+  position: relative; display: inline-block; vertical-align: baseline;
+  width: calc(var(--wm) * 0.8); height: 0; font-size: 0;
+}
+.wordmark span::before, .wordmark span::after {
+  content: ''; position: absolute; bottom: 0; left: calc(var(--wm) * 0.3 - 1.7px);
+  width: 3.4px; height: 3.4px; border-radius: 50%; background: currentColor;
+}
+.wordmark span::before { transform-origin: 50% 0; animation: drip-dot 9s var(--ease) 1.5s infinite; }
+.wordmark span::after { opacity: 0; animation: drip-drop 9s cubic-bezier(0.55, 0, 1, 0.45) 1.5s infinite; }
+/* a quick swell into a hanging bead (kept short so it never reads as a
+   comma), the drop lets go, the dot rebounds and settles */
+@keyframes drip-dot {
+  0%, 64%, 100% { transform: none; border-radius: 50%; }
+  67% { transform: scale(1.1, 1.5); border-radius: 50% 50% 50% 50% / 38% 38% 62% 62%; }
+  68% { transform: scale(1.05, 0.72); border-radius: 50%; }
+  71% { transform: scale(0.96, 1.1); }
+  74% { transform: none; }
+}
+@keyframes drip-drop {
+  0%, 67.5% { opacity: 0; transform: translateY(2px) scale(0.8); }
+  68% { opacity: 1; transform: translateY(3px) scale(0.8); }
+  78% { opacity: 0; transform: translateY(16px) scale(0.55); }
+  100% { opacity: 0; }
+}
+.topbar-divider { width: 1px; align-self: stretch; background: var(--line); margin: 12px 0; }
+.fontname-input {
+  font-family: var(--sans); font-weight: 600; font-size: 14px;
+  border: none; background: transparent; color: var(--fg);
+  padding: 6px 8px; border-radius: 3px; min-width: 110px; width: 140px;
+}
+.project-group { display: flex; gap: 6px; }
+.project-group .text-btn { padding: 6px 9px; }
+.save-state { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+/* unsaved work: a dot before the label (drawn, never read out — the live
+   region's text only changes once a save settles, app.js markDirty) */
+.save-state::before {
+  content: ''; display: inline-block; width: 0; height: 0; margin: 0 7px 1px 0; vertical-align: middle;
+  border: 2.5px solid currentColor; border-radius: 50%; opacity: 0; transition: opacity var(--t) var(--ease);
+}
+.save-state.is-saving::before { opacity: 1; }
+.fontname-input:hover, .fontname-input:focus { background: #1b1b1b; }
+.topbar-spacer { flex: 1; }
+.topbar-meta {
+  font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted);
+  letter-spacing: 0.06em; white-space: nowrap; text-transform: uppercase;
+}
+.swatch-row { display: flex; gap: 6px; align-items: center; }
+.swatch {
+  width: 17px; height: 17px; border-radius: 50%;
+  border: 1px solid var(--edge); cursor: pointer; padding: 0;
+  transition: transform var(--t-fast) var(--ease);
+}
+.swatch:hover { transform: scale(1.18); }
+.swatch.active { outline: 2px solid var(--hi); outline-offset: 2px; }
+
+/* --------------------------------------------------------------- workspace */
+.workspace { flex: 1; min-height: 0; display: flex; overflow: hidden; }
+
+.editor-panel > * { flex-shrink: 0; }
+.editor-panel {
+  width: 288px; min-width: 288px;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+  padding: 14px; display: flex; flex-direction: column; gap: 12px;
+  overflow-y: auto;
+}
+.panel-label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+}
+.editor-canvas-wrap {
+  border: 1px solid var(--line); background: #070707;
+  aspect-ratio: 1 / 1; border-radius: 2px; overflow: hidden;
+}
+.editor-canvas-wrap:focus-visible { outline-offset: -2px; }
+.zoom-row { display: flex; align-items: center; gap: 6px; margin-top: -4px; }
+.zoom-row .mini-btn { min-width: 30px; text-align: center; }
+.zoom-row #btnFit { margin-left: auto; }
+.zoom-label { font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); min-width: 40px; text-align: center; }
+.global-warn {
+  font-family: var(--mono); font-size: var(--fs-xs); line-height: 1.45; color: #000;
+  background: var(--control); padding: 7px 9px; border-radius: 2px;
+}
+.editor-canvas-wrap svg { width: 100%; height: 100%; display: block; touch-action: none; }
+
+/* nodes: hollow on the letter, grey-filled on a shared mark, white when held */
+.node-handle { fill: #0b0b0b; stroke: #d8d8d8; stroke-width: 1.6; cursor: grab; transition: fill var(--t-fast); }
+.node-handle.mark-node { fill: #707070; }
+.node-handle:hover { fill: var(--hi); stroke: var(--hi); }
+.node-handle.active { fill: var(--hi); stroke: var(--hi); stroke-width: 1.8; }
+/* the selected node's radius ring marches, so it reads as something to drag */
+.rim-ring { animation: march 0.9s linear infinite; }
+@keyframes march { to { stroke-dashoffset: calc(var(--dash-cycle, 5) * -1px); } }
+.rim-grip { fill: #0b0b0b; stroke: var(--hi); stroke-width: 1.8; cursor: ew-resize; transition: fill var(--t-fast); }
+.rim-grip:hover { fill: var(--hi); }
+
+.readout { font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted); min-height: 28px; line-height: 1.45; }
+
+.panel-label #letterBadge {
+  display: inline-block; min-width: 1.6em; padding: 1px 4px; margin-left: 2px; text-align: center;
+  background: var(--hi); color: var(--hi-ink); font-weight: 700; border-radius: 1px;
+}
+
+.node-inspector {
+  display: flex; align-items: flex-end; gap: 6px; flex-wrap: wrap;
+  border: 1px solid var(--line); background: var(--surface);
+  padding: 9px; border-radius: 2px;
+}
+.node-field { display: flex; flex-direction: column; gap: 4px; width: 62px; }
+.metrics-row .node-field { width: 76px; }
+.pair-row .pair-glyph { width: 40px; }
+.pair-row .pair-glyph input { text-align: center; font-size: var(--fs-m); }
+.pair-spacer { font-size: var(--fs-xs); line-height: 1; }
+.pair-preview { position: relative; height: 46px; margin-top: -6px; color: var(--fg); display: flex; align-items: flex-end; justify-content: center; }
+.pair-preview svg { display: block; overflow: visible; }
+/* a hand-set kern is labelled, not coloured */
+.pair-preview.manual::after {
+  content: 'Manual'; position: absolute; top: 4px; right: 0;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 1px 4px; background: var(--hi); color: var(--hi-ink); border-radius: 1px;
+}
+#pairKern.manual { border-color: var(--hi); font-weight: 600; }
+.skip-link {
+  position: absolute; left: 8px; top: -60px; z-index: 200; padding: 8px 12px;
+  background: var(--hi); color: var(--hi-ink); font-family: var(--mono); font-size: var(--fs-s); font-weight: 600;
+}
+.skip-link:focus { top: 8px; }
+.node-field label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.node-field input {
+  font-family: var(--mono); font-size: 11px; color: var(--fg);
+  background: var(--panel); border: 1px solid var(--edge);
+  padding: 5px 6px; width: 100%; border-radius: 2px;
+}
+.node-field input:focus { outline: 1px solid var(--hi); outline-offset: -1px; }
+.node-field input:disabled { opacity: 0.35; }
+.node-inspector .mini-btn { flex: 1; min-width: 58px; text-align: center; color: var(--fg); }
+.node-inspector .mini-btn[disabled] { opacity: 0.3; cursor: default; }
+.node-inspector .mini-btn[disabled]:hover { color: var(--muted); border-color: var(--line); }
+
+.toggle-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.pill-btn {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase; border: 1px solid var(--edge);
+  background-color: var(--surface); color: var(--fg);
+  padding: 9px 6px; cursor: pointer; text-align: center; border-radius: 2px;
+  user-select: none;
+}
+.pill-btn:hover { border-color: #8f8f8f; background-color: #171717; }
+.pill-btn[disabled] { opacity: 0.3; cursor: default; }
+.pill-btn[disabled]:hover { background-color: var(--surface); border-color: var(--line); }
+
+.panel-section { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 12px; }
+.slider-group.wide { width: auto; }
+.editor-hint {
+  font-family: var(--mono); font-size: var(--fs-xs); line-height: 1.55; color: var(--muted);
+  border-top: 1px solid var(--line-soft); padding-top: 11px;
+}
+.editor-hint summary { cursor: pointer; color: var(--fg); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+
+/* ---------------------------------------------------------------- specimen */
+.specimen-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; background: var(--bg); }
+.specimen-scroll { flex: 1; overflow-y: auto; }
+
+.tester {
+  border-bottom: 1px solid var(--line);
+  padding: 0 0 34px 0;
+  /* off-screen blocks skip re-rendering when every glyph def changes */
+  content-visibility: auto; contain-intrinsic-size: auto 420px;
+  transition: background-color var(--t-slow) var(--ease);
+}
+.tester.paper { background-color: #fff; }
+.tester.paper .tester-head { border-color: #e2e2e2; }
+.tester.paper .tester-name,
+.tester.paper .tester-ctrl b { color: #000; }
+.tester.paper .tester-ctrl { color: #666; }
+.tester.paper .tester-text { color: #000; }
+
+.tester-head {
+  display: flex; align-items: center; gap: 20px;
+  padding: 11px 26px; border-bottom: 1px solid var(--line-soft);
+  flex-wrap: wrap;
+}
+.tester-name {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--fg); white-space: nowrap;
+}
+.tester-ctrl {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: var(--fs-xs); color: var(--muted);
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+.tester-ctrl-name { text-transform: uppercase; letter-spacing: 0.08em; }
+.tester-ctrl b { color: var(--fg); font-weight: 600; min-width: 44px; display: inline-block; }
+.tester-ctrl input[type=range] { width: 82px; }
+.tester-spacer { flex: 1; }
+.mini-btn {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em;
+  text-transform: uppercase; background-color: transparent; color: var(--muted);
+  border: 1px solid var(--edge); padding: 5px 9px; cursor: pointer; border-radius: 2px;
+}
+.mini-btn:hover { color: var(--fg); border-color: #8f8f8f; }
+
+.tester { cursor: text; }   /* anywhere below a block's controls places the caret */
+.tester-head { cursor: default; }
+.tester-body { padding: 26px 26px 0 26px; }
+/* Live preview text: the glyphs are one SVG drawn from the shared defs; the
+   keys go to an invisible textarea parked at the caret (app.js makeEditor).
+   Caret, selection and focus are all the block's own ink (currentColor), so
+   they read the same on black and on paper. */
+.tester-text { position: relative; }
+.tester-glyphs { display: block; width: 100%; overflow: visible; }
+/* --sel-c / --ph-a are worked out from the ink and the ground (app.js
+   inkTones): the selection >= 3:1 off the ground with the ink >= 3:1 on it,
+   the placeholder >= 3:1 off the ground, on every ink swatch and on paper */
+.tester-text { --sel-c: #5b5b5b; --ph-a: 0.36; }
+.tester-ink.is-ph { opacity: var(--ph-a); }
+.tester-ink .notdef { stroke: currentColor; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.tester-sel rect { fill: var(--sel-c); }
+.tester-sel rect.comp { fill: currentColor; opacity: 0.75; }
+/* focus: a hairline of ink draws down the left edge of the text */
+.tester-text::before {
+  content: ''; position: absolute; left: -12px; top: 0; bottom: 0; width: 1px;
+  background: currentColor; transform: scaleY(0); transform-origin: 50% 0;
+  transition: transform var(--t) var(--ease);
+}
+.tester-text.is-focused::before { transform: scaleY(1); }
+/* a 1px halo of the block's ground keeps the caret off neighbouring strokes */
+.tester-caret {
+  position: absolute; left: 0; top: 0; width: 2px; height: 0;
+  background: currentColor; pointer-events: none; visibility: hidden;
+  box-shadow: 0 0 0 1px var(--bg);
+}
+.tester.paper .tester-caret { box-shadow: 0 0 0 1px #fff; }
+/* solid while it moves, then a hard blink; solid under reduced motion */
+.tester-text.is-focused .tester-caret.on { visibility: visible; animation: tester-blink-a 1.06s step-end infinite; }
+@keyframes tester-blink-a { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+@keyframes tester-blink-b { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+/* 16px so iOS doesn't zoom on focus; focusable, never seen */
+.tester-input {
+  position: absolute; left: 0; top: 0; width: 1px; height: 1px;
+  margin: 0; padding: 0; border: 0; outline: none; resize: none; overflow: hidden;
+  font: 16px/1 var(--mono); white-space: pre;
+  opacity: 0; color: transparent; background: transparent; caret-color: transparent;
+  pointer-events: none;
+}
+/* under the pointer for a right-click, so the menu is the textarea's own */
+.tester-input.is-ctx { width: 24px; height: 24px; pointer-events: auto; z-index: 2; }
+/* after Esc the block itself holds focus: an inset hairline, not a box */
+.tester:focus { outline: none; }
+.tester:focus-visible { outline: 1px solid var(--hi); outline-offset: -1px; }
+.tester.paper:focus-visible { outline-color: #000; }
+/* Windows High Contrast: forced colours paint backgrounds as Canvas, which
+   would hide the caret and the focus hairline; draw them in the system
+   text colour, the selection in Highlight */
+@media (forced-colors: active) {
+  .tester-caret, .tester-text::before { forced-color-adjust: none; background: CanvasText; box-shadow: none; }
+  .tester-text::before { width: 2px; }
+  .tester-sel { forced-color-adjust: none; }
+  .tester-sel rect { fill: Highlight; opacity: 0.5; }
+  .tester-sel rect.comp { fill: CanvasText; opacity: 1; }
+  .tester-ink.is-ph { forced-color-adjust: none; fill: GrayText; opacity: 1; }
+  .tester:focus-visible { outline-color: CanvasText; }
+}
+.empty-state {
+  padding: 60px 26px; font-family: var(--mono); font-size: var(--fs-s); color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.tester.paper input[type="range"]::-webkit-slider-runnable-track { background: #9a9a9a; }
+.tester.paper input[type="range"]::-moz-range-track { background: #9a9a9a; }
+.tester.paper input[type="range"]::-webkit-slider-thumb { background: #111; }
+.tester.paper input[type="range"]::-moz-range-thumb { background: #111; }
+.tester.paper .mini-btn { border-color: #8a8a8a; color: #333; --wipe: #000; }
+.tester.paper .mini-btn.on { color: #fff; border-color: #000; }
+
+.add-block-row { padding: 22px 26px 40px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.proof-select { font-family: var(--mono); font-size: var(--fs-xs); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; min-width: 0; padding: 5px 8px; color: var(--muted); }
+
+/* --------------------------------------------------------------- glyph set */
+.glyphset { padding: 30px 26px 60px; border-top: 1px solid var(--line); }
+.glyphset-group { content-visibility: auto; contain-intrinsic-size: auto 260px; }
+.glyphset-title {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 22px;
+  display: flex; justify-content: space-between;
+}
+.glyphset-legend { letter-spacing: 0.06em; }
+.glyphset-group { margin-bottom: 26px; }
+.glyphset-label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.12em; white-space: pre;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+}
+.glyphset-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 4px; }
+.glyph-cell {
+  cursor: pointer; padding: 4px; border: 1px solid transparent; border-radius: 2px;
+  transition: background-color var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t-fast);
+  background-color: transparent; color: var(--cell-ink, inherit); position: relative; font: inherit;
+}
+.glyph-cell.edited::after {
+  content: ''; position: absolute; top: 4px; right: 4px; width: 5px; height: 5px;
+  border-radius: 50%; background: currentColor;
+}
+.glyph-cell:hover { background-color: #171717; border-color: #333; }
+/* the selected glyph is printed in negative */
+.glyph-cell.selected { border-color: var(--hi); background-color: var(--hi); color: var(--hi-ink); }
+.glyph-cell svg { display: block; overflow: visible; }
+
+/* ---------------------------------------------------------------- controls */
+.control-bar {
+  border-top: 1px solid var(--line); background: var(--surface);
+  padding: 12px 18px; display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap;
+}
+.slider-group { display: flex; flex-direction: column; gap: 5px; width: 72px; }
+.control-cluster { display: flex; gap: 12px; align-items: flex-end; }
+.slider-group label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 4px; white-space: nowrap;
+}
+.slider-group label b { color: var(--fg); font-weight: 600; letter-spacing: 0; }
+
+input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 14px; background: transparent; margin: 0;
+}
+input[type="range"]::-webkit-slider-runnable-track { height: 1px; background: #5a5a5a; }
+input[type="range"]::-moz-range-track { height: 1px; background: #5a5a5a; }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; margin-top: -5.5px;
+  background: var(--control); cursor: pointer; border: none;
+  transition: transform var(--t-fast) var(--ease);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--control); cursor: pointer; border: none;
+  transition: transform var(--t-fast) var(--ease);
+}
+/* a thumb you can grab swells like a drop; held, it squashes flat */
+input[type="range"]:hover::-webkit-slider-thumb { background: var(--hi); transform: scale(1.3); }
+input[type="range"]:hover::-moz-range-thumb { background: var(--hi); transform: scale(1.3); }
+input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.5, 1.1); }
+input[type="range"]:active::-moz-range-thumb { transform: scale(1.5, 1.1); }
+input[type="range"]:focus-visible { outline: none; }
+input[type="range"]:focus-visible::-webkit-slider-thumb { background: var(--hi); box-shadow: 0 0 0 2px #000, 0 0 0 4px var(--fg); }
+input[type="range"]:focus-visible::-moz-range-thumb { background: var(--hi); box-shadow: 0 0 0 2px #000, 0 0 0 4px var(--fg); }
+
+.control-divider { width: 1px; align-self: stretch; background: var(--line); }
+
+.edit-mode-group { display: flex; flex-direction: column; gap: 5px; }
+.edit-mode-group label, .group-label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.edit-toggle-row { display: flex; gap: 6px; }
+.edit-toggle {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em;
+  text-transform: uppercase; border: 1px solid var(--edge);
+  background-color: var(--surface); color: var(--fg);
+  padding: 7px 10px; cursor: pointer; border-radius: 2px; white-space: nowrap;
+}
+.edit-toggle:hover { border-color: #8f8f8f; background-color: #171717; }
+
+.align-group { display: flex; gap: 4px; }
+.align-btn {
+  width: 32px; height: 32px; border: 1px solid var(--line);
+  background-color: var(--surface); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.align-btn svg { width: 17px; height: 13px; }
+.align-btn svg line { stroke: #999; stroke-width: 1.6; transition: stroke var(--t) var(--ease); }
+.align-btn.active svg line { stroke: #000; }
+
+.select-group { display: flex; flex-direction: column; gap: 5px; }
+.select-group label {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.seed-label { font-family: var(--mono); color: var(--fg); font-weight: 600; }
+select {
+  font-family: var(--sans); font-size: 12.5px; font-weight: 600;
+  border: 1px solid var(--edge); background: var(--surface); color: var(--fg);
+  padding: 7px 9px; cursor: pointer; min-width: 104px;
+}
+.text-btn {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em;
+  text-transform: uppercase; border: 1px solid var(--edge);
+  background-color: var(--surface); color: var(--fg);
+  padding: 8px 11px; cursor: pointer; white-space: nowrap;
+}
+.text-btn.reseed { min-width: 92px; font-weight: 600; }
+
+.control-spacer { flex: 1; }
+.export-group { display: flex; gap: 7px; align-items: flex-end; margin-left: auto; }
+.export-btn {
+  position: relative; overflow: hidden; isolation: isolate;
+  font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+  border: 1px solid var(--hi); background-color: var(--hi); color: var(--hi-ink);
+  padding: 9px 15px; cursor: pointer; white-space: nowrap; text-transform: uppercase;
+}
+.export-btn.secondary { background-color: transparent; color: var(--fg); border-color: var(--edge); }
+.export-btn[disabled] { cursor: wait; }
+
+/* ── Motion ───────────────────────────────────────────────────────────
+   Ink wipe: an inverted state floods in from the left, the way ink runs
+   along a stroke. It is one gradient layer, so it composes with each
+   control's own background colour; --wipe is the ink (black on paper). */
+.text-btn, .pill-btn, .edit-toggle, .mini-btn, .align-btn, .export-btn.secondary {
+  background-image: linear-gradient(var(--wipe, var(--hi)), var(--wipe, var(--hi)));
+  background-repeat: no-repeat; background-position: left center; background-size: 0% 100%;
+  transition: background-size var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t-fast) linear;
+}
+.pill-btn.active, .edit-toggle.active, .mini-btn.on, .align-btn.active {
+  background-size: 100% 100%; color: var(--hi-ink); border-color: var(--hi);
+}
+@media (hover: hover) {
+  .text-btn:hover, .export-btn.secondary:hover {
+    background-size: 100% 100%; color: var(--hi-ink); border-color: var(--hi);
+  }
+}
+.text-btn:disabled:hover, .export-btn.secondary:disabled:hover { background-size: 0% 100%; color: var(--fg); border-color: var(--edge); }
+
+/* Liquid fill: the main action fills from below. A slowly turning rounded
+   square rises behind the label (its top edge is the wobbling meniscus) and a
+   difference blend inverts exactly what it covers, label included. Keyboard
+   focus fills it too; while it works ("Pouring…") it stays full and turning. */
+/* Fixed size, so the meniscus is the same on every button: it parks 14px
+   below the bottom edge (clear of its ~13px wobble) and rises 72px, which
+   covers a 34px button with its sag and wobble to spare. Transform only, so
+   it keeps moving while an export blocks the page. */
+.export-btn:not(.secondary)::after {
+  content: ''; position: absolute; z-index: 1; left: 50%; top: 100%; pointer-events: none;
+  width: 260px; height: 260px; margin-left: -130px; border-radius: 40%;
+  background: #fff; mix-blend-mode: difference;
+  translate: 0 14px;
+  animation: liquid-turn 4.5s linear infinite paused;
+  transition: translate 420ms var(--ease);                       /* drains quickly */
+}
+@keyframes liquid-turn { to { rotate: 360deg; } }
+.export-btn:not(.secondary):focus-visible::after,
+.export-btn:not(.secondary)[disabled]::after {
+  translate: 0 -72px; animation-play-state: running;
+  transition: translate 900ms cubic-bezier(0.45, 0.05, 0.25, 1);  /* fills slowly */
+}
+@media (hover: hover) {
+  .export-btn:not(.secondary):hover::after {
+    translate: 0 -72px; animation-play-state: running;
+    transition: translate 900ms cubic-bezier(0.45, 0.05, 0.25, 1);
+  }
+}
+
+/* -------------------------------------------------------------------- misc */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb { background: #2c2c2c; border: 2px solid var(--bg); border-radius: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+
+.toast {
+  position: fixed; bottom: 96px; left: 50%; transform: translate(-50%, 10px); max-width: calc(100vw - 32px);
+  background: var(--hi); color: var(--hi-ink); font-family: var(--mono);
+  font-size: 11.5px; font-weight: 600; padding: 10px 18px; border-radius: 2px;
+  opacity: 0; pointer-events: none; z-index: 100;
+  transition: opacity var(--t) var(--ease), transform var(--t-slow) var(--ease);
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ── About & licence ──────────────────────────────────────────────────
+   Native dialog, drawn in the same panel terms as the rest of the app. */
+.about-dialog {
+  width: min(430px, 90vw);
+  padding: 22px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--fg);
+}
+.about-dialog::backdrop { background: rgba(0, 0, 0, 0.7); }
+.about-close { position: absolute; top: 14px; right: 14px; padding: 4px 9px; }
+.about-title {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+}
+.about { margin: 0; }
+.about dt {
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted); margin-top: 13px;
+}
+.about dt:first-child { margin-top: 0; }
+.about dd { margin: 4px 0 0; font-size: 12px; line-height: 1.6; color: var(--fg); }
+.about a {
+  color: var(--fg); text-decoration: underline; text-underline-offset: 2px;
+  transition: text-underline-offset var(--t-fast) var(--ease);
+}
+.about a:hover { text-underline-offset: 4px; }
+.about-note {
+  margin: 18px 0 0; padding-top: 12px; border-top: 1px solid var(--line-soft);
+  font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: 0.06em; color: var(--muted);
+}
+.keys dt { color: var(--fg); }
+.keys dd { color: var(--muted); margin-top: 2px; }
+
+/* Motion is a cue, never the only one: with reduced motion every state still
+   lands (instantly), and the drip and marching rings hold still. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────
+   Below a laptop width the control bar scrolls sideways instead of
+   wrapping its exports to a second row; below tablet width the editor
+   stacks above the specimen and the page itself scrolls. */
+@media (max-width: 1180px) {
+  .control-bar { flex-wrap: nowrap; overflow-x: auto; }
+  /* the exports stay pinned in view while the rest of the bar scrolls */
+  .control-bar { scroll-padding-right: 300px; }
+  .export-group {
+    position: sticky; right: -18px; margin-right: -18px; padding: 0 18px 0 14px;
+    align-self: stretch; align-items: flex-end;
+    background: var(--surface); box-shadow: -14px 0 14px -6px var(--surface); z-index: 2;
+  }
+  .topbar { overflow-x: auto; }
+  /* coverage lives in the character-set header too; keep Keys/About on screen */
+  #glyphCountMeta, #glyphCountMeta + .topbar-divider { display: none; }
+  .save-state { max-width: 150px; }
+}
+@media (max-width: 900px) {
+  html { overflow: auto; height: auto; scroll-padding-bottom: 130px; }   /* focus never hides under the sticky bar */
+  body { overflow: visible; height: auto; }
+  #app { height: auto; min-height: 100vh; width: 100%; }
+  .topbar { gap: 10px; padding: 0 12px; }
+  .topbar-meta, .swatch-row, .topbar-divider { display: none; }
+  .fontname-input { width: 110px; min-width: 96px; flex-shrink: 0; }
+  .project-group { flex-shrink: 0; }
+  .workspace { flex-direction: column; overflow: visible; }
+  .editor-panel { width: 100%; min-width: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+  .editor-canvas-wrap { width: 100%; max-width: 360px; margin: 0 auto; }
+  .specimen-panel { min-height: 70vh; }
+  .specimen-scroll { overflow: visible; }
+  .tester-head { padding: 10px 16px; gap: 12px; }
+  .tester-body { padding: 18px 16px 0; overflow: hidden; }
+  .add-block-row, .glyphset { padding-left: 16px; padding-right: 16px; }
+  .control-bar { position: sticky; bottom: 0; z-index: 5; padding: 10px 12px; }
+}
