@@ -1,0 +1,17 @@
+Bundled export dependencies
+
+opentype.js 2.0.0 — MIT — https://github.com/opentypejs/opentype.js
+  dist/opentype.min.mjs from the npm release, renamed .js for the static server.
+  Source-map trailer removed; implementation unchanged.
+  Release SHA-1: b87fcec8107075aabb6f50fe5e6bb4d8db6c8c7d
+
+clipper-lib 6.4.2 (JavaScript port 6.4.2.2) — Boost Software License 1.0
+  https://sourceforge.net/projects/jsclipper/
+  clipper.js from the npm release with a module.exports shim and an ES default
+  export. Upstream code and embedded attribution remain intact.
+  Release SHA-1: f2444d87913aaea8312f9e26421b0843f4149e87
+  The bundled JSBN subset copyright and attribution are in clipper.js; its
+  license is preserved in LICENSE-jsbn.txt (from the jsbn 1.1.0 distribution).
+
+Libraries are served locally. Font generation sends no drawings to an external
+service and requires no CDN, package installation, or Python at runtime.

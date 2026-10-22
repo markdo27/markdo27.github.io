@@ -54,6 +54,8 @@ const SHOTS = [
     steps: [{ wait: 3500 }], focus: 'centre' },
   { slug: 'liquid-font', url: `${GH}/generativefont_creator/`,
     steps: [{ wait: 3000 }], clip: '.specimen-panel' },
+  { slug: 'overdot', url: `${GH}/overdot/`,
+    steps: [{ wait: 2500 }], clip: '#hero', fit: 'contain', background: '#111111' },
   { slug: 'typeforge', url: `${GH}/fontconvertswift/`,
     // Empty, it is a drop zone. With a font in it, it is a specimen and a
     // set of formats to convert to, which is what the tool is for.

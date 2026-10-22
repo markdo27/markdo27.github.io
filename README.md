@@ -20,6 +20,7 @@ in CI, not on the page.
 | `thumbs/` | One 800 × 500 WebP per tool cell, named after its `data-tool`. Generated, never edited by hand. |
 | `tools/thumbs/` | The capture script that makes them, and the font it feeds TypeForge. |
 | `.github/workflows/thumbnails.yml` | Runs the capture against the live sites and commits the images. |
+| `overdot/` | Overdot, the modular typeface specimen, tester and editor, hosted as a static build from Moduletext. |
 | `visual/` | Khối, the chrometype studio, hosted here as an offline single-file build. |
 | `liquid-poster/` | Liquid.Poster, the poster tool split out of Liquid.Font. Same origin as the Font tool, so it can draw with the letters you sculpted there. See its README. |
 
@@ -85,7 +86,7 @@ comma.
 
 ## Hover
 
-The nineteen tool cells turn over to `--ink-deep` on hover and focus, type to
+The twenty tool cells turn over to `--ink-deep` on hover and focus, type to
 white, over `.55s`. The lift runs faster at `.25s` so the card still feels
 responsive while the colour is still travelling. The red dot fades in at
 `.35s`. Category bars do not turn over: nothing there is clickable.
@@ -94,16 +95,16 @@ responsive while the colour is still travelling. The red dot fades in at
 
 | Key | Category | Tools |
 | --- | --- | --- |
-| A | Type | 01 to 03 |
-| B | Print & Pattern | 04 to 10 |
-| C | Sound & Visual | 11 to 13 |
-| D | Figma Plugin | 14 to 16 |
-| E | Data & Document | 17 to 19 |
+| A | Type | 01 to 04 |
+| B | Print & Pattern | 05 to 11 |
+| C | Sound & Visual | 12 to 14 |
+| D | Figma Plugin | 15 to 17 |
+| E | Data & Document | 18 to 20 |
 | F | About | Author and contact |
 | G | Legal | Personal use free, commercial on request |
 | H | Contact | dtcmark@gmail.com |
 
-Numbering runs `01` to `19` straight through, across categories. Adding a tool
+Numbering runs `01` to `20` straight through, across categories. Adding a tool
 mid sheet therefore renumbers every card after it, and the two meta
 descriptions in `<head>` spell the total out in words.
 
@@ -118,7 +119,7 @@ floor and lets each one sit as tall as its text. They ride the same
 study and other non commercial work, and any paid, client, brand or resale use
 needs written permission first. The commercial address carries a
 `?subject=Commercial%20use%20request` so those requests arrive sorted. Change
-the terms in one place and they cover all nineteen tools.
+the terms in one place and they cover all twenty tools.
 
 ## Adding a tool
 
@@ -169,7 +170,7 @@ so they carry the date they were listed on this sheet and no update date.
 They are static text. Nothing fetches them, so shipping a change to a tool
 means editing its two dates here as well. A runtime lookup was the other
 option and was not worth it: the GitHub API allows 60 unauthenticated calls an
-hour per visitor, nineteen of them would go on one page load, and it would not
+hour per visitor, twenty of them would go on one page load, and it would not
 cover the Vercel or Figma entries at all.
 
 The **NEW** badge is not written into the markup. A script compares
@@ -189,7 +190,7 @@ grid stays quiet, full colour when the cell turns over on hover. Touch screens
 have no hover, so there they are in colour from the start.
 
 They are captured, not hand-made, by `tools/thumbs/capture.mjs`: headless
-Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All nineteen
+Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All twenty
 come to about 0.4 MB, and they lazy-load, so only the ones on screen are
 fetched.
 
@@ -282,7 +283,7 @@ dashboard, which is what ranks the tools against each other.
 
 Note what that measures. A visitor who goes straight to a tool's own URL never
 touches this page and is not counted. Counting those would mean installing the
-tracker inside every web tool, sixteen of the nineteen; the three Figma
+tracker inside every web tool, seventeen of the twenty; the three Figma
 plugins live on figma.com and cannot carry one.
 
 The footer total is fetched from `/counter/TOTAL.json`. Any failure, offline,

@@ -1,0 +1,68 @@
+{
+ "characters": 5235,
+ "hanzi_common": 4897,
+ "hanzi_simplified": 3524,
+ "hanzi_traditional": 1373,
+ "kanji_joyo": 2136,
+ "kanji_joyo_alternates": [
+  "剥",
+  "填",
+  "頬"
+ ],
+ "by_source": {
+  "makemeahanzi": 3096,
+  "kanjivg": 2139
+ },
+ "files": [
+  [
+   19968,
+   21632,
+   "00-4e00-5480.json"
+  ],
+  [
+   21636,
+   24195,
+   "01-5484-5e83.json"
+  ],
+  [
+   24196,
+   26159,
+   "02-5e84-662f.json"
+  ],
+  [
+   26172,
+   28858,
+   "03-663c-70ba.json"
+  ],
+  [
+   28860,
+   32004,
+   "04-70bc-7d04.json"
+  ],
+  [
+   32005,
+   34892,
+   "05-7d05-884c.json"
+  ],
+  [
+   34893,
+   37237,
+   "06-884d-9175.json"
+  ],
+  [
+   37239,
+   40959,
+   "07-9177-9fff.json"
+  ]
+ ],
+ "sets": {
+  "tgb_level1": 3500,
+  "hsk1_6_characters": 2632,
+  "hsk_not_in_tgb1": 24
+ },
+ "scale": {
+  "min": 0.55,
+  "mean": 0.711
+ },
+ "bytes": 1950024
+}

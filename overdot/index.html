@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overdot · Modular display typeface</title>
+<meta name="description" content="Overdot is a display typeface built from overlapping dots: seven looks, nine styles, 63 fonts. Type into the specimens, redraw any glyph and download OpenType fonts.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Cg fill='%23fff'%3E%3Ccircle cx='9' cy='9' r='4'/%3E%3Ccircle cx='9' cy='23' r='4'/%3E%3Ccircle cx='23' cy='9' r='4'/%3E%3Ccircle cx='23' cy='23' r='4'/%3E%3Ccircle cx='16' cy='16' r='4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#information">Skip to information</a>
+
+<!-- Header: pills, as a foundry page opens. -->
+<header class="site-header" id="siteHeader">
+ <div class="header-group header-left">
+  <a class="pill brand" href="#hero" id="brand" aria-label="Overdot, back to top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>Overdot</a>
+  <details class="menu looks-menu" id="looksMenu">
+   <summary class="pill" aria-haspopup="menu">Looks <span class="caret" aria-hidden="true">▾</span></summary>
+   <div class="menu-panel" role="menu" id="looksMenuList"></div>
+  </details>
+  <a class="pill" href="#information">Information</a>
+ </div>
+ <div class="header-group header-centre">
+  <a class="pill pill-name" href="#styles" id="mainFontPill">Overdot</a>
+  <button class="pill pill-filled" id="exportOTF" type="button">Download <span aria-hidden="true">↗</span></button>
+ </div>
+ <div class="header-group header-right">
+  <button class="pill pill-icon" id="themeToggle" type="button" aria-pressed="false" aria-label="Dark mode" title="Dark mode"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><circle cx="7" cy="7" r="6" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M7 1a6 6 0 0 0 0 12z" fill="currentColor"/></svg></button>
+  <button class="pill" id="openEditor" type="button">Editor</button>
+  <details class="menu project-menu">
+   <summary class="pill" aria-haspopup="menu" aria-label="Project menu">⋯</summary>
+   <div class="menu-panel" role="menu">
+    <button id="undo" type="button" role="menuitem" disabled title="Undo last change (Ctrl/Cmd+Z)">Undo</button>
+    <button id="redo" type="button" role="menuitem" disabled title="Redo last change (Ctrl/Cmd+Shift+Z)">Redo</button>
+    <hr>
+    <button id="saveProject" type="button" role="menuitem">Save project</button>
+    <label class="menu-item" for="loadProject" role="menuitem">Open project</label>
+    <input type="file" id="loadProject" accept=".json" hidden>
+    <button id="export" type="button" role="menuitem">Specimen SVG ↓</button>
+    <hr>
+    <button id="resetAllGlyphs" type="button" role="menuitem">Reset all letters</button>
+   </div>
+  </details>
+ </div>
+</header>
+
+<main id="page">
+ <!-- Hero: the name set huge in the main font, white on black, over the look's own modules. -->
+ <section class="hero" id="hero" aria-label="Overdot">
+  <div class="hero-texture" id="heroTexture" aria-hidden="true"></div>
+  <h1 class="sr-only">Overdot</h1>
+  <p class="hero-eyebrow" id="heroEyebrow"></p>
+  <div class="hero-art" id="heroArt"></div>
+  <p class="hero-hint" id="heroHint"><span>Click the name and type</span></p>
+ </section>
+
+ <div class="page-grid">
+  <nav class="section-nav" id="sectionNav" aria-label="Sections">
+   <span class="section-nav-title">Overdot</span>
+   <a href="#information">Information</a>
+   <a href="#styles">Styles</a>
+   <a href="#tester">Type Tester</a>
+   <a href="#specimen">Specimens</a>
+   <a href="#glyphs">Glyphs</a>
+   <a href="#features">Features</a>
+   <a href="#languages">Languages</a>
+   <a href="#about">About</a>
+  </nav>
+
+  <div class="sections">
+   <!-- Information: name, description, specimen card and the facts table. -->
+   <section class="section intro" id="information" aria-labelledby="introTitle">
+    <div class="intro-grid">
+     <h2 class="intro-name" id="introTitle">Overdot</h2>
+     <div class="intro-copy">
+      <p>A display typeface built from overlapping dots. One set of drawings, drawn seven ways: circles, points, a soft grid, ink traps, diamonds, organic lobes and echoing arcs. Each look comes in nine styles, three weights across three widths, and every glyph stays editable.</p>
+      <p>The fonts are generated live in this page. Choose a look, set it in the tester, redraw a letter in the editor and download OpenType fonts of what you see.</p>
+      <p class="intro-links"><button class="link" id="introDownload" type="button">Download the fonts <span aria-hidden="true">↗</span></button><button class="link" id="introEditor" type="button">Open the Editor <span aria-hidden="true">↗</span></button></p>
+     </div>
+     <div class="intro-card">
+      <div class="intro-aa" id="introAa"></div>
+      <button class="intro-specimen" id="specimenSVG" type="button">Specimen SVG <span aria-hidden="true">↓</span></button>
+     </div>
+    </div>
+    <dl class="facts" id="facts">
+     <div><dt>Category</dt><dd>Display, modular, dot</dd></div>
+     <div><dt>Styles</dt><dd id="factStyles"></dd></div>
+     <div><dt>Main font</dt><dd id="factMain"></dd></div>
+     <div><dt>Version</dt><dd id="factVersion"></dd></div>
+     <div><dt>Designer</dt><dd id="factDesigner"></dd></div>
+     <div><dt>Released</dt><dd id="factReleased"></dd></div>
+     <div><dt>Formats</dt><dd>OTF · SVG</dd></div>
+     <div><dt>Characters</dt><dd id="factCharacters"></dd></div>
+     <div><dt>Languages</dt><dd id="factLanguages"></dd></div>
+     <div><dt>OpenType</dt><dd>tnum · case · sups · ordn · frac · kern · mark · mkmk · blwf · pref</dd></div>
+    </dl>
+   </section>
+
+   <!-- Styles: the nine style names set in themselves, then the seven looks. -->
+   <section class="section styles" id="styles" aria-labelledby="stylesTitle">
+    <div class="section-head"><h2 id="stylesTitle">Styles</h2><span class="section-meta" id="stylesMeta"></span></div>
+    <!-- Axes: one word set live at any weight and width, with the two sliders and a sweep. -->
+    <div class="axes" id="axes">
+     <div class="row-controls axes-controls">
+      <label class="control"><span>Weight.</span><input id="axisWeight" type="range" min="400" max="900" step="1" value="700" aria-label="Weight"><output id="axisWeightOut">700</output></label>
+      <label class="control"><span>Width.</span><input id="axisWidth" type="range" min="70" max="135" step="1" value="100" aria-label="Width"><output id="axisWidthOut">100</output></label>
+      <span class="axes-name" id="axesName"></span>
+      <span class="axes-actions"><button type="button" class="pill" id="axesPlay" aria-pressed="false">Sweep</button><button type="button" class="pill" id="axesUse">Use as main style</button></span>
+     </div>
+     <div class="axes-art" id="axesArt" aria-live="off"></div>
+    </div>
+    <div class="style-names" id="styleNames" role="radiogroup" aria-label="Main style"></div>
+    <div class="section-head sub"><h3 id="looksTitle">Looks</h3><span class="section-meta">Seven ways to draw the same letters. The one you choose is the main font everywhere.</span></div>
+    <div class="looks" id="looks" role="radiogroup" aria-labelledby="looksTitle"></div>
+   </section>
+
+   <!-- Type tester: nine ruled rows, one shared text, typed into directly. -->
+   <section class="section tester" id="tester" aria-labelledby="testerTitle">
+    <div class="section-head"><h2 id="testerTitle">Type Tester</h2><span class="section-meta" id="testerMeta"></span></div>
+    <p class="section-hint" id="testerHint"><strong>Click any line and type.</strong> Each line opens with a different sample; typing in any line sets one text for all nine styles, condensed to extended. <span id="unsupported" class="type-status" aria-live="polite"></span></p>
+    <div class="rows" id="testerRows"></div>
+   </section>
+
+   <!-- Specimens: a waterfall of independent rows, each with its own controls. -->
+   <section class="section specimen" id="specimen" aria-labelledby="specimenTitle">
+    <div class="section-head"><h2 id="specimenTitle">Specimens</h2><span class="section-meta">Showcase rows at 240, 96 and 48 px. Each row keeps its own text, style, size, line height and tracking.</span></div>
+    <div class="rows" id="specimenRows"></div>
+   </section>
+
+   <!-- Glyphs: a sticky record card and the character set by group. -->
+   <section class="section glyphs" id="glyphs" aria-labelledby="glyphsTitle">
+    <div class="section-head"><h2 id="glyphsTitle">Glyphs</h2><span class="section-meta" id="glyphsMeta"></span></div>
+    <div class="glyphs-grid">
+     <aside class="glyph-card" id="glyphCard" aria-live="polite">
+      <div class="glyph-card-art" id="glyphCardArt"></div>
+      <div class="glyph-card-name" id="glyphCardName"></div>
+      <dl class="glyph-record">
+       <div><dt>Character</dt><dd id="glyphCodepoint"></dd></div>
+       <div><dt>Glyph</dt><dd id="glyphName"></dd></div>
+       <div><dt>HTML</dt><dd id="glyphEntity"></dd></div>
+       <div><dt>Advance</dt><dd id="glyphAdvance"></dd></div>
+      </dl>
+      <div class="glyph-card-actions">
+       <select id="glyphStyle" class="pill-select" aria-label="Style shown in the character set"></select>
+       <button class="pill" id="glyphEdit" type="button">Open in Editor <span aria-hidden="true">↗</span></button>
+      </div>
+     </aside>
+     <div class="glyph-groups" id="glyphGroups"></div>
+    </div>
+   </section>
+
+   <!-- Features: off / on pairs. -->
+   <section class="section features" id="features" aria-labelledby="featuresTitle">
+    <div class="section-head"><h2 id="featuresTitle">Features</h2><span class="section-meta">OpenType features compiled into every downloaded font.</span></div>
+    <div class="feature-list" id="featureList"></div>
+   </section>
+
+   <!-- Languages: a filter and the list the character set covers. -->
+   <section class="section languages" id="languages" aria-labelledby="languagesTitle">
+    <div class="languages-grid">
+     <div class="languages-intro">
+      <h2 id="languagesTitle">Language Support</h2>
+      <p>Languages whose letters are all in the character set: Western and Central European, Vietnamese, Indonesian, Malay and Swahili among the Latin-script ones, and the scripts drawn in their own packs. Support is derived from the drawings themselves, so a language appears here only when every letter it needs is drawn.</p>
+     </div>
+     <div class="languages-body">
+      <input id="languageFilter" type="search" placeholder="Filter by name or ISO 639-3" aria-label="Filter languages by name or ISO 639-3 code" autocomplete="off" spellcheck="false">
+      <ul class="language-list" id="languageList"></ul>
+      <p class="language-count" id="languageCount" role="status"></p>
+     </div>
+    </div>
+   </section>
+
+   <!-- About: the designer, set in the face, with a record of projects and links. The entries live in ABOUT in app.js. -->
+   <section class="section about" id="about" aria-labelledby="aboutTitle">
+    <div class="about-grid">
+     <div class="about-intro">
+      <h2 id="aboutTitle">About</h2>
+      <div class="about-name" id="aboutName" aria-hidden="true"></div>
+     </div>
+     <div class="about-body">
+      <div class="about-copy" id="aboutCopy"></div>
+      <dl class="facts about-facts" id="aboutFacts"></dl>
+     </div>
+    </div>
+   </section>
+  </div>
+ </div>
+
+ <footer class="site-footer">
+  <div class="footer-grid">
+   <div class="footer-brand"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><strong>Overdot</strong><span>© 2026</span></div>
+   <div class="footer-col"><h3>Typeface</h3><a href="#information">Information</a><a href="#styles">Styles</a><a href="#tester">Type Tester</a><a href="#specimen">Specimens</a></div>
+   <div class="footer-col"><h3>Character set</h3><a href="#glyphs">Glyphs</a><a href="#features">Features</a><a href="#languages">Languages</a></div>
+   <div class="footer-col"><h3>Studio</h3><a href="#about">About</a><button class="link" id="footerEditor" type="button">Editor</button><button class="link" id="footerDownload" type="button">Download fonts</button></div>
+  </div>
+  <div class="footer-foot"><span id="buildNote"></span><a href="#hero" class="back-to-top">Back to Top <span aria-hidden="true">↑</span></a></div>
+ </footer>
+</main>
+
+<!-- The hidden field every specimen types into; the caret is drawn in the specimen. -->
+<textarea id="text" class="type-input" rows="1" wrap="off" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Sample text. Type to set it in the specimens.">Vortexflamingo
+Tiếng Việt 0123</textarea>
+
+<!-- The Editor: the glyph, its seven looks and the linked character set. -->
+<section id="editorView" class="editor-view" hidden aria-labelledby="editorTitle" role="dialog" aria-modal="true">
+ <div class="editor-bar">
+  <button class="pill" id="closeEditor" type="button"><span aria-hidden="true">←</span> Specimen</button>
+  <span class="editor-title" id="editorTitle">Editor</span>
+  <span class="editor-main" id="editorMain"></span>
+  <div class="editor-bar-actions">
+   <button class="pill" id="editorUndo" type="button" disabled>Undo</button>
+   <button class="pill" id="editorRedo" type="button" disabled>Redo</button>
+   <button class="pill" id="editorExport" type="button">Glyph SVG ↓</button>
+   <button class="pill pill-filled" id="editorDownload" type="button">Download ↗</button>
+  </div>
+ </div>
+ <div class="editor-layout">
+  <div class="editor-rail">
+   <div class="glyph-heading">
+    <button id="previousGlyph" class="pill pill-icon" type="button" aria-label="Previous letter" title="Previous letter (left arrow)">‹</button>
+    <span id="editingLetter">a</span>
+    <button id="nextGlyph" class="pill pill-icon" type="button" aria-label="Next letter" title="Next letter (right arrow)">›</button>
+    <span id="glyphPosition"></span>
+    <div class="glyph-picker" id="glyphPicker"></div>
+   </div>
+   <div id="glyphArt"></div>
+   <div class="editor-tools">
+    <div class="sync-row"><span id="syncLabel">Sync alphabet</span><button id="syncAlphabet" type="button" role="switch" aria-checked="true" aria-labelledby="syncLabel"><span></span></button><output id="syncValue">On</output></div>
+    <p id="syncHint" class="hint">Nearby points in the other letters move with your edit.</p>
+    <div class="edit-actions"><button id="generateSet" class="pill" type="button">Apply proportions to alphabet</button><button id="resetGlyph" class="pill" type="button" title="Restore the default drawings of every letter">Reset all letters</button></div>
+    <p id="syncReadout" class="hint" role="status">Drag a point to move it. Small handles bend the curves.</p>
+    <p class="hint editor-legend" aria-hidden="true"><span class="legend-path">Path</span><span class="legend-point">Point</span><span class="legend-handle">Curve handle</span></p>
+    <div class="module-controls" id="moduleControls" role="group" aria-label="Modules">
+     <div class="module-controls-title">Modules <span id="moduleCount" class="module-count"></span></div>
+     <label class="control"><span>Count.</span><input id="density" type="range" min="0.55" max="1.8" step="0.01" aria-label="How many modules along the path"><output id="densityValue"></output></label>
+     <label class="control"><span>Size.</span><input id="size" type="range" min="26" max="220" step="1" aria-label="Module size"><output id="sizeValue"></output></label>
+     <label class="control"><span>Overlap.</span><input id="overlap" type="range" min="0" max="70" step="1" aria-label="Module overlap"><output id="overlapValue"></output></label>
+     <label class="control" id="roundnessControl"><span>Corners.</span><input id="roundness" type="range" min="0" max="100" step="1" aria-label="Corner roundness of square modules"><output id="roundnessValue"></output></label>
+     <label class="control"><span>Opacity.</span><input id="inkOpacity" type="range" min="15" max="100" step="1" aria-label="Ink opacity: translucent modules build darker ink where they overlap"><output id="inkOpacityValue"></output></label>
+     <p class="hint">Count sets how many modules sit along the path; Opacity below 100 % lets the overlaps build darker ink, as the layered look is drawn.</p>
+    </div>
+    <p id="compositeNote" class="hint composite-note" hidden></p>
+    <details id="pointDetails"><summary>Precise editing</summary><div>
+     <label class="check-label"><input type="checkbox" id="handles" checked> Show points &amp; curves</label>
+     <div class="point-inputs"><label>X <input id="pointX" type="number" step="1" disabled></label><label>Y <input id="pointY" type="number" step="1" disabled></label></div>
+     <details class="path-details"><summary>Path data</summary><label for="skeletonJson" class="field-label">Editable path JSON</label><textarea id="skeletonJson" spellcheck="false"></textarea><button id="applySkeleton" class="pill" type="button">Apply paths</button></details>
+    </div></details>
+   </div>
+  </div>
+  <div class="editor-main-column">
+   <section class="editor-look-wall" aria-labelledby="editorLookTitle">
+    <div class="section-head"><h2 id="editorLookTitle">Seven looks</h2><span class="section-meta">Drag a point. Every look follows; the main font leads.</span></div>
+    <div id="editorLooks" class="look-grid"></div>
+   </section>
+   <section class="linked-alphabet" aria-labelledby="linkedTitle">
+    <div class="section-head"><h2 id="linkedTitle">Character set</h2><span class="section-meta">Choose a glyph to redraw</span></div>
+    <div id="linkedAlphabet"></div>
+    <div class="coverage-note" id="characterCoverage"></div>
+   </section>
+  </div>
+ </div>
+</section>
+
+<dialog id="fontExportDialog" aria-labelledby="fontExportTitle">
+ <form id="fontExportForm">
+  <div class="export-dialog-heading"><h2 id="fontExportTitle">Download the fonts</h2><button type="button" id="closeFontExport" class="pill pill-icon" aria-label="Close font export">×</button></div>
+  <label for="fontName">Font family name</label>
+  <input id="fontName" maxlength="60" placeholder="Overdot" autocomplete="off" aria-describedby="fontIdentity">
+  <label for="fontExportScope">Export</label>
+  <select id="fontExportScope"><option value="current">Current style · one OTF</option><option value="family">Full family · nine OTFs</option></select>
+  <div id="fontSets" class="font-sets"></div>
+  <p id="fontExportSummary"></p>
+  <p id="fontIdentity"></p>
+  <details id="fontInfo" class="font-info"><summary>Font information</summary>
+   <fieldset id="fontInfoFields" class="font-info-grid">
+    <label class="wide">Copyright<input id="fontCopyright" maxlength="200" placeholder="© Year Your name" autocomplete="off"></label>
+    <label>Designer<input id="fontDesigner" maxlength="100" autocomplete="off" placeholder="Mark Do"></label>
+    <label>Foundry or publisher<input id="fontManufacturer" maxlength="100" autocomplete="off"></label>
+    <label>Website<input id="fontWebsite" maxlength="200" inputmode="url" placeholder="https://" autocomplete="off"></label>
+    <label>Vendor ID<input id="fontVendor" maxlength="4" pattern="[A-Za-z0-9]{1,4}" placeholder="NONE" title="One to four letters or numbers" autocomplete="off" spellcheck="false"></label>
+    <label class="wide">License<textarea id="fontLicense" maxlength="1000" rows="2"></textarea></label>
+    <label class="wide">License URL<input id="fontLicenseURL" maxlength="200" inputmode="url" placeholder="https://" autocomplete="off"></label>
+   </fieldset>
+   <p class="hint">Saved inside the font. Leave fields blank to omit them. No license is chosen for you; the rights holder sets the terms.</p>
+  </details>
+  <p id="fontInkNote" class="hint"></p>
+  <p class="hint" id="fontExportHint">The complete character set, using your current drawings and style. Install the downloaded .otf file like any other font.</p>
+  <progress id="fontExportProgress" max="102" value="0" hidden></progress>
+  <p id="fontExportStatus" role="status" aria-live="polite">Ready to export.</p>
+  <div class="export-dialog-actions"><button type="button" class="pill" id="cancelFontExport">Cancel</button><button type="submit" class="pill pill-filled" id="downloadOTF">Download OTF</button></div>
+ </form>
+</dialog>
+<div id="toast" role="status" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+</body>
+</html>
