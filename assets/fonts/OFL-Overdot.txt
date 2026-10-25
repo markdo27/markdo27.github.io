@@ -1,8 +1,8 @@
-Copyright 2024-2024 The Doto Project Authors (https://github.com/oliverlalan/Doto)
+Copyright 2026 The Overdot Project Authors (https://github.com/markdo27/Moduletext)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
+https://openfontlicense.org
 
 
 -----------------------------------------------------------
