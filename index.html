@@ -3,268 +3,484 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>MRKD / Tools</title>
+<title>MRKD / Tools index</title>
 <meta name="description" content="Twenty free design tools and Figma plugins for type, posters, patterns and sound. Nothing to install."/>
 <meta name="author" content="Mark Do"/>
-<meta name="theme-color" content="#000000"/>
-<meta property="og:title" content="MRKD / Tools"/>
+<meta name="theme-color" content="#f2f2f2"/>
+<meta property="og:title" content="MRKD / Tools index"/>
 <meta property="og:description" content="Twenty free design tools and Figma plugins for type, posters, patterns and sound. Nothing to install."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://markdo27.github.io/"/>
 <meta property="og:image" content="https://markdo27.github.io/logo.svg"/>
 <meta name="twitter:card" content="summary"/>
 <link rel="canonical" href="https://markdo27.github.io/"/>
-<link rel="preload" href="assets/fonts/overdot-extended-extrabold.woff2" as="font" type="font/woff2" crossorigin/>
-<link rel="preload" href="assets/fonts/overdot-bold.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="assets/fonts/overdot-extended-bold.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="assets/fonts/overdot-regular.woff2" as="font" type="font/woff2" crossorigin/>
+<link rel="preload" href="assets/fonts/overdot-condensed-regular.woff2" as="font" type="font/woff2" crossorigin/>
 <link rel="icon" href="logo.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="logo.svg"/>
+<script>
+/* Motion is opt in: with JavaScript off or reduced motion on, nothing waits to be revealed. */
+document.documentElement.classList.add('js');
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+</script>
 <style>
-/* Overdot, the dot typeface from Moduletext, sets every word on the page. */
+/* Overdot, from Moduletext, in three cuts: Regular reads, Condensed labels, Extended Bold speaks. */
 @font-face{font-family:Overdot;src:url('assets/fonts/overdot-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:Overdot;src:url('assets/fonts/overdot-bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:'Overdot Extended';src:url('assets/fonts/overdot-extended-extrabold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap}
-/* Arial stretched to Overdot's width, so the swap does not reflow lines. */
-@font-face{font-family:OverdotFB;src:local('Arial'),local('ArialMT');font-weight:400;size-adjust:117.6%}
-@font-face{font-family:OverdotFB;src:local('Arial Bold'),local('Arial-BoldMT');font-weight:700;size-adjust:125%}
+@font-face{font-family:'Overdot Condensed';src:url('assets/fonts/overdot-condensed-regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Overdot Extended';src:url('assets/fonts/overdot-extended-bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap}
 
 :root{
   color-scheme:light;
-  --paper:#fff;
-  --ink:#000;
-  --font:Overdot,OverdotFB,system-ui,sans-serif;
-  --display:'Overdot Extended',Overdot,OverdotFB,system-ui,sans-serif;
-  --pad:16px;
-  --bar:48px;
-  --line:1px solid var(--ink);
-  --fast:.18s cubic-bezier(.2,.7,.2,1);
+  --paper:#f2f2f2;
+  --ink:#0a0a0a;
+  --mute:#636363;
+  --hair:#cfcfcf;
+  --red:#d71921;
+  --night:#0a0a0a;
+  --night-mute:#9b9b9b;
+  --body:Overdot,system-ui,sans-serif;
+  --label:'Overdot Condensed','Arial Narrow',system-ui,sans-serif;
+  --display:'Overdot Extended',Overdot,system-ui,sans-serif;
+  --pad:20px;
+  --max:1320px;
+  --top:52px;
+  --ease:cubic-bezier(.7,0,.2,1);
+  --out:cubic-bezier(.2,.7,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--bar) + 8px)}
-body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.4;-webkit-font-smoothing:antialiased}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:calc(var(--top) + 12px)}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
 ::selection{background:var(--ink);color:var(--paper)}
 a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:var(--pad);top:-80px;z-index:20;padding:12px 16px;background:var(--paper);color:var(--ink)}
-.skip:focus{top:var(--pad)}
+.skip{position:absolute;left:var(--pad);top:-80px;z-index:30;padding:10px 14px;background:var(--ink);color:var(--paper)}
+.skip:focus{top:8px}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
 
-/* ── Hero: the wordmark, white on black, over a field of drifting dots.
-      The canvas paints black with white dots; the type is white with
-      mix-blend-mode:difference, so a dot passing under a letter turns it
-      black. .hero carries isolation:isolate, which is that blend group. */
-.hero{container-type:inline-size;position:relative;isolation:isolate;overflow:hidden;background:#000;color:#fff;padding:var(--pad);display:flex;flex-direction:column}
-.hero canvas{position:absolute;inset:0;z-index:-1;width:100%;height:100%;display:block}
-.hero-top,.mark{mix-blend-mode:difference;color:#fff}
-.hero-top{display:flex;justify-content:space-between;gap:16px;font-size:16px}
-.hero-top a{display:inline-flex;align-items:center;min-height:44px;margin:-12px 0}
-.hero-top a:hover{text-decoration:underline;text-underline-offset:4px}
-.mark{margin-top:clamp(56px,9vw,140px);overflow-wrap:anywhere;font-family:var(--display);font-weight:800;line-height:.8;letter-spacing:-.02em;font-size:calc((100vw - 2 * var(--pad)) / 4.36);font-size:calc(100cqi / 4.36);margin-left:-.05em;padding-top:.12em}
+/* Labels: the spec sheet voice. Small, condensed, tracked, upper case. */
+.lab{font-family:var(--label);font-size:12px;line-height:1.25;letter-spacing:.07em;text-transform:uppercase;font-variant-numeric:tabular-nums}
 
-/* ── Filter: the hero's black carried into a sticky bar; the active
-      word is a white block, the same block language as the NEW tag. */
-.filters{position:sticky;top:0;z-index:5;background:var(--ink);color:var(--paper);box-shadow:0 1px 0 var(--paper);display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.filters::-webkit-scrollbar{display:none}
-.filters[hidden]{display:none}
-.filters button{position:relative;flex:none;white-space:nowrap;display:inline-flex;align-items:center;min-height:var(--bar);padding:0 10px;font-size:16px;line-height:1}
-.filters button:first-child{padding-left:var(--pad)}
-.filters button[aria-pressed="true"]{background:var(--paper);color:var(--ink)}
-.filters button:focus-visible{outline:3px solid currentColor;outline-offset:-5px}
+/* Links that underline from the left on hover. */
+.ul{background:linear-gradient(currentColor,currentColor) no-repeat 0 100%/0 1px;transition:background-size .35s var(--out);padding-bottom:2px}
+.ul:hover,.ul:focus-visible{background-size:100% 1px}
+
+/* ── Top bar ───────────────────────────────────────────────────────── */
+.top{position:sticky;top:0;z-index:10;height:var(--top);background:rgba(242,242,242,.86);-webkit-backdrop-filter:saturate(1.2) blur(12px);backdrop-filter:saturate(1.2) blur(12px);border-bottom:1px solid var(--hair)}
+.top::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ink);transform-origin:0 50%;transform:scaleX(var(--p,0))}
+.top-in{height:100%;display:flex;align-items:center;gap:28px}
+.brand{display:inline-flex;align-items:center;gap:9px;font-family:var(--display);font-size:17px;letter-spacing:.03em;line-height:1}
+.brand i{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center}
+.brand i::after{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;transition:transform .4s var(--out)}
+.brand:hover i::after{transform:scale(1.5)}
+.top-meta{color:var(--mute)}
+.top-nav{margin-left:auto;display:flex;gap:22px}
+.top-nav a{display:inline-flex;align-items:center;min-height:44px}
+.pct{width:4.2ch;text-align:right;color:var(--mute);opacity:0;transition:opacity .3s}
+.pct.on{opacity:1}
+
+/* ── Hero ──────────────────────────────────────────────────────────── */
+.hero{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:end;padding-top:64px;padding-bottom:96px}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--mute)}
+.rec{width:7px;height:7px;border-radius:50%;background:var(--red);flex:none}
+.motion .rec{animation:rec 2.4s steps(1,end) infinite}
+@keyframes rec{0%,79%{opacity:1}80%,100%{opacity:.3}}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(32px,3.9vw,54px);line-height:1.06;letter-spacing:-.012em;margin:24px 0}
+/* Lines slide up out of a mask: the headline on load, section titles on scroll. */
+.ln{display:block;overflow:hidden;padding-bottom:.1em;margin-bottom:-.1em}
+.ln>span{display:inline-block}
+.motion .ln>span{transform:translateY(105%);transition:transform .9s var(--out)}
+.motion.ready h1 .ln>span,.motion h2.in .ln>span{transform:none}
+.motion h1 .ln:nth-child(2)>span{transition-delay:.08s}
+.motion h1 .ln:nth-child(3)>span{transition-delay:.16s}
+.lead{font-size:16px;color:var(--mute);max-width:42ch}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:40px;border-top:1px solid var(--ink)}
+.stats>div{padding:12px 12px 0 0}
+.stats>div+div{border-left:1px solid var(--hair);padding-left:12px}
+.stats dt{color:var(--mute)}
+.stats dd{font-family:var(--display);font-size:20px;line-height:1.1;margin-top:8px;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* The panel: a dot field that wakes up under the pointer, and one Overdot
+   glyph at a time, with its code point, like a specimen sheet. */
+.panel{position:relative;aspect-ratio:5/4;border-radius:22px;overflow:hidden;background:var(--night);color:#fff;user-select:none;-webkit-user-select:none}
+.panel canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.panel-row{position:absolute;left:20px;right:20px;display:flex;justify-content:space-between;align-items:center;gap:12px;color:var(--night-mute)}
+.panel-row.t{top:18px}
+.panel-row.b{bottom:16px}
+.panel-row a{color:#fff;display:inline-flex;align-items:center;min-height:32px}
+.glyph{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;font-family:var(--display);font-size:clamp(130px,16vw,236px);line-height:1;color:#fff;transition:opacity .25s}
+.glyph.out{opacity:0}
+
+/* ── Index ─────────────────────────────────────────────────────────── */
+.index{padding-bottom:104px}
+.index-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 32px;border-top:1px solid var(--ink);padding:24px 0}
+h2{font-family:var(--display);font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.005em;display:flex;align-items:flex-start;gap:8px}
+.motion h2 .ln>span{transition-duration:.7s}
+h2 sup{font-family:var(--label);font-size:12px;letter-spacing:.06em;color:var(--mute);line-height:1;margin-top:2px}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:12px 28px}
+.controls[hidden]{display:none}
+.pills,.sort{display:flex;flex-wrap:wrap;gap:6px}
+.pill{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 13px;border:1px solid var(--hair);border-radius:999px;transition:background-color .25s,color .25s,border-color .25s}
+.pill .n{color:var(--mute);transition:color .25s}
+.pill:hover{border-color:var(--ink)}
+.pill[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.pill[aria-pressed="true"] .n{color:var(--night-mute)}
+.sort{align-items:center;gap:4px;color:var(--mute)}
+.sort .pill{border-color:transparent;padding:0 10px}
+.sort .pill:hover{border-color:var(--hair)}
+
+.cols,.row{display:grid;grid-template-columns:44px minmax(0,1.3fr) minmax(0,1.7fr) 84px 92px 30px;column-gap:20px;align-items:center}
+.cols{padding:0 14px 10px;color:var(--mute);border-bottom:1px solid var(--ink)}
+.cols span:nth-child(5){grid-column:5}
+.list{list-style:none}
+.list>li{border-bottom:1px solid var(--hair)}
+.list>li[hidden]{display:none}
+/* The hover is a white sheet in difference mode wiping in from the left:
+   it turns the row to black and its type to white exactly where it has
+   reached. isolation keeps the blend inside the row. */
+.row{position:relative;isolation:isolate;background:var(--paper);padding:16px 14px;min-height:68px}
+.row::after{content:'';position:absolute;inset:0;z-index:1;background:#fff;mix-blend-mode:difference;transform:scaleX(0);transform-origin:0 50%;transition:transform .34s var(--ease);pointer-events:none}
+.row:focus-visible{outline-offset:-4px;outline-color:var(--paper)}
+.row:focus-visible::after{transform:scaleX(1)}
+.no{color:var(--mute)}
+.title{display:flex;flex-direction:column;gap:5px;min-width:0}
+.name{font-family:var(--display);font-weight:700;font-size:15px;line-height:1.25;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.code{color:var(--mute);font-size:11px}
+.desc{font-size:14px;line-height:1.45;color:var(--mute);max-width:56ch}
+.meta{display:contents}
+.cat{color:var(--ink)}
+.date{color:var(--mute)}
+.go{justify-self:end;width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--hair);border-radius:50%;transition:transform .45s var(--out),border-color .3s}
+.go svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.3}
+/* NEW stays red through the hover: it sits above the blend layer. */
+.new{position:relative;z-index:2;display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:999px;background:var(--red);color:#fff;font-family:var(--label);font-size:11px;letter-spacing:.07em;line-height:1;text-transform:uppercase}
 @media (hover:hover){
-  .filters button[aria-pressed="false"]:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+  .row:hover::after{transform:scaleX(1)}
+  .row:hover .go{transform:rotate(45deg);border-color:var(--ink)}
 }
-@media (pointer:fine){.filters{scrollbar-width:thin}}
 
-/* ── Index: one ruled grid, every cell a tool. Borders collapse by
-      pulling each cell 1px over its neighbours. */
-.grid{list-style:none;display:grid;grid-auto-flow:dense;background:var(--ink);grid-template-columns:repeat(2,minmax(0,1fr));padding:0 0 1px 1px}
-.grid>li{display:flex}
-.grid>li[hidden]{display:none}
-.tool{position:relative;flex:1;display:flex;flex-direction:column;border:var(--line);margin:0 0 -1px -1px;background:var(--paper);transition:background var(--fast),color var(--fast)}
-.thumb{aspect-ratio:8/5;overflow:hidden;background:#000;border-bottom:var(--line)}
-.thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.3);transition:filter var(--fast)}
-.name{display:block;padding:10px 10px 12px;font-size:14px;font-weight:700;line-height:1.2}
-/* One tile leads: the typeface this page is set in. */
-.grid>li.feature{grid-column:span 2}
-.feature .name{font-family:var(--display);font-weight:800;font-size:clamp(20px,2.6vw,36px);letter-spacing:-.01em}
-.new{position:absolute;top:0;right:0;padding:6px 8px;font-size:12px;font-weight:700;line-height:1;background:var(--ink);color:var(--paper);outline:1px solid var(--paper)}
-.tool:hover,.tool:focus-visible{z-index:1;background:var(--ink);color:var(--paper);outline-offset:-5px}
-.tool:hover .new,.tool:focus-visible .new{background:var(--paper);color:var(--ink)}
-.tool:hover .thumb img,.tool:focus-visible .thumb img{filter:none}
+/* Reveal on scroll. Only with motion on, and only once. */
+.motion .rv{opacity:0;transform:translateY(16px);transition:opacity .7s var(--out),transform .7s var(--out);transition-delay:var(--d,0s)}
+.motion .rv.in{opacity:1;transform:none}
 
-/* ── Footer: the address in the wordmark face, as large as the line allows. */
-.foot{container-type:inline-size;background:#000;color:#fff;padding:56px var(--pad) var(--pad);display:grid;gap:28px}
-.mail{font-family:var(--display);font-weight:800;line-height:1;letter-spacing:-.02em;font-size:calc((100vw - 2 * var(--pad)) / 16.2);font-size:calc(100cqi / 16.2);overflow-wrap:anywhere}
-.mail:hover{text-decoration:underline;text-decoration-thickness:.06em;text-underline-offset:.12em}
-.legal{font-size:14px;max-width:60ch}
-.legal a{text-decoration:underline;text-underline-offset:3px}
-.hits[hidden]{display:none}
+/* The peek: a halftone of the tool, drawn from its thumbnail. It rides a
+   track over the category and date columns, gliding to whichever row is
+   under the pointer, so the name and description stay readable. */
+.peek{position:fixed;left:0;top:0;z-index:20;width:260px;padding:6px 6px 0;border-radius:14px;background:var(--paper);border:1px solid var(--hair);box-shadow:0 10px 28px rgba(0,0,0,.14);pointer-events:none;opacity:0;transition:opacity .2s;will-change:transform}
+.peek.on{opacity:1}
+.peek canvas{display:block;width:248px;height:155px;border-radius:10px}
+.peek .lab{display:flex;justify-content:space-between;gap:12px;padding:9px 4px 10px;color:var(--ink)}
+.peek .lab span:last-child{color:var(--mute)}
 
-@media (max-width:389px){.filters button{padding:0 8px}.filters button:first-child{padding-left:12px}}
-@media (min-width:768px){
-  :root{--pad:24px;--bar:52px}
-  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .grid>li.feature{grid-row:span 2}
-  .feature .thumb{position:relative;flex:1;aspect-ratio:auto;min-height:0}
-  .feature .thumb img{position:absolute;inset:0;object-fit:contain}
-  .name{padding:12px 16px 14px;font-size:16px}
-  .filters button{font-size:18px;padding:0 14px}
+/* ── About ─────────────────────────────────────────────────────────── */
+.about{padding-bottom:104px}
+.about .index-head{padding-bottom:32px}
+.about-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px}
+.about-grid .lab{color:var(--mute);margin-bottom:10px}
+.about-grid p:not(.lab){max-width:38ch}
+.about-grid a{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.about-grid a:hover{text-decoration-thickness:2px}
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.foot{background:var(--night);color:#fff}
+.foot-in{padding-top:56px;padding-bottom:24px;display:grid;gap:56px}
+.foot .lab{color:var(--night-mute)}
+.mail{display:inline-block;margin-top:12px;font-family:var(--display);font-weight:700;font-size:clamp(14px,calc((100vw - 2 * var(--pad)) / 15.6),48px);line-height:1.05;letter-spacing:-.01em;overflow-wrap:anywhere}
+.mail.ul{background-size:0 2px;padding-bottom:4px}
+.mail.ul:hover,.mail.ul:focus-visible{background-size:100% 2px}
+.foot-meta{display:flex;flex-wrap:wrap;gap:10px 28px;border-top:1px solid #2a2a2a;padding-top:16px}
+.foot-meta a{color:#fff}
+.foot-meta .end{margin-left:auto}
+
+/* ── Sizes ─────────────────────────────────────────────────────────── */
+@media (max-width:1023px){
+  .hero{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:32px;padding-top:48px;padding-bottom:72px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats>div:nth-child(n+3){margin-top:14px}
+  .stats>div:nth-child(3){border-left:0;padding-left:0}
+  .panel{aspect-ratio:1/1}
+  .cols,.row{grid-template-columns:36px minmax(0,1.25fr) minmax(0,1.25fr) 92px 30px}
+  .cols span:nth-child(4),.cat{display:none}
+  .cols span:nth-child(5){grid-column:4}
 }
-@media (min-width:1024px){
-  :root{--pad:40px;--bar:56px}
-  .grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .name{font-size:18px}
-  .filters button{padding:0 18px}
-  .foot{padding-top:96px}
+@media (max-width:767px){
+  :root{--pad:16px;--top:48px}
+  .top-meta,.pct{display:none}
+  .top-nav{gap:16px}
+  .hero{grid-template-columns:1fr;padding-top:36px;padding-bottom:56px}
+  .lead{font-size:15px}
+  .stats{margin-top:32px}
+  .stats dd{font-size:min(20px,5vw)}
+  .panel{aspect-ratio:2/1;border-radius:18px}
+  .glyph{font-size:96px}
+  .controls{width:100%}
+  .pills{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 calc(-1 * var(--pad));padding:0 var(--pad);width:calc(100% + 2 * var(--pad))}
+  .pills::-webkit-scrollbar{display:none}
+  .pills{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 40px),transparent)}
+  .pills.end{-webkit-mask-image:none;mask-image:none}
+  .pill{flex:none}
+  .cols{display:none}
+  .index-head{border-bottom:1px solid var(--ink)}
+  .row{grid-template-columns:24px minmax(0,1fr) 30px;grid-template-areas:"no title go" ". desc go" ". meta .";gap:6px 12px;padding:14px 2px;align-items:start}
+  .no{grid-area:no;padding-top:2px}
+  .title{grid-area:title;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:10px}
+  .desc{grid-area:desc}
+  .meta{grid-area:meta;display:flex;gap:14px}
+  .cat{display:inline}
+  .go{grid-area:go}
+  .about-grid{grid-template-columns:1fr;gap:24px}
+  .foot-meta .end{margin-left:0}
 }
-@media (max-height:420px){.filters{position:static}html{scroll-padding-top:0}.feature .thumb{aspect-ratio:16/5}}
+@media (max-width:340px){
+  .top-in{gap:12px}
+  .brand{font-size:15px}
+  .top-nav{gap:12px}
+}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{transition:none!important}
+  *,*::before,*::after{transition:none!important;animation:none!important}
 }
 </style>
 </head>
 <body>
-<a class="skip" href="#main">Skip to the tools</a>
+<a class="skip" href="#index">Skip to the tools</a>
 
-<header class="hero">
-  <canvas aria-hidden="true"></canvas>
-  <div class="hero-top"><span>Free design tools by Mark Do</span><a href="#contact">Contact</a></div>
-  <h1 class="mark">MRKD</h1>
+<header class="top" id="top">
+  <div class="top-in wrap">
+    <a class="brand" href="#top" aria-label="MRKD, back to top"><i aria-hidden="true"></i>MRKD</a>
+    <span class="top-meta lab">Tools index / 2026</span>
+    <nav class="top-nav lab" aria-label="Sections">
+      <a class="ul" href="#index">Index</a>
+      <a class="ul" href="#about">About</a>
+      <a class="ul" href="#contact">Contact</a>
+    </nav>
+    <span class="pct lab" aria-hidden="true">000%</span>
+  </div>
 </header>
 
 <main id="main">
-  <nav class="filters" aria-label="Filter tools by category" hidden>
-    <button type="button" data-filter="all" aria-pressed="true">All</button>
-    <button type="button" data-filter="type" aria-pressed="false">Type</button>
-    <button type="button" data-filter="print" aria-pressed="false">Print</button>
-    <button type="button" data-filter="sound" aria-pressed="false">Sound</button>
-    <button type="button" data-filter="figma" aria-pressed="false">Figma</button>
-    <button type="button" data-filter="data" aria-pressed="false">Utility</button>
-  </nav>
-  <p class="sr-only" id="shown" role="status"></p>
+  <section class="hero wrap" aria-labelledby="hero-h">
+    <div>
+      <p class="eyebrow lab"><span class="rec" aria-hidden="true"></span>Independent design tools by Mark Do</p>
+      <h1 id="hero-h"><span class="ln"><span>Free tools for</span></span><span class="ln"><span>type, print</span></span><span class="ln"><span>and sound.</span></span></h1>
+      <p class="lead">Twenty small browser tools and Figma plugins, built for my own work. No account, nothing to install. Open one and make something.</p>
+      <dl class="stats">
+        <div><dt class="lab">Tools</dt><dd>20</dd></div>
+        <div><dt class="lab">New this month</dt><dd id="stat-new">03</dd></div>
+        <div><dt class="lab">Price</dt><dd>Free</dd></div>
+        <div><dt class="lab">Last update</dt><dd id="stat-last">2026.10.22</dd></div>
+      </dl>
+    </div>
 
-  <h2 class="sr-only" id="tools-h">Tools</h2>
-  <ol class="grid" role="list" aria-labelledby="tools-h">
+    <figure class="panel" aria-label="Overdot specimen">
+      <canvas aria-hidden="true"></canvas>
+      <div class="panel-row t lab" aria-hidden="true"><span>Fig. 01 / Set in Overdot</span><span class="cp">U+0041</span></div>
+      <div class="glyph" aria-hidden="true">A</div>
+      <figcaption class="panel-row b lab"><span>Extended Bold</span><a class="ul" href="https://markdo27.github.io/overdot/" target="_blank" rel="noopener">Open the typeface<span class="sr-only"> (opens in a new tab)</span></a></figcaption>
+    </figure>
+  </section>
 
-    <!-- Type -->
-    <li class="feature" data-cat="type"><a class="tool" data-tool="overdot" data-released="2026-10-22" data-updated="2026-10-22" href="https://markdo27.github.io/overdot/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/overdot.webp" alt="" width="800" height="500" fetchpriority="high" decoding="async"></span>
-      <span class="name">Overdot typeface</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
+  <section class="index wrap" id="index" aria-labelledby="index-h">
+    <div class="index-head">
+      <h2 id="index-h"><span class="ln"><span>The index</span></span><sup aria-hidden="true">20</sup></h2>
+      <div class="controls lab" hidden>
+        <div class="pills" role="group" aria-label="Filter by category">
+          <button class="pill" type="button" data-filter="all" aria-pressed="true">All <span class="n">20</span></button>
+          <button class="pill" type="button" data-filter="type" aria-pressed="false">Type <span class="n">06</span></button>
+          <button class="pill" type="button" data-filter="print" aria-pressed="false">Print <span class="n">06</span></button>
+          <button class="pill" type="button" data-filter="sound" aria-pressed="false">Sound <span class="n">02</span></button>
+          <button class="pill" type="button" data-filter="figma" aria-pressed="false">Figma <span class="n">03</span></button>
+          <button class="pill" type="button" data-filter="data" aria-pressed="false">Utility <span class="n">03</span></button>
+        </div>
+        <div class="sort" role="group" aria-label="Sort">
+          <span aria-hidden="true">Sort</span>
+          <button class="pill" type="button" data-sort="index" aria-pressed="true">Index</button>
+          <button class="pill" type="button" data-sort="date" aria-pressed="false">Latest</button>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" id="shown" role="status"></p>
 
-    <li data-cat="type"><a class="tool" data-tool="circle" data-released="2026-08-12" data-updated="2026-08-15" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/circle.webp" alt="" width="800" height="500" decoding="async"></span>
-      <span class="name">Grid typeface builder</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
+    <div class="cols lab" aria-hidden="true"><span>No.</span><span>Tool</span><span>What it does</span><span>Category</span><span>Updated</span></div>
+    <ol class="list" role="list">
+      <li data-cat="type" data-date="2026-10-22"><a class="row" data-tool="overdot" data-released="2026-10-22" href="https://markdo27.github.io/overdot/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">01</span>
+        <span class="title"><span class="name">Overdot typeface</span><span class="code lab" aria-hidden="true">OVERDOT</span></span>
+        <span class="desc">Build letters from overlapping dots in seven looks. Test nine styles, redraw glyphs, export OpenType.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-10-22"><span class="sr-only">Updated </span>2026.10.22</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="type" data-date="2026-08-15"><a class="row" data-tool="circle" data-released="2026-08-12" href="https://circlefont.vercel.app" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">02</span>
+        <span class="title"><span class="name">Grid typeface builder</span><span class="code lab" aria-hidden="true">CIRCLE</span></span>
+        <span class="desc">Draw letterforms on a modular grid, then export an installable OpenType font.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-08-15"><span class="sr-only">Updated </span>2026.08.15</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="type" data-date="2026-08-16"><a class="row" data-tool="typoman" data-released="2026-04-20" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">03</span>
+        <span class="title"><span class="name">Kinetic type animator</span><span class="code lab" aria-hidden="true">TYPOMAN</span></span>
+        <span class="desc">Set letters in motion on a timeline and export the animation.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-08-16"><span class="sr-only">Updated </span>2026.08.16</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="type" data-date="2026-10-19"><a class="row" data-tool="liquid-font" data-released="2026-07-31" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">04</span>
+        <span class="title"><span class="name">Liquid font generator</span><span class="code lab" aria-hidden="true">LIQUID.FONT</span></span>
+        <span class="desc">Melt and reflow letterforms into a typeface you can install.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-10-19"><span class="sr-only">Updated </span>2026.10.19</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="type" data-date="2026-10-16"><a class="row" data-tool="visual" data-released="2026-10-07" href="https://markdo27.github.io/visual/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">05</span>
+        <span class="title"><span class="name">3D chrome type</span><span class="code lab" aria-hidden="true">VISUAL</span></span>
+        <span class="desc">Paint letters in chrome, plasticine, metal or wood with real depth, then orbit them in 3D.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-10-16"><span class="sr-only">Updated </span>2026.10.16</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="type" data-date="2026-09-02"><a class="row" data-tool="nuftext" data-released="2026-08-24" href="https://markdo27.github.io/nuftext/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">06</span>
+        <span class="title"><span class="name">Heat glow type</span><span class="code lab" aria-hidden="true">NUFTEXT</span></span>
+        <span class="desc">Drag across the type to melt it and raise a colour halo. Export PNG, WebM or GIF.</span>
+        <span class="meta"><span class="cat lab">Type</span><time class="date lab" datetime="2026-09-02"><span class="sr-only">Updated </span>2026.09.02</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-08-03"><a class="row" data-tool="fractured" data-released="2026-08-02" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">07</span>
+        <span class="title"><span class="name">Brutalist poster generator</span><span class="code lab" aria-hidden="true">FRACTURED</span></span>
+        <span class="desc">Generative brutalist posters, reshuffled until one lands.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-08-03"><span class="sr-only">Updated </span>2026.08.03</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-08-15"><a class="row" data-tool="mosaic" data-released="2026-07-03" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">08</span>
+        <span class="title"><span class="name">Mosaic tile generator</span><span class="code lab" aria-hidden="true">MOSAIC</span></span>
+        <span class="desc">Set text or a logo in ceramic mosaic tiles. Export PNG or SVG.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-08-15"><span class="sr-only">Updated </span>2026.08.15</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-08-15"><a class="row" data-tool="pattern-typo" data-released="2026-06-26" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">09</span>
+        <span class="title"><span class="name">SVG pattern generator</span><span class="code lab" aria-hidden="true">PATTERN TYPO</span></span>
+        <span class="desc">Pick a pattern and palette, add a type layer, export a tileable SVG.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-08-15"><span class="sr-only">Updated </span>2026.08.15</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-09-02"><a class="row" data-tool="burnt-noise" data-released="2026-08-16" href="https://markdo27.github.io/Burnt-Noise/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">10</span>
+        <span class="title"><span class="name">Burnt glow posters</span><span class="code lab" aria-hidden="true">BURNT NOISE</span></span>
+        <span class="desc">Melt type, a logo or an SVG into thermal fluid, then scan it dirty.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-09-02"><span class="sr-only">Updated </span>2026.09.02</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-09-02"><a class="row" data-tool="saigon-1985" data-released="2026-09-02" href="https://markdo27.github.io/vietnamsesignage/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">11</span>
+        <span class="title"><span class="name">Saigon sign maker</span><span class="code lab" aria-hidden="true">SAIGON 1985</span></span>
+        <span class="desc">A street of Vietnamese shop signs. Edit any line, switch 1985 paint for 2010 vinyl.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-09-02"><span class="sr-only">Updated </span>2026.09.02</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="print" data-date="2026-10-19"><a class="row" data-tool="liquid-poster" data-released="2026-10-19" href="https://markdo27.github.io/liquid-poster/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">12</span>
+        <span class="title"><span class="name">Liquid type posters</span><span class="code lab" aria-hidden="true">LIQUID.POSTER</span></span>
+        <span class="desc">Pour dripping letters into a poster, Vietnamese included. Export PNG or SVG.</span>
+        <span class="meta"><span class="cat lab">Print</span><time class="date lab" datetime="2026-10-19"><span class="sr-only">Updated </span>2026.10.19</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="sound" data-date="2026-06-02"><a class="row" data-tool="musicbox" data-released="2026-05-30" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">13</span>
+        <span class="title"><span class="name">Beat maker</span><span class="code lab" aria-hidden="true">MUSICBOX</span></span>
+        <span class="desc">A step sequencer in the browser with Strudel samples, genre presets and save slots.</span>
+        <span class="meta"><span class="cat lab">Sound</span><time class="date lab" datetime="2026-06-02"><span class="sr-only">Updated </span>2026.06.02</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="sound" data-date="2026-08-16"><a class="row" data-tool="dead4rat" data-released="2026-04-05" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">14</span>
+        <span class="title"><span class="name">Music-reactive visuals</span><span class="code lab" aria-hidden="true">DEAD4RAT</span></span>
+        <span class="desc">A live VJ engine with audio reactivity, webcam input, gesture tracking and shaders.</span>
+        <span class="meta"><span class="cat lab">Sound</span><time class="date lab" datetime="2026-08-16"><span class="sr-only">Updated </span>2026.08.16</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="figma" data-date="2026-08-21"><a class="row" data-tool="eps-importer" data-released="2026-08-21" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">15</span>
+        <span class="title"><span class="name">EPS to Figma</span><span class="code lab" aria-hidden="true">EPS IMPORTER</span></span>
+        <span class="desc">Open EPS artwork in Figma as editable vectors. Converts on your machine.</span>
+        <span class="meta"><span class="cat lab">Figma</span><time class="date lab" datetime="2026-08-21"><span class="sr-only">Released </span>2026.08.21</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="figma" data-date="2026-08-26"><a class="row" data-tool="pdf-importer" data-released="2026-08-26" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">16</span>
+        <span class="title"><span class="name">PDF to Figma</span><span class="code lab" aria-hidden="true">PDF IMPORTER</span></span>
+        <span class="desc">Bring PDF pages into Figma as frames with live, editable text.</span>
+        <span class="meta"><span class="cat lab">Figma</span><time class="date lab" datetime="2026-08-26"><span class="sr-only">Released </span>2026.08.26</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="figma" data-date="2026-08-27"><a class="row" data-tool="website-importer" data-released="2026-08-27" href="https://www.figma.com/community/plugin/1674297961569861299/free-html-to-figma" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">17</span>
+        <span class="title"><span class="name">Website to Figma</span><span class="code lab" aria-hidden="true">HTML TO FIGMA</span></span>
+        <span class="desc">Paste a URL, get the page back as editable Figma layers and styles.</span>
+        <span class="meta"><span class="cat lab">Figma</span><time class="date lab" datetime="2026-08-27"><span class="sr-only">Released </span>2026.08.27</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="data" data-date="2026-09-21"><a class="row" data-tool="typeforge" data-released="2026-09-21" href="https://markdo27.github.io/fontconvertswift/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">18</span>
+        <span class="title"><span class="name">Font converter &amp; renamer</span><span class="code lab" aria-hidden="true">TYPEFORGE</span></span>
+        <span class="desc">Convert WOFF2, WOFF, TTF and OTF without losing kerning. Rename a whole family.</span>
+        <span class="meta"><span class="cat lab">Utility</span><time class="date lab" datetime="2026-09-21"><span class="sr-only">Updated </span>2026.09.21</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="data" data-date="2026-05-12"><a class="row" data-tool="translaate" data-released="2026-05-12" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">19</span>
+        <span class="title"><span class="name">Document translator</span><span class="code lab" aria-hidden="true">TRANSLAATE</span></span>
+        <span class="desc">Translate a document and keep its original layout.</span>
+        <span class="meta"><span class="cat lab">Utility</span><time class="date lab" datetime="2026-05-12"><span class="sr-only">Updated </span>2026.05.12</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+      <li data-cat="data" data-date="2026-05-02"><a class="row" data-tool="vietlot" data-released="2026-04-27" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
+        <span class="no lab" aria-hidden="true">20</span>
+        <span class="title"><span class="name">Vietlott lottery stats</span><span class="code lab" aria-hidden="true">VIETLOT</span></span>
+        <span class="desc">Power 6/55 and Mega 6/45 statistics: hot and cold numbers, draw gaps, scored sets.</span>
+        <span class="meta"><span class="cat lab">Utility</span><time class="date lab" datetime="2026-05-02"><span class="sr-only">Updated </span>2026.05.02</time></span>
+        <span class="go" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 8.5 8.5 3.5M4.5 3.5H8.5V7.5"/></svg></span><span class="sr-only"> (opens in a new tab)</span>
+      </a></li>
+    </ol>
+  </section>
 
-    <li data-cat="type"><a class="tool" data-tool="typoman" data-released="2026-04-20" data-updated="2026-08-16" href="https://markdo27.github.io/typoman/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/typoman.webp" alt="" width="800" height="500" decoding="async"></span>
-      <span class="name">Kinetic type animator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="type"><a class="tool" data-tool="liquid-font" data-released="2026-07-31" data-updated="2026-10-19" href="https://markdo27.github.io/generativefont_creator/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/liquid-font.webp" alt="" width="800" height="500" decoding="async"></span>
-      <span class="name">Liquid font generator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="type"><a class="tool" data-tool="visual" data-released="2026-10-07" data-updated="2026-10-16" href="https://markdo27.github.io/visual/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/visual.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">3D chrome type</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="type"><a class="tool" data-tool="nuftext" data-released="2026-08-24" data-updated="2026-09-02" href="https://markdo27.github.io/nuftext/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/nuftext.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Heat glow type</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <!-- Print and pattern -->
-    <li data-cat="print"><a class="tool" data-tool="fractured" data-released="2026-08-02" data-updated="2026-08-03" href="https://poster-generator-jet.vercel.app" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/fractured.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Brutalist poster generator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="print"><a class="tool" data-tool="mosaic" data-released="2026-07-03" data-updated="2026-08-15" href="https://markdo27.github.io/mosaic_art/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/mosaic.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Mosaic tile generator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="print"><a class="tool" data-tool="pattern-typo" data-released="2026-06-26" data-updated="2026-08-15" href="https://markdo27.github.io/pattern_typo/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/pattern-typo.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">SVG pattern generator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="print"><a class="tool" data-tool="burnt-noise" data-released="2026-08-16" data-updated="2026-09-02" href="https://markdo27.github.io/Burnt-Noise/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/burnt-noise.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Burnt glow posters</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="print"><a class="tool" data-tool="saigon-1985" data-released="2026-09-02" data-updated="2026-09-02" href="https://markdo27.github.io/vietnamsesignage/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/saigon-1985.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Saigon sign maker</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="print"><a class="tool" data-tool="liquid-poster" data-released="2026-10-19" data-updated="2026-10-19" href="https://markdo27.github.io/liquid-poster/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/liquid-poster.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Liquid type posters</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <!-- Sound and visual -->
-    <li data-cat="sound"><a class="tool" data-tool="musicbox" data-released="2026-05-30" data-updated="2026-06-02" href="https://markdo27.github.io/musicbox/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/musicbox.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Beat maker</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="sound"><a class="tool" data-tool="dead4rat" data-released="2026-04-05" data-updated="2026-08-16" href="https://markdo27.github.io/dead4rat-v3/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/dead4rat.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Music-reactive visuals</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <!-- Figma plugins -->
-    <li data-cat="figma"><a class="tool" data-tool="eps-importer" data-released="2026-08-21" href="https://www.figma.com/community/plugin/1672276000158452389/eps-importer" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/eps-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">EPS to Figma</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="figma"><a class="tool" data-tool="pdf-importer" data-released="2026-08-26" href="https://www.figma.com/community/plugin/1673270708025158573/free-pdf-importer" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/pdf-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">PDF to Figma</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="figma"><a class="tool" data-tool="website-importer" data-released="2026-08-27" href="https://www.figma.com/community/plugin/1674297961569861299/free-html-to-figma" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/website-importer.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Website to Figma</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <!-- Data and documents -->
-    <li data-cat="data"><a class="tool" data-tool="typeforge" data-released="2026-09-21" data-updated="2026-09-21" href="https://markdo27.github.io/fontconvertswift/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/typeforge.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Font converter &amp; renamer</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="data"><a class="tool" data-tool="translaate" data-released="2026-05-12" data-updated="2026-05-12" href="https://translate-doc-nine.vercel.app" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/translaate.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Document translator</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-    <li data-cat="data"><a class="tool" data-tool="vietlot" data-released="2026-04-27" data-updated="2026-05-02" href="https://markdo27.github.io/vietlot_predict/" target="_blank" rel="noopener">
-      <span class="thumb"><img src="thumbs/vietlot.webp" alt="" width="800" height="500" loading="lazy" decoding="async"></span>
-      <span class="name">Vietlott lottery stats</span><span class="sr-only"> (opens in a new tab)</span>
-    </a></li>
-
-  </ol>
+  <section class="about wrap" id="about" aria-labelledby="about-h">
+    <div class="index-head">
+      <h2 id="about-h"><span class="ln"><span>About</span></span></h2>
+    </div>
+    <div class="about-grid">
+      <div class="rv"><p class="lab">The work</p><p>Mark Do, designer. Every tool here is designed, built and maintained by me, and runs in the browser.</p></div>
+      <div class="rv" style="--d:.08s"><p class="lab">Personal use</p><p>Free. Use any tool, and anything you make with it, for personal, study and other non-commercial work.</p></div>
+      <div class="rv" style="--d:.16s"><p class="lab">Commercial use</p><p>Ask first. Client, brand, resale and other paid work needs written permission. <a href="mailto:dtcmark@gmail.com?subject=Commercial%20use%20request">Request it by email</a>.</p></div>
+    </div>
+  </section>
 </main>
 
 <footer class="foot" id="contact">
-  <a class="mail" href="mailto:dtcmark@gmail.com">dtcmark@gmail.com</a>
-  <p class="legal">
-    Free for personal use. <a href="mailto:dtcmark@gmail.com?subject=Commercial%20use%20request">Ask before commercial use.</a> &copy; 2026 Mark Do<span class="hits" id="hits" hidden></span></p>
+  <div class="foot-in wrap">
+    <div>
+      <p class="lab">Contact</p>
+      <a class="mail ul" href="mailto:dtcmark@gmail.com">dtcmark@gmail.com</a>
+    </div>
+    <div class="foot-meta lab">
+      <a class="ul" href="https://github.com/markdo27" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+      <span>Local time <span id="clock">--:--</span> GMT+7</span>
+      <span>Set in Overdot, OFL</span>
+      <span>&copy; 2026 Mark Do<span id="hits" hidden></span></span>
+      <a class="ul end" href="#top">Back to top</a>
+    </div>
+  </div>
 </footer>
+
+<div class="peek" aria-hidden="true"><canvas width="496" height="310"></canvas><div class="lab"><span class="peek-name"></span><span>Preview</span></div></div>
 
 <script>
 /* ══════════════════════════════════════════════════════════════════════
-   FILTER, NEW BADGE, THUMBNAILS, VISIT COUNTING
+   INDEX: filter, sort, NEW badge, stats, visit counting
    ═══════════════════════════════════════════════════════════════════ */
 
 /* The base URL of your GoatCounter, with no trailing slash, hosted
@@ -275,58 +491,79 @@ var GOATCOUNTER_HOST = '';
 /* A tool counts as new for this many days after its data-released date. */
 var NEW_FOR_DAYS = 30;
 
-/* ── Filter ────────────────────────────────────────────────────────────
-   The buttons ship hidden, so with JavaScript off the page is simply the
-   full list. */
-(function () {
-  var nav = document.querySelector('.filters');
-  if (!nav) return;
-  var buttons = nav.querySelectorAll('button');
-  var items = document.querySelectorAll('.grid > li');
-  var shown = document.getElementById('shown');
-  var main = document.getElementById('main');
-  nav.hidden = false;
-  nav.addEventListener('click', function (e) {
-    var btn = e.target.closest('button');
-    if (!btn) return;
-    var f = btn.dataset.filter, n = 0;
-    buttons.forEach(function (b) { b.setAttribute('aria-pressed', String(b === btn)); });
-    items.forEach(function (li) {
-      li.hidden = f !== 'all' && li.dataset.cat !== f;
-      if (!li.hidden) n++;
-    });
-    if (shown) shown.textContent = n + (n === 1 ? ' tool' : ' tools') + ' shown';
-    /* Filtering from deep in the list would land mid-results. */
-    var top = main.getBoundingClientRect().top + window.scrollY;
-    if (window.scrollY > top) window.scrollTo(0, top);
-  });
-})();
+var MOTION = document.documentElement.classList.contains('motion');
+var list = document.querySelector('.list');
+var items = Array.prototype.slice.call(list.children);
+function pad2(n) { return (n < 10 ? '0' : '') + n; }
 
-/* ── NEW badge ─────────────────────────────────────────────────────────
-   Computed from data-released, so a badge ages out by itself. */
+/* ── NEW badge and the hero numbers ────────────────────────────────────
+   Computed from the data attributes, so badges age out by themselves and
+   the counts never go stale. */
 (function () {
-  var cutoff = Date.now() - NEW_FOR_DAYS * 864e5;
-  document.querySelectorAll('.tool[data-released]').forEach(function (card) {
-    var released = Date.parse(card.dataset.released + 'T00:00:00Z');
+  var cutoff = Date.now() - NEW_FOR_DAYS * 864e5, fresh = 0, last = '';
+  items.forEach(function (li) {
+    var row = li.firstElementChild;
+    if (li.dataset.date > last) last = li.dataset.date;
+    var released = Date.parse(row.dataset.released + 'T00:00:00Z');
     if (isNaN(released) || released < cutoff) return;
-    var badge = document.createElement('span');
-    badge.className = 'new';
-    badge.textContent = 'New';
-    badge.setAttribute('aria-hidden', 'true');
-    card.appendChild(badge);
-    var name = card.querySelector('.name');
-    if (name) name.insertAdjacentHTML('afterend', '<span class="sr-only">, new</span>');
+    fresh++;
+    row.querySelector('.name').insertAdjacentHTML('beforeend', '<span class="new">New</span>');
   });
+  var n = document.getElementById('stat-new');
+  if (n) n.textContent = pad2(fresh);
+  var l = document.getElementById('stat-last');
+  if (l && last) l.textContent = last.replace(/-/g, '.');
 })();
 
-/* ── Thumbnails ────────────────────────────────────────────────────────
-   A cell added before the capture has run would show a broken image.
-   Drop the box instead; the cell reads fine without a picture. */
-document.querySelectorAll('.thumb img').forEach(function (img) {
-  function drop() { if (img.parentNode) img.parentNode.remove(); }
-  if (img.complete && !img.naturalWidth) drop();
-  else img.addEventListener('error', drop);
-});
+/* ── Filter and sort ───────────────────────────────────────────────────
+   The controls ship hidden, so with JavaScript off the page is the plain
+   numbered list. */
+(function () {
+  var box = document.querySelector('.controls');
+  if (!box) return;
+  box.hidden = false;
+  var filter = 'all', sort = 'index';
+  var shown = document.getElementById('shown');
+  var head = document.getElementById('index');
+
+  box.querySelectorAll('[data-filter]').forEach(function (b) {
+    var f = b.dataset.filter;
+    var c = f === 'all' ? items.length : items.filter(function (li) { return li.dataset.cat === f; }).length;
+    b.querySelector('.n').textContent = pad2(c);
+  });
+
+  function apply(announce) {
+    var order = items.slice();
+    if (sort === 'date') order.sort(function (a, b) { return a.dataset.date < b.dataset.date ? 1 : a.dataset.date > b.dataset.date ? -1 : 0; });
+    var n = 0;
+    order.forEach(function (li) {
+      li.hidden = filter !== 'all' && li.dataset.cat !== filter;
+      list.appendChild(li);
+      if (li.hidden) return;
+      if (MOTION) {
+        li.classList.remove('in');
+        li.style.setProperty('--d', Math.min(n, 12) * 0.03 + 's');
+      }
+      n++;
+    });
+    if (MOTION) {
+      void list.offsetWidth;
+      order.forEach(function (li) { if (!li.hidden) li.classList.add('in'); });
+    }
+    if (announce && shown) shown.textContent = n + (n === 1 ? ' tool' : ' tools') + ' shown' + (sort === 'date' ? ', latest first' : '');
+    var top = head.getBoundingClientRect().top + window.scrollY - 60;
+    if (announce && window.scrollY > top) window.scrollTo({ top: top, behavior: MOTION ? 'smooth' : 'auto' });
+  }
+
+  box.addEventListener('click', function (e) {
+    var b = e.target.closest('button');
+    if (!b) return;
+    var group = b.dataset.filter ? '[data-filter]' : '[data-sort]';
+    box.querySelectorAll(group).forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+    if (b.dataset.filter) filter = b.dataset.filter; else sort = b.dataset.sort;
+    apply(true);
+  });
+})();
 
 /* ── Visit counting ────────────────────────────────────────────────────
    GoatCounter: no cookies, no personal data. Page views, plus one event
@@ -340,12 +577,12 @@ document.querySelectorAll('.thumb img').forEach(function (img) {
   tag.setAttribute('data-goatcounter', host + '/count');
   document.head.appendChild(tag);
 
-  document.querySelectorAll('.tool[data-tool]').forEach(function (card) {
-    card.addEventListener('click', function () {
+  document.querySelectorAll('.row[data-tool]').forEach(function (row) {
+    row.addEventListener('click', function () {
       if (!window.goatcounter || !window.goatcounter.count) return;
       window.goatcounter.count({
-        path: 'tool/' + card.dataset.tool,
-        title: (card.querySelector('.name') || {}).textContent || card.dataset.tool,
+        path: 'tool/' + row.dataset.tool,
+        title: (row.querySelector('.name') || {}).textContent || row.dataset.tool,
         event: true
       });
     });
@@ -359,213 +596,268 @@ document.querySelectorAll('.thumb img').forEach(function (img) {
     .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
     .then(function (d) {
       if (!d || !d.count) return;
-      slot.textContent = String(d.count) + ' visits';
+      slot.textContent = ', ' + String(d.count) + ' visits';
       slot.hidden = false;
     })
     .catch(function () {});
 })();
-</script>
 
-<script>
-/* Attractor field. Dots drift across the hero and are pulled toward the
-   pointer while it is over it. No dependencies. */
+/* ── Local time ────────────────────────────────────────────────────── */
 (function () {
-  var hero = document.querySelector('.hero');
-  var canvas = hero && hero.querySelector('canvas');
-  var ctx = canvas && canvas.getContext('2d');
-  if (!ctx) return;
-
-  var INK = '#000';
-  var PAPER = '#fff';
-  var FIELD = 180;      /* pointer field radius, css px, sized in measure() */
-  var PULL = 0.20;      /* pull at the centre of the field, px per frame squared */
-  var DAMP_IDLE = 0.995;/* almost lossless, so they keep floating */
-  var DAMP_PULL = 0.985;/* a little more loss, so they settle into the cluster */
-  var STEER = 0.012;    /* random steering, keeps paths from going straight */
-  var VMIN = 0.16;      /* floating speed floor, px per frame */
-  var VMAX = 0.7;       /* floating speed ceiling */
-  var VCAP = 6;         /* hard speed cap while the pointer pulls */
-  var EASE = 0.06;      /* how fast speed eases back into the float band */
-  var WALL = 0.98;      /* wall restitution */
-  var BOUNCE = 0.85;    /* body to body restitution */
-
-  var w = 0, h = 0, top = 0, bodies = [], raf = 0, last = 0;
-  var bar = hero.querySelector('.hero-top');
-  var onScreen = true, running = false;
-  var pointer = { x: 0, y: 0, on: false };
-  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  function measure() {
-    var r = hero.getBoundingClientRect();
-    w = Math.max(1, Math.round(r.width));
-    h = Math.max(1, Math.round(r.height));
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    FIELD = Math.max(120, Math.min(260, (w + h) * 0.18));
-    /* Below 768px the dots are as big as the letters of the top bar and
-       would punch holes in it, so they keep below it. */
-    top = (w < 768 && bar) ? Math.round(bar.getBoundingClientRect().bottom - r.top) + 8 : 0;
-  }
-
-  function idealCount() {
-    return Math.max(18, Math.min(70, Math.round((w * h) / 9000)));
-  }
-
-  function seed() {
-    var n = idealCount();
-    var big = Math.min(w, h) < 360 ? 7 : 11;
-    bodies = [];
-    for (var i = 0; i < n; i++) {
-      var rad = 3 + Math.pow(Math.random(), 2) * big;
-      var sp = VMIN + Math.random() * (VMAX - VMIN);
-      var a = Math.random() * Math.PI * 2;
-      bodies.push({
-        x: rad + Math.random() * Math.max(1, w - rad * 2),
-        y: top + rad + Math.random() * Math.max(1, h - top - rad * 2),
-        vx: Math.cos(a) * sp, vy: Math.sin(a) * sp,
-        r: rad, m: rad * rad
-      });
-    }
-  }
-
-  function step(dt) {
-    var pulling = pointer.on;
-    var damp = Math.pow(pulling ? DAMP_PULL : DAMP_IDLE, dt);
-    var i, j, b;
-    for (i = 0; i < bodies.length; i++) {
-      b = bodies[i];
-      if (pulling) {
-        var dx = pointer.x - b.x, dy = pointer.y - b.y;
-        var d = Math.sqrt(dx * dx + dy * dy) || 0.01;
-        if (d < FIELD) {
-          var f = PULL * (1 - d / FIELD) * dt;
-          b.vx += (dx / d) * f;
-          b.vy += (dy / d) * f;
-        }
-      }
-      b.vx += (Math.random() - 0.5) * STEER * dt;
-      b.vy += (Math.random() - 0.5) * STEER * dt;
-      b.vx *= damp;
-      b.vy *= damp;
-
-      /* Hold idle speed inside a band so nothing settles; cap the rush
-         while the pointer pulls. Eased, so letting go does not pop. */
-      var sp = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-      if (sp < 0.0001) {
-        b.vx = (Math.random() - 0.5) * VMIN * 2;
-        b.vy = (Math.random() - 0.5) * VMIN * 2;
-      } else if (pulling) {
-        if (sp > VCAP) { b.vx *= VCAP / sp; b.vy *= VCAP / sp; }
-      } else {
-        var want = sp < VMIN ? VMIN : (sp > VMAX ? VMAX : sp);
-        if (want !== sp) {
-          var k = 1 + (want / sp - 1) * Math.min(1, EASE * dt);
-          b.vx *= k; b.vy *= k;
-        }
-      }
-
-      b.x += b.vx * dt;
-      b.y += b.vy * dt;
-      if (b.x - b.r < 0) { b.x = b.r; b.vx = Math.abs(b.vx) * WALL; }
-      else if (b.x + b.r > w) { b.x = w - b.r; b.vx = -Math.abs(b.vx) * WALL; }
-      if (b.y - b.r < top) { b.y = top + b.r; b.vy = Math.abs(b.vy) * WALL; }
-      else if (b.y + b.r > h) { b.y = h - b.r; b.vy = -Math.abs(b.vy) * WALL; }
-    }
-
-    for (i = 0; i < bodies.length; i++) {
-      for (j = i + 1; j < bodies.length; j++) {
-        var a = bodies[i], c = bodies[j];
-        var ox = c.x - a.x, oy = c.y - a.y;
-        var dist = Math.sqrt(ox * ox + oy * oy);
-        var min = a.r + c.r;
-        if (dist === 0) { dist = 0.01; ox = 0.01; oy = 0; }
-        if (dist >= min) continue;
-        var nx = ox / dist, ny = oy / dist;
-        var over = min - dist, tm = a.m + c.m;
-        a.x -= nx * over * (c.m / tm); a.y -= ny * over * (c.m / tm);
-        c.x += nx * over * (a.m / tm); c.y += ny * over * (a.m / tm);
-        var sep = (c.vx - a.vx) * nx + (c.vy - a.vy) * ny;
-        if (sep >= 0) continue;
-        var imp = -(1 + BOUNCE) * sep / (1 / a.m + 1 / c.m);
-        a.vx -= (imp / a.m) * nx; a.vy -= (imp / a.m) * ny;
-        c.vx += (imp / c.m) * nx; c.vy += (imp / c.m) * ny;
-      }
-    }
-  }
-
-  function draw() {
-    /* Painted, not cleared: the copy blends against this, so the ground
-       under it has to be opaque. */
-    ctx.fillStyle = INK;
-    ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = PAPER;
-    for (var i = 0; i < bodies.length; i++) {
-      var b = bodies[i];
-      ctx.beginPath();
-      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  function frame(now) {
-    var dt = last ? Math.min((now - last) / 16.667, 2.5) : 1;
-    last = now;
-    step(dt);
-    draw();
-    raf = requestAnimationFrame(frame);
-  }
-  function start() {
-    if (running || still.matches) return;
-    running = true; last = 0;
-    raf = requestAnimationFrame(frame);
-  }
-  function stop() { running = false; cancelAnimationFrame(raf); }
-  function sync() { if (onScreen && !document.hidden) start(); else stop(); }
-
-  measure(); seed(); draw();
-
-  hero.addEventListener('pointermove', function (e) {
-    var r = hero.getBoundingClientRect();
-    pointer.x = e.clientX - r.left;
-    pointer.y = e.clientY - r.top;
-    pointer.on = true;
-  });
-  hero.addEventListener('pointerleave', function () { pointer.on = false; });
-  hero.addEventListener('pointercancel', function () { pointer.on = false; });
-
-  var resizeTimer = 0;
-  function onResize() {
-    var before = bodies.length;
-    measure();
-    for (var i = 0; i < bodies.length; i++) {
-      var b = bodies[i];
-      b.x = Math.min(Math.max(b.x, b.r), Math.max(b.r, w - b.r));
-      b.y = Math.min(Math.max(b.y, top + b.r), Math.max(top + b.r, h - b.r));
-    }
-    draw();
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () {
-      if (Math.abs(idealCount() - before) > before * 0.25) { seed(); draw(); }
-    }, 220);
-  }
-  if (window.ResizeObserver) new ResizeObserver(onResize).observe(hero);
-  else window.addEventListener('resize', onResize);
-
-  if (window.IntersectionObserver) {
-    new IntersectionObserver(function (entries) {
-      onScreen = entries[0].isIntersecting;
-      sync();
-    }).observe(hero);
-  }
-  document.addEventListener('visibilitychange', sync);
-  if (still.addEventListener) still.addEventListener('change', function () {
-    if (still.matches) { stop(); seed(); draw(); } else sync();
-  });
-  sync();
+  var el = document.getElementById('clock');
+  if (!el || !window.Intl) return;
+  var fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
+  function tick() { el.textContent = fmt.format(new Date()); }
+  tick();
+  setInterval(tick, 20000);
 })();
 </script>
 
+<script>
+/* ══════════════════════════════════════════════════════════════════════
+   MOTION: scroll progress, reveals, the dot panel and the halftone peek.
+   Everything here is decoration; the page reads the same without it.
+   ═══════════════════════════════════════════════════════════════════ */
+(function () {
+  var root = document.documentElement;
+  var MOTION = root.classList.contains('motion');
+  var fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+  /* ── Scroll progress: a hairline under the top bar and a percentage. */
+  var top = document.querySelector('.top');
+  var pct = document.querySelector('.pct');
+  var ticking = false;
+  function progress() {
+    ticking = false;
+    var max = root.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    top.style.setProperty('--p', p.toFixed(4));
+    if (pct) { pct.textContent = ('00' + Math.round(p * 100)).slice(-3) + '%'; pct.classList.toggle('on', p > 0.005); }
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(progress); } }, { passive: true });
+  window.addEventListener('resize', progress);
+  progress();
+
+  /* ── On phones the pills scroll sideways; the right edge fades until
+     the end is reached, so it is clear there is more. */
+  var pills = document.querySelector('.pills');
+  if (pills) {
+    var edge = function () { pills.classList.toggle('end', pills.scrollLeft + pills.clientWidth >= pills.scrollWidth - 2); };
+    pills.addEventListener('scroll', edge, { passive: true });
+    window.addEventListener('resize', edge);
+    edge();
+  }
+
+  /* ── Dot panel ─────────────────────────────────────────────────────
+     A grid of dim dots. Near the pointer they swell and brighten; with no
+     pointer, a fainter drifting focus keeps the field breathing. A soft
+     diagonal wave runs through the whole grid. With reduced motion it is
+     drawn once, still. */
+  (function () {
+    var panel = document.querySelector('.panel');
+    var canvas = panel && panel.querySelector('canvas');
+    var ctx = canvas && canvas.getContext('2d');
+    if (!ctx) return;
+    var glyph = panel.querySelector('.glyph'), cp = panel.querySelector('.cp');
+    var w = 0, h = 0, gap = 18, dots = [], raf = 0, running = false, onScreen = true;
+    var p = { x: 0, y: 0, tx: 0, ty: 0, k: 0.5, on: false };
+
+    function measure() {
+      var r = panel.getBoundingClientRect();
+      w = Math.max(1, Math.round(r.width)); h = Math.max(1, Math.round(r.height));
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      gap = w < 520 ? 15 : 18;
+      dots = [];
+      var cols = Math.floor(w / gap), rws = Math.floor(h / gap);
+      var ox = (w - (cols - 1) * gap) / 2, oy = (h - (rws - 1) * gap) / 2;
+      for (var j = 0; j < rws; j++) for (var i = 0; i < cols; i++) dots.push(ox + i * gap, oy + j * gap);
+      if (!p.x) { p.x = p.tx = w * 0.5; p.y = p.ty = h * 0.5; }
+      if (!MOTION) draw(0, 0);
+    }
+
+    function draw(t, focus) {
+      var R = Math.max(110, Math.min(w, h) * 0.42), R2 = R * R;
+      ctx.clearRect(0, 0, w, h);
+      for (var k = 0; k < dots.length; k += 2) {
+        var x = dots[k], y = dots[k + 1];
+        var dx = x - p.x, dy = y - p.y, d2 = dx * dx + dy * dy;
+        var near = d2 < R2 ? 1 - Math.sqrt(d2) / R : 0;
+        near = near * near * focus;
+        var wave = 0.5 + 0.5 * Math.sin((x + y) * 0.018 - t * 0.0016);
+        ctx.fillStyle = 'rgba(255,255,255,' + (0.16 + wave * 0.1 + near * 0.74).toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(x, y, 1.05 + near * 3.1, 0, 6.2832); ctx.fill();
+      }
+    }
+
+    function frame(t) {
+      if (!p.on) {
+        p.tx = w * (0.5 + 0.34 * Math.sin(t * 0.00023));
+        p.ty = h * (0.5 + 0.3 * Math.sin(t * 0.00031 + 1.3));
+      }
+      p.x += (p.tx - p.x) * 0.12; p.y += (p.ty - p.y) * 0.12;
+      p.k += ((p.on ? 1 : 0.45) - p.k) * 0.06;
+      draw(t, p.k);
+      if (p.on) {
+        ctx.fillStyle = '#d71921';
+        ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, 6.2832); ctx.fill();
+      }
+      glyph.style.transform = 'translate(' + ((p.x - w / 2) * -0.025).toFixed(1) + 'px,' + ((p.y - h / 2) * -0.025).toFixed(1) + 'px)';
+      raf = requestAnimationFrame(frame);
+    }
+    function start() { if (!running) { running = true; raf = requestAnimationFrame(frame); } }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+    function sync() { if (onScreen && !document.hidden) start(); else stop(); }
+
+    measure();
+    if (window.ResizeObserver) new ResizeObserver(measure).observe(panel);
+    if (!MOTION) return;
+
+    panel.addEventListener('pointermove', function (e) {
+      var r = panel.getBoundingClientRect();
+      p.tx = e.clientX - r.left; p.ty = e.clientY - r.top; p.on = true;
+    });
+    panel.addEventListener('pointerleave', function () { p.on = false; });
+
+    /* One glyph at a time, with its code point. */
+    var GLYPHS = 'AgR&8@Mk?Ø3a'.split(''), gi = 0;
+    setInterval(function () {
+      if (!running) return;
+      glyph.classList.add('out');
+      setTimeout(function () {
+        gi = (gi + 1) % GLYPHS.length;
+        var ch = GLYPHS[gi];
+        glyph.textContent = ch;
+        if (cp) cp.textContent = 'U+' + ('000' + ch.charCodeAt(0).toString(16).toUpperCase()).slice(-4);
+        glyph.classList.remove('out');
+      }, 260);
+    }, 2400);
+
+    new IntersectionObserver(function (en) { onScreen = en[0].isIntersecting; sync(); }).observe(panel);
+    document.addEventListener('visibilitychange', sync);
+    sync();
+  })();
+
+  /* ── Peek ──────────────────────────────────────────────────────────
+     Each thumbnail is redrawn once as a halftone, ink on paper, so twenty
+     different screenshots read as one family. Images that are mostly dark
+     are inverted first, so the dots carry the content, not the background.
+     The card rides a track over the category and date columns and glides
+     to whichever row is under the pointer. Desktop pointers only. */
+  (function () {
+    var peek = document.querySelector('.peek');
+    if (!peek) return;
+    var cv = peek.querySelector('canvas'), cx = cv.getContext('2d'), label = peek.querySelector('.peek-name');
+    var W = 248, H = 155, CELL = 4, cache = {}, cur = null;
+    var pos = { x: 0, y: 0, tx: 0, ty: 0 }, raf = 0, live = false;
+
+    function halftone(img) {
+      var cols = Math.round(W / CELL), rws = Math.round(H / CELL);
+      var off = document.createElement('canvas');
+      off.width = cols; off.height = rws;
+      var o = off.getContext('2d', { willReadFrequently: true });
+      o.drawImage(img, 0, 0, cols, rws);
+      var px = o.getImageData(0, 0, cols, rws).data, v = [], sum = 0, lo = 1, hi = 0, i;
+      for (i = 0; i < cols * rws; i++) {
+        var l = (0.2126 * px[i * 4] + 0.7152 * px[i * 4 + 1] + 0.0722 * px[i * 4 + 2]) / 255;
+        v.push(1 - l); sum += 1 - l;
+      }
+      var flip = sum / v.length > 0.5;
+      for (i = 0; i < v.length; i++) { if (flip) v[i] = 1 - v[i]; if (v[i] < lo) lo = v[i]; if (v[i] > hi) hi = v[i]; }
+      var span = Math.max(0.15, hi - lo);
+      var out = document.createElement('canvas');
+      out.width = W * 2; out.height = H * 2;
+      var c = out.getContext('2d');
+      c.scale(2, 2);
+      c.fillStyle = '#f2f2f2'; c.fillRect(0, 0, W, H);
+      c.fillStyle = '#0a0a0a';
+      var sx = W / cols, sy = H / rws;
+      for (var j = 0; j < rws; j++) for (var k = 0; k < cols; k++) {
+        var n = (v[j * cols + k] - lo) / span;
+        if (n < 0.1) continue;
+        c.beginPath();
+        c.arc(k * sx + sx / 2, j * sy + sy / 2, Math.sqrt(n) * sx * 0.58, 0, 6.2832);
+        c.fill();
+      }
+      return out;
+    }
+
+    function show(slug, name) {
+      cur = slug;
+      label.textContent = name;
+      if (cache[slug] && cache[slug] !== 1) {
+        cx.drawImage(cache[slug], 0, 0);
+        peek.classList.add('on');
+        return;
+      }
+      if (cache[slug] === 1) return;
+      cache[slug] = 1;
+      var img = new Image();
+      img.decoding = 'async';
+      img.onload = function () {
+        cache[slug] = halftone(img);
+        if (cur === slug) { cx.drawImage(cache[slug], 0, 0); peek.classList.add('on'); }
+      };
+      img.onerror = function () { cache[slug] = 0; };
+      img.src = 'thumbs/' + slug + '.webp';
+    }
+    function hide() { cur = null; live = false; peek.classList.remove('on'); }
+
+    function loop() {
+      var ease = MOTION ? 0.22 : 1;
+      pos.x += (pos.tx - pos.x) * ease; pos.y += (pos.ty - pos.y) * ease;
+      peek.style.transform = 'translate3d(' + pos.x.toFixed(1) + 'px,' + pos.y.toFixed(1) + 'px,0)';
+      raf = live && (Math.abs(pos.ty - pos.y) > 0.3 || Math.abs(pos.tx - pos.x) > 0.3) ? requestAnimationFrame(loop) : 0;
+    }
+    function place(row) {
+      var r = row.getBoundingClientRect(), lr = list.getBoundingClientRect();
+      var pw = peek.offsetWidth, ph = peek.offsetHeight, floor = top.getBoundingClientRect().bottom + 12;
+      pos.tx = lr.right - pw - 60;
+      pos.ty = Math.max(floor, Math.min(window.innerHeight - ph - 12, r.top + r.height / 2 - ph / 2));
+    }
+
+    list.addEventListener('pointerover', function (e) {
+      if (!fine.matches || window.innerWidth < 1024) return;
+      var row = e.target.closest('.row');
+      if (!row || row.dataset.tool === cur) return;
+      place(row);
+      if (!live) { pos.x = pos.tx; pos.y = pos.ty; live = true; }
+      if (!raf) raf = requestAnimationFrame(loop);
+      show(row.dataset.tool, row.querySelector('.name').firstChild.textContent);
+    });
+    list.addEventListener('pointerleave', hide);
+    window.addEventListener('scroll', function () { if (cur) hide(); }, { passive: true });
+  })();
+
+  if (!MOTION) return;
+
+  requestAnimationFrame(function () { root.classList.add('ready'); });
+
+  /* ── Reveals: rows stagger in by their order on screen, section titles
+     slide up out of their mask. Once each. */
+  document.querySelectorAll('.list > li').forEach(function (li) { li.classList.add('rv'); });
+  var targets = document.querySelectorAll('.rv, h2');
+  if (!window.IntersectionObserver) {
+    targets.forEach(function (el) { el.classList.add('in'); });
+    return;
+  }
+  var batch = 0, batchTimer = 0;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target;
+      io.unobserve(el);
+      if (el.matches('.list > li')) {
+        el.style.setProperty('--d', Math.min(batch++, 10) * 0.045 + 's');
+        clearTimeout(batchTimer);
+        batchTimer = setTimeout(function () { batch = 0; }, 120);
+      }
+      el.classList.add('in');
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  targets.forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>
