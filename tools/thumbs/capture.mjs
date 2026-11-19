@@ -29,6 +29,7 @@ const UA = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Geck
 
 const GH = 'https://markdo27.github.io';
 const FIGMA = 'https://www.figma.com/community/plugin';
+const VF = 'https://www.vinafont.com';
 
 /* One entry per cell, keyed by its data-tool.
      steps   run in order before the shot:
@@ -45,6 +46,8 @@ const FIGMA = 'https://www.figma.com/community/plugin';
              which have no page of their own to stage. */
 const SHOTS = [
   // ── A / Type ────────────────────────────────────────────────────────
+  { slug: 'vinadau', url: `${VF}/vinadau/`,
+    steps: [{ wait: 3500 }], focus: 'top' },
   { slug: 'circle', url: 'https://circlefont.vercel.app',
     // The editor, letters drawn on the circle grid, is the tool. The
     // Preview tab only shows a finished pixel font.
@@ -52,9 +55,9 @@ const SHOTS = [
   { slug: 'typoman', url: `${GH}/typoman/`,
     // Full-bleed kinetic type; the whole window is the piece.
     steps: [{ wait: 3500 }], focus: 'centre' },
-  { slug: 'liquid-font', url: `${GH}/generativefont_creator/`,
+  { slug: 'liquid-font', url: `${VF}/liquidfont/`,
     steps: [{ wait: 3000 }], clip: '.specimen-panel' },
-  { slug: 'overdot', url: `${GH}/overdot/`,
+  { slug: 'overdot', url: `${VF}/overdot/`,
     steps: [{ wait: 2500 }], clip: '#hero', fit: 'contain', background: '#111111' },
   { slug: 'typeforge', url: `${GH}/fontconvertswift/`,
     // Empty, it is a drop zone. With a font in it, it is a specimen and a
@@ -88,6 +91,8 @@ const SHOTS = [
     // needs no staging beyond the trace. The stage frames the portrait sheet
     // on its dark backdrop at about 8:5.
     steps: [{ wait: 4500 }], clip: '.stage-view', focus: 'centre' },
+  { slug: 'afterimage', url: 'https://effector-three.vercel.app',
+    steps: [{ wait: 4000 }], focus: 'centre' },
 
   // ── C / Sound & Visual ──────────────────────────────────────────────
   { slug: 'musicbox', url: `${GH}/musicbox/`,

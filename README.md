@@ -20,7 +20,7 @@ in CI, not on the page.
 | `thumbs/` | One 800 × 500 WebP per tool, named after its `data-tool`, used for the hover preview. Generated, never edited by hand. |
 | `tools/thumbs/` | The capture script that makes them, and the font it feeds TypeForge. |
 | `.github/workflows/thumbnails.yml` | Runs the capture against the live sites and commits the images. |
-| `overdot/` | Overdot, the modular typeface specimen, tester and editor, hosted as a static build from Moduletext. |
+| `overdot/` | An older static build of Overdot from Moduletext. The list now links to its home at vinafont.com/overdot/, alongside Circle, Liquid.Font and Vinadấu. |
 | `visual/` | Khối, the chrometype studio, hosted here as an offline single-file build. |
 | `liquid-poster/` | Liquid.Poster, the poster tool split out of Liquid.Font. Same origin as the Font tool, so it can draw with the letters you sculpted there. See its README. |
 
@@ -110,14 +110,14 @@ things keep it working and are easy to break:
 
 | `data-cat` | Pill | Tools |
 | --- | --- | --- |
-| `type` | Type | 01 to 06 |
-| `print` | Print | 07 to 12 |
-| `sound` | Sound | 13 to 14 |
-| `figma` | Figma | 15 to 17 |
-| `data` | Utility | 18 to 20 |
+| `type` | Type | 01 to 07 |
+| `print` | Print | 08 to 14 |
+| `sound` | Sound | 15 to 16 |
+| `figma` | Figma | 17 to 19 |
+| `data` | Utility | 20 to 22 |
 
 The pill counts and the hero numbers are computed from the list, so they never
-need editing. Numbering runs `01` to `20` straight through. Sorting by Latest
+need editing. Numbering runs `01` to `22` straight through. Sorting by Latest
 reorders the rows, and each keeps its number.
 
 ## Adding a tool
@@ -155,7 +155,7 @@ so they carry the date they were listed on this page and no update date.
 They are static text. Nothing fetches them, so shipping a change to a tool
 means editing its two dates here as well. A runtime lookup was the other
 option and was not worth it: the GitHub API allows 60 unauthenticated calls an
-hour per visitor, twenty of them would go on one page load, and it would not
+hour per visitor, twenty-two of them would go on one page load, and it would not
 cover the Vercel or Figma entries at all.
 
 The **NEW** badge is not written into the markup. A script compares
@@ -173,13 +173,13 @@ var NEW_FOR_DAYS = 30;
 The list carries no pictures. The thumbnails only feed the preview that
 glides beside the list on desktop: the first hover on a row loads
 `thumbs/<slug>.webp`, redraws it as a halftone, ink dots on paper, and
-caches it. That turns twenty different screenshots into one family. An image
+caches it. That turns twenty-two different screenshots into one family. An image
 that is mostly dark is inverted first, so the dots carry the content and not
 the background. Touch screens never show the preview, and a missing
 thumbnail simply means no preview for that row.
 
 They are captured, not hand-made, by `tools/thumbs/capture.mjs`: headless
-Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All twenty
+Chromium against the live sites, cropped to 8:5 WebP at 800 × 500. All twenty-two
 come to about 0.4 MB, and the page fetches one only when its row is first
 hovered.
 
@@ -272,7 +272,7 @@ dashboard, which is what ranks the tools against each other.
 
 Note what that measures. A visitor who goes straight to a tool's own URL never
 touches this page and is not counted. Counting those would mean installing the
-tracker inside every web tool, seventeen of the twenty; the three Figma
+tracker inside every web tool, nineteen of the twenty-two; the three Figma
 plugins live on figma.com and cannot carry one.
 
 The footer total is fetched from `/counter/TOTAL.json`. Any failure, offline,
